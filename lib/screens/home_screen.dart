@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: Consumer<QuizProvider>(
             builder: (context, quiz, _) {
-              return Padding(
+              return SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildSubjectChips(quiz),
                     const SizedBox(height: 32),
                     _buildDenemeSection(context, quiz),
-                    const Spacer(),
+                    const SizedBox(height: 32),
                     _buildStartButton(context, quiz),
                     const SizedBox(height: 32),
                   ],
@@ -69,28 +69,31 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Quiz Zamanı! 🎯',
-              style: GoogleFonts.poppins(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.2),
-            const SizedBox(height: 8),
-            Text(
-              'TYT ve AYT sorularıyla kendini sına',
-              style: GoogleFonts.poppins(
-                fontSize: 13,
-                color: Colors.white54,
-              ),
-            ).animate().fadeIn(duration: 800.ms).slideX(begin: -0.2),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Quiz Zamanı! 🎯',
+                style: GoogleFonts.poppins(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.2),
+              const SizedBox(height: 8),
+              Text(
+                'TYT ve AYT sorularıyla kendini sına',
+                style: GoogleFonts.poppins(
+                  fontSize: 13,
+                  color: Colors.white54,
+                ),
+              ).animate().fadeIn(duration: 800.ms).slideX(begin: -0.2),
+            ],
+          ),
         ),
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
               icon: const Icon(Icons.leaderboard, color: Colors.amberAccent, size: 28),
@@ -105,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.logout, color: Colors.white54),
               onPressed: () async {
                 await AuthService().signOut();
+                // AuthWrapper stream dinliyor, otomatik login sayfasına dönecek
               },
             ),
           ],
@@ -156,16 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: isSelected ? null : const Color(0xFF1E1E3F),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: isSelected
-                      ? Colors.transparent
-                      : Colors.white12,
+                  color: isSelected ? Colors.transparent : Colors.white12,
                   width: 1.5,
                 ),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: (e['gradient'] as List<Color>)[0]
-                              .withOpacity(0.4),
+                          color: (e['gradient'] as List<Color>)[0].withOpacity(0.4),
                           blurRadius: 20,
                           spreadRadius: 2,
                         )
@@ -175,8 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(e['icon'] as String,
-                      style: const TextStyle(fontSize: 32)),
+                  Text(e['icon'] as String, style: const TextStyle(fontSize: 32)),
                   const SizedBox(height: 12),
                   Text(
                     e['title'] as String,
@@ -227,17 +227,14 @@ class _HomeScreenState extends State<HomeScreen> {
               color: isSelected ? null : const Color(0xFF1E1E3F),
               borderRadius: BorderRadius.circular(30),
               border: Border.all(
-                color: isSelected
-                    ? Colors.transparent
-                    : Colors.white12,
+                color: isSelected ? Colors.transparent : Colors.white12,
               ),
             ),
             child: Text(
               subject,
               style: GoogleFonts.poppins(
                 fontSize: 13,
-                fontWeight:
-                    isSelected ? FontWeight.w600 : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 color: isSelected ? Colors.white : Colors.white54,
               ),
             ),
@@ -262,10 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: (isTYT
-                      ? const Color(0xFF6C63FF)
-                      : const Color(0xFFFF6B35))
-                  .withOpacity(0.4),
+              color: (isTYT ? const Color(0xFF6C63FF) : const Color(0xFFFF6B35)).withOpacity(0.4),
               blurRadius: 20,
               spreadRadius: 2,
             ),
@@ -310,18 +304,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              'YKS Deneme Modu',
-              style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.white70,
-              ),
-            ),
-
-          ],
+        Text(
+          'YKS Deneme Modu',
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.white70,
+          ),
         ),
         const SizedBox(height: 12),
         Row(
