@@ -37,5 +37,5 @@ class QuizResult {
     required this.subject,
   });
 
-  double get percentage => (correct / totalQuestions) * 100;
+  double get percentage => totalQuestions > 0 ? (correct / totalQuestions) * 100 : 0;
 }
