@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
@@ -67,6 +69,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                if (!kIsWeb && Platform.isIOS) ...[
+                  ElevatedButton.icon(
+                    onPressed: () => _signIn(_authService.signInWithApple),
+                    icon: const Icon(Icons.apple, color: Colors.white, size: 28),
+                    label: const Text('Apple ile Giriş Yap'),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                ],
                 OutlinedButton(
                   onPressed: () => _signIn(_authService.signInAnonymously),
                   style: OutlinedButton.styleFrom(
