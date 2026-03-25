@@ -110,27 +110,30 @@ class _QuizScreenState extends State<QuizScreen> {
                 children: [
                   _buildTopBar(quiz, primaryColor),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 20),
-                          _buildSubjectBadge(q.subject, primaryColor),
-                          const SizedBox(height: 20),
-                          _buildQuestionCard(q.questionText),
-                          const SizedBox(height: 24),
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: q.options.length,
-                                itemBuilder: (_, i) => _buildOptionTile(
-                                    context, i, q.options[i], quiz, primaryColor),
-                              ),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 20),
+                            _buildSubjectBadge(q.subject, primaryColor),
+                            const SizedBox(height: 20),
+                            _buildQuestionCard(q.questionText),
+                            const SizedBox(height: 24),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: q.options.length,
+                              itemBuilder: (_, i) => _buildOptionTile(
+                                  context, i, q.options[i], quiz, primaryColor),
                             ),
-                          _buildNavigationRow(quiz, primaryColor),
-                          _buildBottomBar(quiz, primaryColor),
-                          const SizedBox(height: 16),
-                        ],
+                            _buildNavigationRow(quiz, primaryColor),
+                            _buildBottomBar(quiz, primaryColor),
+                            const SizedBox(height: 16),
+                          ],
+                        ),
                       ),
                     ),
                   ),

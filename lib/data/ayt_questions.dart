@@ -2,72 +2,552 @@ import '../models/question.dart';
 
 final List<Question> aytQuestions = [
   // ─────────────── AYT MATEMATİK ───────────────
-  Question(id: 101, examType: 'AYT', subject: 'Matematik', questionText: 'lim(x→0) sin(x)/x = ?', options: ['0', '∞', '1', '-1'], correctIndex: 2),
-  Question(id: 102, examType: 'AYT', subject: 'Matematik', questionText: 'f(x) = x³ için f\'(x) = ?', options: ['x²', '3x²', '3x', 'x³/3'], correctIndex: 1),
-  Question(id: 103, examType: 'AYT', subject: 'Matematik', questionText: '∫ 2x dx = ?', options: ['2', 'x²', 'x² + C', '2x² + C'], correctIndex: 2),
-  Question(id: 104, examType: 'AYT', subject: 'Matematik', questionText: 'Bir kompleks sayı z = a + bi için |z| = ?', options: ['a+b', '√(a²+b²)', 'a²+b²', 'a-b'], correctIndex: 1),
-  Question(id: 105, examType: 'AYT', subject: 'Matematik', questionText: 'Bir matrisin determinantı sıfır ise matris nasıldır?', options: ['Simetrik', 'Tekil (singular)', 'Birim matris', 'Sıfır matris'], correctIndex: 1),
-  Question(id: 106, examType: 'AYT', subject: 'Matematik', questionText: 'Herhangi iki nokta arasındaki doğru denkleminin genel formu nedir?', options: ['y = ax²+b', 'y = mx + b', 'y = a/x', 'x² + y² = r²'], correctIndex: 1),
-  Question(id: 107, examType: 'AYT', subject: 'Matematik', questionText: 'Parabol y=x²-4x+3\'ün tepe noktası x koordinatı kaçtır?', options: ['1', '2', '3', '-2'], correctIndex: 1),
-  Question(id: 108, examType: 'AYT', subject: 'Matematik', questionText: '∫₀¹ x² dx = ?', options: ['1/4', '1/3', '1/2', '1'], correctIndex: 1),
-  Question(id: 109, examType: 'AYT', subject: 'Matematik', questionText: 'e sayısı yaklaşık kaçtır?', options: ['2.14', '2.72', '3.14', '1.73'], correctIndex: 1),
-  Question(id: 110, examType: 'AYT', subject: 'Matematik', questionText: 'Bir dizinin yakınsak olması için ne gereklidir?', options: ['Sınırlı olması', 'Belirli bir değere yaklaşması', 'Artan olması', 'Dizinin sonsuz olması'], correctIndex: 1),
-  Question(id: 111, examType: 'AYT', subject: 'Matematik', questionText: 'Çemberin kartezyen denkleminin genel formu nedir? Merkez (h,k) çaplı r', options: ['(x+h)²+(y+k)²=r', '(x-h)²+(y-k)²=r²', 'x²+y²=r', 'x/h+y/k=r'], correctIndex: 1),
-  Question(id: 112, examType: 'AYT', subject: 'Matematik', questionText: 'f(x) = eˣ ise f\'(x) = ?', options: ['eˣ⁻¹', 'xeˣ', 'eˣ', '1/eˣ'], correctIndex: 2),
-  Question(id: 113, examType: 'AYT', subject: 'Matematik', questionText: 'tan(45°) = ?', options: ['0', '√2/2', '1', '√3'], correctIndex: 2),
-  Question(id: 114, examType: 'AYT', subject: 'Matematik', questionText: 'n elemanlı kümeden r elemanlı permütasyon sayısı P(n,r)=?', options: ['n!/(n-r)!', 'n!/(r!(n-r)!)', 'n!', 'n/r'], correctIndex: 0),
-  Question(id: 115, examType: 'AYT', subject: 'Matematik', questionText: 'Elips denkleminin standart formu nedir?', options: ['x²+y²=1', 'x²/a²+y²/b²=1', 'y=ax²', 'x=a*cos(t)'], correctIndex: 1),
+  Question(
+      id: 101,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'f(x) fonksiyonu gerçel sayılar kümesinde türevlenebilir bir fonksiyon olmak üzere,\nlim (x → 2) [f(x) - f(2)] / (x - 2) = 4\nolduğu bilinmektedir.\n\nBuna göre g(x) = x² · f(x) fonksiyonunun x = 2 noktasındaki türevinin (g\'(2)) değeri aşağıdakilerden hangisine eşittir? (f(2) = 3 olarak verilmiştir)',
+      options: ['12', '16', '24', '28'],
+      correctIndex: 3), // f'(2) = 4, f(2) = 3. g'(x) = 2x*f(x) + x²*f'(x) => g'(2) = 4*3 + 4*4 = 12 + 16 = 28.
+  Question(
+      id: 102,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Gerçel sayılar kümesi üzerinde tanımlı f(x) parabolü x eksenini x = 1 ve x = 5 noktalarında kesmektedir. Fonksiyonun grafiği y eksenini (0, 10) noktasında kestiğine göre, bu parabolün tepe noktasının ordinatı (y) kaçtır?',
+      options: ['-4', '-8', '6', '12'],
+      correctIndex: 1), // f(x) = a(x-1)(x-5). f(0) = a(-1)(-5) = 5a = 10 => a = 2. Tepe noktası r = (1+5)/2 = 3. k = f(3) = 2(2)(-2) = -8.
+  Question(
+      id: 103,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Bir öğrenci, kökleri x₁ ve x₂ olan x² - mx + n = 0 ikinci dereceden denklemini çözerken yanlışlıkla kökler toplamını x₁·x₂, kökler çarpımını ise x₁ + x₂ olarak hesaplamıştır. Öğrencinin bulduğu bu yeni denklem x² - 8x + 15 = 0 olduğuna göre, m + n toplamı kaçtır?',
+      options: ['15', '23', '24', '30'],
+      correctIndex: 1), // Hatalı denklemde kökler toplamı T' = 8, kökler çarpımı Ç' = 15. T' = n (gerçek Ç), Ç' = m (gerçek T). O halde n = 8, m = 15. Toplam m+n = 23.
+  Question(
+      id: 104,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'P(x) = x³ + ax² + bx + c polinomunun (x - 1)² ile bölümünden kalan 2x - 1\'dir. P(x) polinomunun katsayılar toplamı kaçtır?',
+      options: ['1', '2', '3', '4'],
+      correctIndex: 0), // P(x) = Q(x)*(x-1)² + 2x-1. Katsayılar toplamı = P(1). P(1) = 0 + 2(1)-1 = 1.
+  Question(
+      id: 105,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Dik koordinat düzleminde, merkezi x-ekseni üzerinde bulunan ve y = 4 doğrusuna teğet olan bir çember çiziliyor. Çember y eksenini (0, 2) ve (0, m) noktalarında kestiğine göre m kaçtır?',
+      options: ['-2', '0', '2', 'Bilinemez'],
+      correctIndex: 0), // Merkez M(a, 0). y=4'e teğetse uzaklık = 4 (yarıçap R = 4). Çemberin denklemi: (x-a)² + y² = 16. Y eksenini x=0 => a² + y² = 16 => a²=12 => y²=4 => y=±2. Dolayısıyla y kestiği noktalar 2 ve -2'dir. -> -2.
+  Question(
+      id: 106,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'A = {1, 2, 3, 4, 5, 6} kümesinin elemanları kullanılarak rakamları tekrarsız üç basamaklı sayılar yazılıyor. Yazılan bu sayıların kaç tanesinde rakamlar soldan sağa doğru artan bir sıradadır?',
+      options: ['15', '20', '30', '120'],
+      correctIndex: 1), // Sadece 6 elemandan 3 tane seçmek yeterlidir. C(6,3) = (6*5*4)/(3*2*1) = 20. Seçilen her 3 rakam sadece tek bir şekilde küçükten büyüğe sıralanabilir.
+  Question(
+      id: 107,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'I. x doğrusal hızıyla giden bir hareketlinin zamana göre integrali alınan yolu verir.\nII. Eğri altında kalan alanı hesaplamak için türevkullanılır.\nIII. Türevi sıfır olan her nokta kesinlikle yerel ekstremum noktasıdır.\nYukarıdaki ifadelerden hangileri yanlıştır?',
+      options: ['Yalnız I', 'Yalnız II', 'I ve II', 'II ve III'],
+      correctIndex: 3), // Alan hesabı için integral kullanılır (II yanlış). x^3 türevi sıfırdır ama ekstremum değildir (III yanlış). Yanlışlar: II ve III.
+  Question(
+      id: 108,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          '(1 + x)⁸ açılımında x⁴ lü terimin katsayısı, x³ lü terimin katsayısından kaç fazladır?',
+      options: ['14', '20', '35', '56'],
+      correctIndex: 0), // C(8,4) = 70. C(8,3) = 56. 70 - 56 = 14.
+  Question(
+      id: 109,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'log₂x + log₂(x-2) = 3 denklemini sağlayan x değeri kaçtır?',
+      options: ['4', '5', '6', '8'],
+      correctIndex: 0), // log₂(x(x-2)) = 3 => x²-2x = 8 => x²-2x-8 = 0 => (x-4)(x+2)=0. x>2 olduğu için x=4.
+  Question(
+      id: 110,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Gerçel sayılarda tanımlı sürekli bir f fonksiyonu için ∫₀³ f(x) dx = 10 ve ∫₀³ x·f\'(x) dx = 6 olduğuna göre, f(3) değeri kaçtır?',
+      options: ['0', '16/3', '10/3', '5'],
+      correctIndex: 1), // Parçalı integral: ∫ x f'(x) dx = [x f(x)] - ∫ f(x) dx. 6 = [3 f(3) - 0] - 10 => 3 f(3) = 16 => f(3) = 16/3.
+  Question(
+      id: 111,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Bir (aₙ) aritmetik dizisinde a₃ + a₇ = 24 olduğuna göre, a₅ değeri kaçtır?',
+      options: ['6', '8', '12', '24'],
+      correctIndex: 2), // a₃ + a₇ = 2a₅ = 24 => a₅ = 12.
+  Question(
+      id: 112,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          '0 ≤ x ≤ π olmak üzere,\nsin²x - cos²x = 1/2 denkleminin sağlayan en küçük x açısı kaç derecedir?',
+      options: ['15', '30', '45', '60'],
+      correctIndex: 3), // sin²x - cos²x = -cos(2x). -cos(2x) = 1/2 => cos(2x) = -1/2. 2x = 120° => x = 60°.
+  Question(
+      id: 113,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Dik koordinat sisteminde, y = 2x - 4 doğrusunun y = x doğrusuna göre simetriğinin denklemi aşağıdakilerden hangisidir?',
+      options: ['y = x/2 + 2', 'y = -2x + 4', 'y = x/2 - 2', 'y = 2x + 4'],
+      correctIndex: 0), // y=x'e göre simetriği x ve y yer değiştirir. x = 2y - 4 => 2y = x + 4 => y = x/2 + 2.
+  Question(
+      id: 114,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'Karmaşık sayılar kümesinde i² = -1 olmak üzere,\n(1 - i)¹⁰ işleminin sonucu aşağıdakilerden hangisidir?',
+      options: ['32', '-32', '32i', '-32i'],
+      correctIndex: 3), // (1-i)² = -2i. (-2i)⁵ = -32 * i⁵ = -32 * i = -32i.
+  Question(
+      id: 115,
+      examType: 'AYT',
+      subject: 'Matematik',
+      questionText:
+          'y = √x eğrisi ile y = x/2 doğrusu arasında kalan kapalı bölgenin alanı kaç birimkaredir?',
+      options: ['1/3', '2/3', '4/3', '8/3'],
+      correctIndex: 2), // Kesişim x=4. ∫₀⁴ (√x - x/2) dx = (2/3 x^(3/2) - x²/4) |₀⁴ = (16/3 - 4) = 4/3.
 
   // ─────────────── AYT FİZİK ───────────────
-  Question(id: 116, examType: 'AYT', subject: 'Fizik', questionText: 'Einstein\'ın kütle-enerji denkliği E = ?', options: ['mc', 'mc²', 'm/c²', 'mv²'], correctIndex: 1),
-  Question(id: 117, examType: 'AYT', subject: 'Fizik', questionText: 'Ohm Yasası V = IR\'de I neyi temsil eder?', options: ['Voltaj', 'Direnç', 'Akım', 'Güç'], correctIndex: 2),
-  Question(id: 118, examType: 'AYT', subject: 'Fizik', questionText: 'Bir nesnenin ivmesi F = ma\'da "m" neyi temsil eder?', options: ['Kuvvet', 'İvme', 'Kütle', 'Momentum'], correctIndex: 2),
-  Question(id: 119, examType: 'AYT', subject: 'Fizik', questionText: 'Serbest düşen bir cismin yerçekimi ivmesi yaklaşık kaçtır?', options: ['6.67 m/s²', '9.8 m/s²', '3.0×10⁸ m/s²', '1.67 m/s²'], correctIndex: 1),
-  Question(id: 120, examType: 'AYT', subject: 'Fizik', questionText: 'Elektromanyetik spektrumda en kısa dalga boyuna sahip ışıma türü hangisidir?', options: ['Radyo dalgaları', 'Kızılötesi', 'Morötesi', 'Gama ışınları'], correctIndex: 3),
-  Question(id: 121, examType: 'AYT', subject: 'Fizik', questionText: 'Termodinamiğin birinci yasası neyi ifade eder?', options: ['Entropi artışı', 'Enerji korunumu', 'Donma noktası', 'Basınç-hacim ilişkisi'], correctIndex: 1),
-  Question(id: 122, examType: 'AYT', subject: 'Fizik', questionText: 'Coulomb yasasında elektrik kuvveti yük ve mesafeyle nasıl ilişkilidir?', options: ['Yüklerle ters, mesafeyle doğru orantılı', 'Yüklerle doğru, mesafenin karesiyle ters orantılı', 'Yüklerle ve mesafeyle doğru orantılı', 'Her ikisiyle ters orantılı'], correctIndex: 1),
-  Question(id: 123, examType: 'AYT', subject: 'Fizik', questionText: 'Manyetik akı birimi nedir?', options: ['Tesla', 'Weber', 'Henry', 'Farad'], correctIndex: 1),
-  Question(id: 124, examType: 'AYT', subject: 'Fizik', questionText: 'Dalga boyu, frekans ve hız arasındaki ilişki nedir?', options: ['v = λ/f', 'v = λf', 'v = f/λ', 'λ = v/f²'], correctIndex: 1),
-  Question(id: 125, examType: 'AYT', subject: 'Fizik', questionText: 'Fotoelektrik olayıyla ilgili Nobel ödülünü kim almıştır?', options: ['Newton', 'Bohr', 'Einstein', 'Planck'], correctIndex: 2),
-  Question(id: 126, examType: 'AYT', subject: 'Fizik', questionText: 'Kondansatörün kapasitansı birimi nedir?', options: ['Ohm', 'Volt', 'Farad', 'Amper'], correctIndex: 2),
-  Question(id: 127, examType: 'AYT', subject: 'Fizik', questionText: 'Basit harmonik hareket yapan bir cismin dönemi T = 2π√(m/k) formülünde k nedir?', options: ['Kütle', 'Yay sabiti', 'Sürtünme katsayısı', 'Genlik'], correctIndex: 1),
-  Question(id: 128, examType: 'AYT', subject: 'Fizik', questionText: 'Doppler etkisi neyle ilgilidir?', options: ['Işığın kırılması', 'Ses veya dalga frekansının hareketle değişmesi', 'Yerçekimi', 'Elektrik yükü'], correctIndex: 1),
-  Question(id: 129, examType: 'AYT', subject: 'Fizik', questionText: 'Kinetik enerji formülü nedir?', options: ['mgh', '½mv²', 'Fd', 'qV'], correctIndex: 1),
-  Question(id: 130, examType: 'AYT', subject: 'Fizik', questionText: 'Maddenin dördüncü hâli olarak bilinen nedir?', options: ['Kritik sıvı', 'Plazma', 'Bose-Einstein yoğuşması', 'Süper katı'], correctIndex: 1),
+  Question(
+      id: 116,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Sürtünmesiz yatay düzlemde durmakta olan m kütleli bir cisme yatay F kuvveti Δt süre boyunca uygulanıyor. Cismin kazandığı kinetik enerjinin, kazandığı momentuma oranı aşağıdakilerden hangisine eşittir?',
+      options: ['v', 'v/2', '2v', 'v²'],
+      correctIndex: 1), // K = 1/2 m v² = p² / 2m. p = m v. K/p = (1/2 m v²) / (m v) = v/2.
+  Question(
+      id: 117,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Düzgün çembersel hareket yapan bir cisim için;\nI. Çizgisel hız sabittir.\nII. Merkezcil kuvvet iş yapmaz.\nIII. Açısal momentum korunur.\nyargılarından hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 2), // Çizgisel hızın Vektörü DEĞİŞİR (I yanlış). Kuvvet yola diktir, iş yapmaz (II doğru). Dış tork sıfırdır, açısal momentum korunur (III doğru).
+  Question(
+      id: 118,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Özdeş K, L ve M lambalarıyla kurulan bir alternatif akım devresinde, K lambasına seri bir sığaç (kondansatör), L lambasına seri bir bobin, M lambasına ise sadece omik bir direnç bağlanmıştır. Alternatif gerilimin frekansı artırıldığında lambaların parlaklıkları nasıl değişir?',
+      options: [
+        'K artar, L azalır, M değişmez',
+        'K azalır, L artar, M değişmez',
+        'K artar, L azalır, M artar',
+        'K, L ve M azalır'
+      ],
+      correctIndex: 0), // Kondansatörün Xc = 1 / (2πfC) (f artarsa Xc azalır, akım artar, K parlar). Bobinin Xl = 2πfL (f artarsa Xl artar, L kararır). Direnç R frekansa bağlı değildir (M değişmez).
+  Question(
+      id: 119,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Çift yarıkla yapılan girişim (Young) deneyinde, ekran üzerinde oluşan saçak aralığının (Δx) artması için;\nI. Yarıklar arası mesafenin artırılması\nII. Kullanılan ışığın dalga boyunun küçültülmesi\nIII. Yarık düzlemi ile ekran arasındaki suyun boşaltılıp yerine hava doldurulması\nişlemlerinden hangileri tek başına yapılabilir?',
+      options: ['Yalnız III', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 0), // Δx = (L*λ) / (d*n). d artarsa azalır. λ azalırsa azalır. Su yerini havaya bırakırsa n küçülür, Δx artar. Yalnız III.
+  Question(
+      id: 120,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Bohr atom modeline göre hidrojen atomunda elektron n=2 yörüngesinden n=4 yörüngesine uyarıldığında aşağıdakilerden hangisi gerçekleşmez?',
+      options: [
+        'Açısal momentumu h/π kadar artar.',
+        'Toplam enerjisi artar.',
+        'Çizgisel sürati azalır.',
+        'Bağlanma enerjisi artar.'
+      ],
+      correctIndex: 3), // L = n*h/2π. 2'den 4'e geçince L = 2h/2π = h/π artar. E_n = -13.6/n^2 (artar). V_n = V/n (azalır). Bağlanma enerjisi, elektronu koparmak için gereken enerjidir; elektron çekirdekten uzaklaştıkça bağlanma enerjisi azalır.
+  Question(
+      id: 121,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Transformatörler ile ilgili;\nI. Sadece dalgalı akımla (AC) çalışırlar.\nII. Gerilimi alçaltmak veya yükseltmek için kullanılırlar.\nIII. İdeal bir transformatörde giriş gücü her zaman çıkış gücünden büyüktür.\nifadelerinden hangileri doğrudur?',
+      options: ['Yalnız II', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 1), // İdeal bir transformatörde Pf giriş = Pf çıkış. (III yanlış). I ve II doğru.
+  Question(
+      id: 122,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Bir fotoelektrik olayında sökülen fotoelektronların maksimum kinetik enerjisinin, yüzeye düşürülen ışığın frekansına bağlı değişim grafiği çiziliyor. Grafiğin eğimi evrensel bir sabit verirken, grafiğin frekans eksenini kestiği nokta aşağıdakilerden hangisidir?',
+      options: ['Planck sabiti', 'Işık hızı', 'Eşik frekansı', 'Bağlanma enerjisi'],
+      correctIndex: 2), // Eğim Planck sabiti (h). f eksenini kestiği nokta ise K = 0 iken f = f0 'dır, yani eşik frekansıdır.
+  Question(
+      id: 123,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Eşit bölmeli homojen bir çubuğun iki ucuna asılan P kütleli cisimler sürtünmesiz ortamda dengededir. Çubuğun asıldığı ipe olan uzaklıklar değiştirildiğinde aşağıdakilerden hangisi kesinlikle değişir?',
+      options: ['Sistemin toplam ağırlığı', 'İpteki gerilme kuvveti', 'Denge noktasına göre tork dengesi', 'Çubuğun ağırlık merkezi'],
+      correctIndex: 2), // İp üzerindeki denge (tork) eşit kollu değilse bozulur ve çubuk döner. Denge noktasına göre net tork sıfır olmaktan çıkar.
+  Question(
+      id: 124,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Kütlesi ihmal edilen yalıtkan iplerle tavana asılı yüklü iki cisim birbirini iterek dengeye gelmiştir. İplerin düşeyle yaptığı açılar sırasıyla α ve β\'dır. Cisimlerin yük miktarları farklı olduğuna göre;\nI. Cisimlere etki eden elektriksel kuvvetlerin büyüklükleri eşittir.\nII. Açılar kütlelere bağlıdır.\nIII. Yükü büyük olanın açısı büyüktür.\nyargılarından hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 1), // Coulomb kuvvetleri etki tepki çiftidir (eşit büyüklüktedir - I doğru). Açı sadece elektriksel kuvvet/kütle oranına bağlıdır (II doğru). Açı yüke değil doğrudan kütleye bağlıdır (III yanlış).
+  Question(
+      id: 125,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Michelson-Morley deneyinin bilim dünyasına kazandırdığı en önemli sonuç aşağıdakilerden hangisidir?',
+      options: [
+        'Ether (esir) maddesinin var olmadığını ve ışık hızının tüm eylemsiz gözlem çerçevelerinde aynı olduğunu kanıtlaması',
+        'Fotoelektrik olayının açıklanması',
+        'Kuantum mekaniğinin temellerini atması',
+        'Kara cisim ışımasının açıklanması'
+      ],
+      correctIndex: 0),
+  Question(
+      id: 126,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Sağ el kuralına göre, bir telden geçen akım başparmak yönünde ise bükülen dört parmağın yönü aşağıdakilerden hangisini verir?',
+      options: ['Elektriksel alan yönü', 'Manyetik alan yönü', 'Manyetik kuvvet yönü', 'Elektrik akımı yönü'],
+      correctIndex: 1),
+  Question(
+      id: 127,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Bir gezegenin Güneş etrafındaki yörüngesi elips şeklindedir (Kepler Kanunları). Gezegen Güneş\'e yaklaştıkça;\nI. Çizgisel hızı artar\nII. Açısal momentumu değişmez\nIII. Kinetik enerjisi azalır\nifadelerinden hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 1), // Yaklaştıkça çizgisel hızı artar (Kinetik enerjisi artar, III yanlış). Açısal momentum sabittir (II doğru).
+  Question(
+      id: 128,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Esneklik (Yay) sabiti k ve uzunluğu L olan bir helezon yay tam ortadan ikiye bölünüyor. Elde edilen iki yeni yayın her birinin esneklik sabiti k\' için aşağıdakilerden hangisi doğrudur?',
+      options: ['k/2', 'k', '2k', '4k'],
+      correctIndex: 2), // Yay kısaldıkça sertleşir. k = 1/L. L yarıya düşerse k iki katına çıkar.
+  Question(
+      id: 129,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Compton saçılması deneyinde, bir X-ışını fotonu elektronla çarpıştıktan sonra saçılıyor. Saçılan foton ile ilgili olarak gelen fotona göre aşağıdakilerden hangisi artmıştır?',
+      options: ['Enerji', 'Frekans', 'Hız', 'Dalga boyu'],
+      correctIndex: 3), // Enerji azalır, frekans azalır, hız değişmez (c). Dalga boyu artar.
+  Question(
+      id: 130,
+      examType: 'AYT',
+      subject: 'Fizik',
+      questionText:
+          'Bağıl hareket konusuyla ilgili olarak doğuya v hızıyla giden K aracından, kuzeye v hızıyla giden L aracına bakan gözlemci L aracını hangi yönde ve hangi hızla gidiyormuş gibi görür?',
+      options: ['Kuzeydoğu v√2', 'Kuzeybatı v√2', 'Güneybatı v', 'Kuzeybatı v'],
+      correctIndex: 1), // Vk = v_doğu, Vl = v_kuzey. V_k->l = Vl - Vk = v_kuzey - v_doğu = v_kuzey + v_batı = v√2 kuzeybatı.
 
   // ─────────────── AYT KİMYA ───────────────
-  Question(id: 131, examType: 'AYT', subject: 'Kimya', questionText: 'Avogadro sayısı yaklaşık kaçtır?', options: ['6.02×10²¹', '6.02×10²³', '6.02×10²⁰', '3.14×10²³'], correctIndex: 1),
-  Question(id: 132, examType: 'AYT', subject: 'Kimya', questionText: 'pH ölçeğinde nötr bir çözeltinin pH değeri kaçtır?', options: ['0', '7', '14', '1'], correctIndex: 1),
-  Question(id: 133, examType: 'AYT', subject: 'Kimya', questionText: 'Alkanlarda genel formül nedir?', options: ['CₙH₂ₙ', 'CₙH₂ₙ₋₂', 'CₙH₂ₙ₊₂', 'CₙHₙ'], correctIndex: 2),
-  Question(id: 134, examType: 'AYT', subject: 'Kimya', questionText: 'Asit-baz nötralizasyon reaksiyonu sonucunda ne oluşur?', options: ['Yalnızca su', 'Yalnızca tuz', 'Su ve tuz', 'Asit ve baz'], correctIndex: 2),
-  Question(id: 135, examType: 'AYT', subject: 'Kimya', questionText: 'Standart koşullarda 1 mol ideal gazın hacmi yaklaşık kaçtır?', options: ['11.2 L', '22.4 L', '44.8 L', '8.314 L'], correctIndex: 1),
-  Question(id: 136, examType: 'AYT', subject: 'Kimya', questionText: 'Elektroliz ne tür bir enerji dönüşümüdür?', options: ['Kimyasal→ısı', 'Elektrik→kimyasal', 'Kimyasal→elektrik', 'Işık→kimyasal'], correctIndex: 1),
-  Question(id: 137, examType: 'AYT', subject: 'Kimya', questionText: 'Yarı ömür nedir?', options: ['Bir maddenin tamamen bozunma süresi', 'Radyoaktif bir maddenin miktarının yarıya düşme süresi', 'Kimyasal tepkime süresi', 'Çözünme süresi'], correctIndex: 1),
-  Question(id: 138, examType: 'AYT', subject: 'Kimya', questionText: 'Hess Yasası hangi konuyla ilgilidir?', options: ['Çözünme dengesi', 'Reaksiyon entalpisi', 'Kinetik enerji', 'Molar kütle'], correctIndex: 1),
-  Question(id: 139, examType: 'AYT', subject: 'Kimya', questionText: 'Aromatik bileşiklerin temel yapısı hangisidir?', options: ['Zincir yapı', 'Benzen halkası', 'Alken yapı', 'İyonik yapı'], correctIndex: 1),
-  Question(id: 140, examType: 'AYT', subject: 'Kimya', questionText: 'İdeal gaz yasası PV = nRT\'de R nedir?', options: ['Reynolds sayısı', 'Evrensel gaz sabiti', 'Yoğunluk', 'Molar kütle'], correctIndex: 1),
-  Question(id: 141, examType: 'AYT', subject: 'Kimya', questionText: 'Oksidasyon basamağı kavramı en çok hangi kimya dalında kullanılır?', options: ['Organik kimya', 'Biyokimya', 'Redoks kimyası', 'Fiziksel kimya'], correctIndex: 2),
-  Question(id: 142, examType: 'AYT', subject: 'Kimya', questionText: 'Bir maddenin erime noktası basınçla nasıl değişir? (normal maddeler)', options: ['Basınç artarsa erime noktası düşer', 'Basınç artarsa erime noktası artar', 'Basınç etkisi yoktur', 'Her madde için farklıdır'], correctIndex: 1),
-  Question(id: 143, examType: 'AYT', subject: 'Kimya', questionText: 'Polimer nedir?', options: ['Tek bir atom zinciri', 'Tekrar eden monomer birimlerinden oluşan büyük molekül', 'İyonik bileşik', 'Asit çözeltisi'], correctIndex: 1),
-  Question(id: 144, examType: 'AYT', subject: 'Kimya', questionText: 'Enzimler biyolojik süreçlerde hangi görevi üstlenir?', options: ['Depo görevi', 'Biyolojik katalizör', 'Hücre zarı yapımı', 'Enerji depolama'], correctIndex: 1),
-  Question(id: 145, examType: 'AYT', subject: 'Kimya', questionText: 'Alkollerin genel yapısında hangi fonksiyonel grup bulunur?', options: ['-COOH', '-OH', '-CHO', '-NH₂'], correctIndex: 1),
+  Question(
+      id: 131,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Modern atom teorisine göre, bir elektronun durumu dört kuantum sayısı ile ifade edilir. Baş kuantum sayısı n=3, açısal momentum kuantum sayısı l=2 olan bir orbital türü aşağıdakilerden hangisidir ve en fazla kaç elektron alabilir?',
+      options: ['3s, 2 e⁻', '3p, 6 e⁻', '3d, 10 e⁻', '3f, 14 e⁻'],
+      correctIndex: 2), // l=0(s), 1(p), 2(d), 3(f). 3d orbitalidir. d orbitalleri 5 alt orbitalden oluşur ve toplam 10 e- alabilir.
+  Question(
+      id: 132,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'İdeal gaz davranışı gösteren X ve Y gazlarından X\'in mol kütlesi 16 g/mol, Y\'nin mol kütlesi ise 64 g/mol\'dür. Aynı sıcaklıkta küçük bir delikten vakuma efüzyon (yayılma) hızları arasındaki (V_x / V_y) oranı kaçtır?',
+      options: ['1/4', '1/2', '2', '4'],
+      correctIndex: 2), // Graham Difüzyon Yasası: V_x / V_y = √(M_y / M_x) = √(64/16) = √4 = 2.
+  Question(
+      id: 133,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          '0.2 M 100 mL kurşun(II) nitrat (Pb(NO3)2) çözeltisi ile 0.3 M 100 mL potasyum iyodür (KI) çözeltisi karıştırılıyor. Çökelme tamamlandıktan sonra çözeltideki K⁺ ve NO3⁻ iyon derişimleri sırasıyla kaç M olur? (Hacim değişimi ihmal edilecektir.)',
+      options: ['0.15 ve 0.20', '0.30 ve 0.20', '0.15 ve 0.40', '0.10 ve 0.20'],
+      correctIndex: 0), // K+ derişimi: n_K = 0.3 * 0.1 = 0.03 mol. V_top = 0.2 L. [K+] = 0.03 / 0.2 = 0.15 M. NO3- derişimi: n_NO3 = 2 * 0.2 * 0.1 = 0.04 mol. [NO3-] = 0.04 / 0.2 = 0.20 M. K ve NO3 seyirci iyonlardır.
+  Question(
+      id: 134,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Tepkime hızı ve aktifleşme enerjisi üzerine katalizörün etkisi incelendiğinde;\nI. İleri ve geri tepkimenin aktifleşme enerjisini aynı miktarda düşürür.\nII. Tepkimenin entalpi değişimini (ΔH) değiştirmez.\nIII. Tepkimenin mekanizmasını değiştirebilir.\nyargılarından hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 3), // Üçü de doğrudur. Katalizör entalpiyi değiştirmez, Ea'yı düşürür, mekanizmayı değiştirebilir.
+  Question(
+      id: 135,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Kapalı bir kapta gerçekleşen;\nN2(g) + 3H2(g) ⇌ 2NH3(g)   ΔH < 0\ndenge tepkimesinde NH3 verimini artırmak için Le Chatelier ilkesine göre aşağıdakilerden hangisi uygulanmalıdır?',
+      options: [
+        'Sıcaklığı artırmak ve kabın hacmini büyütmek',
+        'Sıcaklığı düşürmek ve kaba sabit hacimde He gazı eklemek',
+        'Sıcaklığı düşürmek ve basıncı artırmak',
+        'Katalizör eklemek'
+      ],
+      correctIndex: 2), // Ekzotermik (ΔH<0), düşük sıcaklık ürünlere (sağa) kaydırır. Gaz mol sayısı girenlerde 4, ürünlerde 2. Basıncı artırmak (hacmi küçültmek) mol sayısının az olduğu ürünler yönüne kaydırır. NH3 artar.
+  Question(
+      id: 136,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Asitlik sabiti Ka = 1×10⁻⁵ olan zayıf HA asidinin 0.1 M\'lık sulu çözeltisinin pH değeri kaçtır?',
+      options: ['2', '3', '4', '5'],
+      correctIndex: 1), // [H+] = √(Ka * C) = √(1e-5 * 0.1) = √(1e-6) = 1e-3. pH = -log(1e-3) = 3.
+  Question(
+      id: 137,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Suda az çözünen CaF2 tuzunun t °C\'de çözünürlük çarpımı sabiti Kçç = 4×10⁻¹² dir. Buna göre aynı sıcaklıkta CaF2 tuzunun saf sudaki molar çözünürlüğü kaç M\'dir?',
+      options: ['10⁻⁴', '2×10⁻⁴', '10⁻⁶', '2×10⁻⁶'],
+      correctIndex: 0), // CaF2 ⇌ Ca+2 + 2F-. Kçç = s * (2s)^2 = 4s^3. 4s^3 = 4×10⁻¹² => s^3 = 10⁻¹² => s = 10⁻⁴.
+  Question(
+      id: 138,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Standart koşullarda gerçekleşen;\nZn(k) + Cu²⁺(suda) → Zn²⁺(suda) + Cu(k)\npil tepkimesi kendiliğinden ve ekzotermik olarak gerçekleşmektedir. Hücre potansiyelini (E_pil) artırmak için Nernst Eşitliği\'ne göre aşağıdakilerden hangisi yapılmalıdır?',
+      options: [
+        'Anot yarı hücresine saf su eklemek',
+        'Katot yarı hücresine saf su eklemek',
+        'Sıcaklığı artırmak',
+        'Zn(k) elektrodun kütlesini artırmak'
+      ],
+      correctIndex: 0), // E_pil = E° - (0.0592/n) * log([Zn2+]/[Cu2+]). [Zn2+] azalırsa log değeri küçülür, E_pil artar. Zn olan taraf anottur, anota su eklemek derişimi azaltır.
+  Question(
+      id: 139,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Seri bağlı iki elektroliz kabından birincisinde XCl2, ikincisinde YCl3 ergimiş tuzları aynı süre elektroliz ediliyor. Kapların katotlarında toplanan X kütlesi Y kütlesine eşit ise, elementlerin atom kütleleri oranı (M_X / M_Y) kaçtır?',
+      options: ['2/3', '3/2', '1', '1/2'],
+      correctIndex: 0), // n_X = q / 2, n_Y = q / 3. Kütleler m_X = m_Y. n_X * M_X = n_Y * M_Y => (q/2) * M_X = (q/3) * M_Y => M_X / M_Y = 2/3.
+  Question(
+      id: 140,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'CH4 (Metan) molekülünün merkez atomu olan karbon (C) atomunun yaptığı hibritleşme türü ve molekül geometrisi aşağıdakilerden hangisidir?',
+      options: [
+        'sp² - Düzlem üçgen',
+        'sp³ - Düzgün dörtyüzlü (Tetrahedral)',
+        'sp - Doğrusal',
+        'sp³ - Üçgen piramit'
+      ],
+      correctIndex: 1), // CH4 tetrahedraldir ve bağ açısı 109.5 derecedir. C atomu sp3 hibritleşmesi yapar.
+  Question(
+      id: 141,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Alkenlerle ilgili olarak;\nI. Genel formülleri CnH2n\'dir ve yapılarında en az bir tane pi (π) bağı bulunur.\nII. Karbon tetraklorürdeki (CCl4) bromun (Br2) kızıl-kahverengi rengini giderirler (katılma tepkimesi).\nIII. Suda iyi çözünürler.\nyargılarından hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 1), // Alkenler apolardır ve hidrokarbondur, suda (polar) çözünmezler. (III yanlış). I ve II doğru.
+  Question(
+      id: 142,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Bir organik bileşik olan A, yükseltgendiğinde aldehit, aldehit de yükseltgendiğinde karboksilik asit oluşturmaktadır. Buna göre A bileşiğinin sınıfı aşağıdakilerden hangisidir?',
+      options: ['Sekonder alkol', 'Primer alkol', 'Tersiyer alkol', 'Keton'],
+      correctIndex: 1), // Primer alkoller 1 kademe yükseltgendiğinde aldehit, 2 kademe yükseltgendiğinde karboksilik asit olur. Sekonder alkoller keton oluşturur.
+  Question(
+      id: 143,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Benzen (C6H6) molekülü ile ilgili olarak;\nI. Yapısındaki karbon atomları arasındaki bağ uzunlukları birbirine eşittir (rezonans).\nII. Aromatik özellik gösterir.\nIII. Kolaylıkla katılma tepkimesi verirler.\nifadelerinden hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 1), // Aromatik halkalar kararlıdır, katılma yerine yer değiştirme tepkimesine yatkındırlar. (III yanlış).
+  Question(
+      id: 144,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'Piller ve elektroliz hücreleri karşılaştırıldığında aşağıdakilerden hangisi yanlıştır?',
+      options: [
+        'Galvanik hücrelerde (pil) sistem dışarıya elektrik enerjisi verir.',
+        'Elektroliz hücrelerinde olay istemsizdir ve dışarıdan enerji gerekir.',
+        'Her iki sistemde de anotta yükseltgenme, katotta indirgenme olur.',
+        'Galvanik hücrede anot (+), elektroliz hücresinde ise anot (-) kutuptur.'
+      ],
+      correctIndex: 3), // Galvanik pilde anot (-), katot (+) dir. Elektrolizde ise anot (+), katot (-) dir. Tam tersi verilmiş.
+  Question(
+      id: 145,
+      examType: 'AYT',
+      subject: 'Kimya',
+      questionText:
+          'H₂O, NH₃ ve CH₄ moleküllerindeki merkez atomların hibritleşme türleri aynı (sp³) olmasına rağmen bağ açıları sırasıyla 104.5°, 107.3° ve 109.5° dir. Bu durumun temel nedeni aşağıdakilerden hangisidir?',
+      options: [
+        'Elektrolit olmaları',
+        'Halojenlerle girdikleri tepkimelerin farklılığı',
+        'Merkez atom üzerindeki ortaklanmamış (bağ yapmamış) elektron çiftlerinin bağlayıcı elektronları daha çok itmesi',
+        'Moleküllerin molar kütlelerinin farklı olması'
+      ],
+      correctIndex: 2), // VSEPR teorisine göre e- çifti itmesi: ortaklanmamış-ortaklanmamış > ortaklanmamış-bağlayıcı > bağlayıcı-bağlayıcı. H2O'da 2 çift, NH3'te 1 çift serbest elektron vardır; açıyı daraltırlar.
 
   // ─────────────── AYT BİYOLOJİ ───────────────
-  Question(id: 146, examType: 'AYT', subject: 'Biyoloji', questionText: 'Hücre zarının ana yapısı nedir?', options: ['Fosfolipid çift tabakası', 'Protein tabakası', 'Karbonhidrat zinciri', 'DNA ipliği'], correctIndex: 0),
-  Question(id: 147, examType: 'AYT', subject: 'Biyoloji', questionText: 'Mitoz bölünmede kaç yavru hücre oluşur?', options: ['1', '2', '4', '8'], correctIndex: 1),
-  Question(id: 148, examType: 'AYT', subject: 'Biyoloji', questionText: 'Mayoz bölünme sonucunda oluşan hücre sayısı ve kromozom seti?', options: ['2 hücre, 2n', '4 hücre, n', '2 hücre, n', '4 hücre, 2n'], correctIndex: 1),
-  Question(id: 149, examType: 'AYT', subject: 'Biyoloji', questionText: 'Protein sentezi hangi organelde gerçekleşir?', options: ['Çekirdek', 'Golgi aygıtı', 'Ribozom', 'Kloroplast'], correctIndex: 2),
-  Question(id: 150, examType: 'AYT', subject: 'Biyoloji', questionText: 'Kan gruplarını belirleyen moleküller hücrenin hangi yapısında bulunur?', options: ['Çekirdekte', 'Hücre zarında', 'Mitokondride', 'Ribozomda'], correctIndex: 1),
-  Question(id: 151, examType: 'AYT', subject: 'Biyoloji', questionText: 'İnsan vücudunda kaç çift otozomal kromozom bulunur?', options: ['22', '23', '44', '46'], correctIndex: 0),
-  Question(id: 152, examType: 'AYT', subject: 'Biyoloji', questionText: 'Transkripsiyon nedir?', options: ['DNA\'dan protein sentezi', 'DNA\'dan mRNA sentezi', 'mRNA\'dan protein sentezi', 'DNA replikasyonu'], correctIndex: 1),
-  Question(id: 153, examType: 'AYT', subject: 'Biyoloji', questionText: 'Hormon nedir?', options: ['Enzim türü', 'Kimyasal haberci molekül', 'Antikor', 'Nörotransmitter'], correctIndex: 1),
-  Question(id: 154, examType: 'AYT', subject: 'Biyoloji', questionText: 'Doğal seçilim kavramını kim ortaya atmıştır?', options: ['Mendel', 'Watson', 'Darwin', 'Lamarck'], correctIndex: 2),
-  Question(id: 155, examType: 'AYT', subject: 'Biyoloji', questionText: 'Ekosistemde üretici (produsen) kimdir?', options: ['Hayvanlar', 'Mantarlar', 'Bitkiler ve fotosentetik organizmalar', 'Bakteriler'], correctIndex: 2),
-  Question(id: 156, examType: 'AYT', subject: 'Biyoloji', questionText: 'İmmün sistem hücreleri olan lenfositler nerede üretilir?', options: ['Kalp', 'Karaciğer', 'Kemik iliği', 'Pankreas'], correctIndex: 2),
-  Question(id: 157, examType: 'AYT', subject: 'Biyoloji', questionText: 'Glikoz hangi biyomolekül grubuna girer?', options: ['Protein', 'Karbonhidrat', 'Lipid', 'Nükleik asit'], correctIndex: 1),
-  Question(id: 158, examType: 'AYT', subject: 'Biyoloji', questionText: 'Sinaps nedir?', options: ['Kas lifi', 'İki nöron arasındaki bağlantı noktası', 'Hormon salgılayan bez', 'Kan damarı bağlantısı'], correctIndex: 1),
-  Question(id: 159, examType: 'AYT', subject: 'Biyoloji', questionText: 'ATP\'nin açılımı nedir?', options: ['Adenozin Trifosforik', 'Adenozin Trifosfat', 'Asit Trifosfor', 'Adenin Trifosfat'], correctIndex: 1),
-  Question(id: 160, examType: 'AYT', subject: 'Biyoloji', questionText: 'Kemosentez yapan organizmalar hangi enerji kaynağını kullanır?', options: ['Güneş ışığı', 'İnorganik kimyasal maddeler', 'Organik moleküller', 'Isı enerjisi'], correctIndex: 1),
+  Question(
+      id: 146,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Bir araştırmacı, hücre zarından madde geçişlerini incelerken bir molekülün hücre içine alınması sırasında ATP harcandığını, geçişin az yoğun ortamdan çok yoğun ortama doğru olduğunu ve taşıyıcı proteinlerin görev aldığını gözlemliyor. Buna göre bu madde geçiş yöntemi aşağıdakilerden hangisidir?',
+      options: ['Kolaylaştırmış difüzyon', 'Osmoz', 'Aktif taşıma', 'Ekzositoz'],
+      correctIndex: 2), // ATP harcanıyor, taşıyıcı protein var, azdan çoğa: Aktif taşıma. (Ekzositoz hücre dışına ve madde boyutu büyük).
+  Question(
+      id: 147,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'İnsan mide özsuyunda bulunan pepsin enzimi inaktif olan pepsinojen formunda salgılanır ve midedeki HCl ile aktif pepsine dönüşür. Bu durumun (enzimin inaktif salgılanmasının) temel fizyolojik amacı aşağıdakilerden hangisidir?',
+      options: [
+        'Mide boşluğundaki asidik ortamı nötralize etmek',
+        'Proteinlerin sindirimini yavaşlatarak emilimi kolaylaştırmak',
+        'Mide mukozasını ve kendi kendini (mide hücrelerini) sindirmesini önlemek',
+        'İnce bağırsaktaki sindirime hazırlık yapmak'
+      ],
+      correctIndex: 2), // Protein sindiren enzimler üretildikleri hücreleri sindirmesin diye inaktif salgılanır.
+  Question(
+      id: 148,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Bir insanda kan şekerinin (glikoz) normal seviyenin altına düştüğü bir durumda uyarılan pankreas, kana glukagon hormonu salgılar. Glukagonun hedef organı ve bu organdaki temel etkisi aşağıdakilerden hangisinde doğru verilmiştir?',
+      options: [
+        'Karaciğer - Glikojenin glikoza yıkılarak kana verilmesi',
+        'Kaslar - Glikozun kas hücrelerine alınması',
+        'Böbrekler - İdrarla glikoz atılımının tamamen durdurulması',
+        'Pankreas insülin hücreleri - İnsülin üretiminin artırılması'
+      ],
+      correctIndex: 0), // Glukagon karaciğeri uyararak depo glikojeni glikoza çevirir ve kana verir, böylece kan şekeri yükselir.
+  Question(
+      id: 149,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Mitokondrinin iç zarında (krista) yer alan Elektron Taşıma Sistemi (ETS) elemanları, elektronları taşıyarak matriksten zarlar arası boşluğa proton (H⁺) pompalar. Bu durum zarlar arasında bir proton derişimi farkı (eğim) yaratır. Bu elektrokimyasal eğim hangi molekülün sentezlenmesi için doğrudan itici güç sağlar? (Kemiosmotik hipotez)',
+      options: ['NADH', 'FADH2', 'Karbondioksit (CO2)', 'ATP (Adenozin Trifosfat)'],
+      correctIndex: 3), // Kemiosmotik hipoteze göre protonlar ATP sentazdan geri dönerken ATP sentezlenir.
+  Question(
+      id: 150,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'DNA replikasyonu (kendini eşlemesi) sırasında;\nI. Helikaz enziminin hidrojen bağlarını koparması\nII. DNA polimerazın yeni zincire uygun nükleotitleri eklemesi\nIII. DNA ligazın Okazaki fragmanlarını birleştirmesi\nolaylarının gerçekleşme sırası aşağıdakilerden hangisinde doğru verilmiştir?',
+      options: ['I - II - III', 'I - III - II', 'II - I - III', 'III - I - II'],
+      correctIndex: 0), // Önce helikaz açar, polimeraz örer, ligaz parçaları birleştirir.
+  Question(
+      id: 151,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Oksijenli solunum ve laktik asit fermantasyonu yapan iki farklı memeli kas hücresi karşılaştırıldığında;\nI. Glikoliz evresinin sitoplazmada gerçekleşmesi\nII. NAD⁺ koenziminin indirgenmesi\nIII. Karbondioksit (CO2) çıkışının olması\nözelliklerinden hangileri her iki süreç için de ortaktır?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 1), // Glikoliz ortaktır (I). Glikolizde NAD+ NADH'a indirgenir (II). Oksijenlide ve etil alkolde CO2 çıkar ama laktik asit fermantasyonunda CO2 çıkmaz (III yanlış).
+  Question(
+      id: 152,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'İnsan böbreğinde bir nefronun Bowman kapsülünden süzülen sıvı içindeki yararlı maddelerin (örneğin glikozun ve aminoasitlerin %100\'ünün) kana geri emildiği(reabsorpsiyon) ilk ve en yoğun kanal bölümü neresidir?',
+      options: ['Henle kulpunun inen kolu', 'Henle kulpunun çıkan kolu', 'Proksimal tüp', 'Distal tüp'],
+      correctIndex: 2), // Besin monomerlerinin tamamı proksimal tüpte geri emilir.
+  Question(
+      id: 153,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Mendel genetiğine göre, AABbCc ve AaBbcc genotipli iki bireyin çaprazlanması sonucunda, tüm karakterler bakımından çekinik (aabbcc) fenotipli bir bireyin oluşma olasılığı kaçtır? (Genler bağımsızdır)',
+      options: ['0', '1/8', '1/16', '1/64'],
+      correctIndex: 0), // İlk bireyden daima büyük 'A' geni gelir. aa olma ihtimali 0'dır. Bu nedenle aabbcc birey oluşamaz (İhtimal 0).
+  Question(
+      id: 154,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Çiçekli bitkilerde çift döllenme olayı gerçekleşir. Döllenme sırasında polen tüpünden gelen sperm çekirdeklerinden biri yumurtayı döllerken, diğeri embriyo kesesindeki polar çekirdeklerle birleşir. Polar çekirdeklerin döllenmesi sonucunda oluşan yapı aşağıdakilerden hangisidir?',
+      options: ['Embriyo (2n)', 'Tohum kabuğu (2n)', 'Endosperm (Besi doku) (3n)', 'Meyve eti (2n)'],
+      correctIndex: 2), // Polar çekirdekler (n+n) + Sperm (n) = Endosperm (3n). Yumurta (n) + Sperm (n) = Zigot (2n).
+  Question(
+      id: 155,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Bir popülasyon genetiği çalışmasında, Hardy-Weinberg dengesindeki bir popülasyonda çekinik (otozomal resesif) bir hastalığın görülme sıklığı q² = 0.04 olarak hesaplanmıştır. Bu popülasyonda taşıyıcı (heterozigot) bireylerin oranı (2pq) kaçtır?',
+      options: ['0.16', '0.32', '0.64', '0.96'],
+      correctIndex: 1), // q²=0.04 => q=0.2. p+q=1 => p=0.8. Heterozigot (2pq) = 2 * 0.8 * 0.2 = 0.32 (%32).
+  Question(
+      id: 156,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'İnsan bağışıklık (immün) sisteminde özgül bağışıklığı sağlayan B ve T lenfositleri ile ilgili;\nI. B lenfositleri antikor üreterek sıvısal (hümoral) bağışıklık sağlar.\nII. T lenfositleri enfekte olmuş hücreleri doğrudan yok ederek hücresel bağışıklık sağlar.\nIII. Her ikisi de timüs bezinde olgunlaşır.\nifadelerinden hangileri doğrudur?',
+      options: ['Yalnız I', 'Yalnız II', 'I ve II', 'I, II ve III'],
+      correctIndex: 2), // B lenfositler kemik iliğinde (Bone marrow), T lenfositler Timüste olgunlaşır. (III yanlış). I ve II doğru.
+  Question(
+      id: 157,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'İskelet kasının (çizgili kasın) kasılması sırasında, Huxley’in "Kayan İplikler Hipotezi"ne göre sarkomerin yapısında meydana gelen değişikliklerle ilgili olarak aşağıdakilerden hangisi yanlıştır?',
+      options: [
+        'Z çizgileri birbirine yaklaşır.',
+        'H bandı daralır veya kaybolur.',
+        'Sarkomerin boyu kısalır.',
+        'A bandının boyu (Miyozin uzunluğu) kısalır.'
+      ],
+      correctIndex: 3), // Kasılma sırasında miyozin ve aktin ipliklerin kendi boyları DEĞİŞMEZ. Dolayısıyla A bandının boyu (miyozin boyu) değişmez. Sadece birbirleri üzerinde kayarlar.
+  Question(
+      id: 158,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Merkezi sinir sisteminde yer alan beynin bölümleri ve görevleriyle ilgili olarak;\nI. Uç beyin (Serebrum): Öğrenme, hafıza, istemli hareketler.\nII. Beyincik (Serebellum): Denge ve kas koordinasyonu.\nIII. Omurilik soğanı (Medulla oblongata): Solunum, dolaşım gibi hayati organların çalışmasını kontrol etme.\neleştirmelerinden hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 3), // Verilen eşleştirmelerin üçü de beynin ilgili kısımlarının temel görevleridir.
+  Question(
+      id: 159,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Kloroplast organelinde fotosentezin ışığa bağımlı ve ışıktan bağımsız (Kalvin döngüsü) reaksiyonları gerçekleşir.\nBuna göre ışıktan bağımsız reaksiyonlar (Kalvin döngüsü) için;\nI. Stromada gerçekleşir.\nII. CO2 (Karbondioksit) tüketilir.\nIII. Işığa bağımlı evreden gelen ATP ve NADPH molekülleri harcanır.\nyargılarından hangileri doğrudur?',
+      options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+      correctIndex: 3), // Üçü de ışığından bağımsız reaksiyonların (karanlık evre) özelliğidir.
+  Question(
+      id: 160,
+      examType: 'AYT',
+      subject: 'Biyoloji',
+      questionText:
+          'Bitkilerde madde taşınmasını sağlayan ksilem (odun borusu) ve floem (soymuk borusu) ile ilgili aşağıdakilerden hangisi yanlıştır?',
+      options: [
+        'Ksilemde taşıma tek yönlüdür (kökten yapraklara doğru).',
+        'Floemde taşıma çift yönlü olabilir (yapraktan köke veya kökten yaprağa).',
+        'Ksilem hücreleri ölüdür, floem hücreleri ise canlıdır.',
+        'Ksilem borularında inorganik maddeler taşınırken, su taşınması sadece floemde gerçekleşir.'
+      ],
+      correctIndex: 3), // Suyun ana taşınma yolu ksilemdir, floemde gerçekleşir ifadesi yanlıştır. Ksilem su ve mineralleri, floem ise organik besinleri ve suyu taşır. Ksilem su iletimi için özelleşmiştir.
 
   // ─────────────── AYT EDEBİYAT ───────────────
   Question(id: 161, examType: 'AYT', subject: 'Edebiyat', questionText: 'Servet-i Fünun dönemi hangi yıllar arasında etkindir?', options: ['1860-1876', '1895-1901', '1911-1923', '1923-1940'], correctIndex: 1),
