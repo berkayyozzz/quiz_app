@@ -14,51 +14,64 @@ class FirestoreService {
 
   // Save or Update User Score
   Future<void> saveQuizResult(String uid, String displayName, double score) async {
-    final userRef = _db.collection('users').doc(uid);
-    final weekId = _getWeekId(DateTime.now());
-    final weeklyRef = _db.collection('weekly_scores').doc('${uid}_$weekId');
-    
-    return _db.runTransaction((transaction) async {
-      // 1. Update Global High Score
-      final userSnapshot = await transaction.get(userRef);
-      if (!userSnapshot.exists) {
-        transaction.set(userRef, {
-          'displayName': displayName,
-          'highScore': score,
-          'totalGamesPlayed': 1,
-        });
-      } else {
-        double currentHighScore = (userSnapshot.data()?['highScore'] ?? 0).toDouble();
-        double newHighScore = score > currentHighScore ? score : currentHighScore;
-        int totalGames = (userSnapshot.data()?['totalGamesPlayed'] ?? 0) + 1;
+    try {
+      final userRef = _db.collection('users').doc(uid);
+      final weekId = _getWeekId(DateTime.now());
+      final weeklyRef = _db.collection('weekly_scores').doc('${uid}_$weekId');
+      
+      await _db.runTransaction((transaction) async {
+        // 1. Update Global High Score
+        final userSnapshot = await transaction.get(userRef);
+        if (!userSnapshot.exists) {
+          transaction.set(userRef, {
+            'displayName': displayName,
+            'highScore': score,
+            'totalGamesPlayed': 1,
+            'lastUpdated': FieldValue.serverTimestamp(),
+          });
+        } else {
+          double currentHighScore = (userSnapshot.data()?['highScore'] ?? 0).toDouble();
+          double newHighScore = score > currentHighScore ? score : currentHighScore;
+          int totalGames = (userSnapshot.data()?['totalGamesPlayed'] ?? 0) + 1;
 
-        transaction.update(userRef, {
-          'displayName': displayName,
-          'highScore': newHighScore,
-          'totalGamesPlayed': totalGames,
-        });
-      }
+          transaction.update(userRef, {
+            'displayName': displayName, // Always update name from the current session
+            'highScore': newHighScore,
+            'totalGamesPlayed': totalGames,
+            'lastUpdated': FieldValue.serverTimestamp(),
+          });
+        }
 
-      // 2. Update Weekly High Score
-      final weeklySnapshot = await transaction.get(weeklyRef);
-      if (!weeklySnapshot.exists) {
-        transaction.set(weeklyRef, {
-          'uid': uid,
-          'displayName': displayName,
-          'weekId': weekId,
-          'score': score,
-          'timestamp': FieldValue.serverTimestamp(),
-        });
-      } else {
-        double currentWeeklyScore = (weeklySnapshot.data()?['score'] ?? 0).toDouble();
-        if (score > currentWeeklyScore) {
-          transaction.update(weeklyRef, {
+        // 2. Update Weekly High Score
+        final weeklySnapshot = await transaction.get(weeklyRef);
+        if (!weeklySnapshot.exists) {
+          transaction.set(weeklyRef, {
+            'uid': uid,
+            'displayName': displayName,
+            'weekId': weekId,
             'score': score,
             'timestamp': FieldValue.serverTimestamp(),
           });
+        } else {
+          double currentWeeklyScore = (weeklySnapshot.data()?['score'] ?? 0).toDouble();
+          // Always update displayName to sync with potential name changes/logins
+          Map<String, dynamic> updateData = {
+            'displayName': displayName,
+            'uid': uid, // Ensure UID is always there
+          };
+          
+          if (score > currentWeeklyScore) {
+            updateData['score'] = score;
+            updateData['timestamp'] = FieldValue.serverTimestamp();
+          }
+          
+          transaction.update(weeklyRef, updateData);
         }
-      }
-    });
+      });
+    } catch (e) {
+      print('Error saving quiz result: $e');
+      rethrow; // Rethrow to handle in UI
+    }
   }
 
   // Get Top Users for Global Leaderboard

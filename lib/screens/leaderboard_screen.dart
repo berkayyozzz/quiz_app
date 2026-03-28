@@ -57,93 +57,145 @@ class LeaderboardScreen extends StatelessWidget {
               ),
 
               Expanded(
-                child: StreamBuilder<List<UserProfile>>(
-                  stream: firestoreService.getWeeklyLeaderboard(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Bir hata oluştu: ${snapshot.error}'));
-                    }
-
-                    final users = snapshot.data ?? [];
-
-                    if (users.isEmpty) {
-                      return Center(
-                        child: Text(
-                          'Bu hafta henüz kimse skor kaydetmedi.',
-                          style: GoogleFonts.poppins(color: Colors.white54),
-                        ),
-                      );
-                    }
-
-                    return ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: users.length,
-                      itemBuilder: (context, index) {
-                        final user = users[index];
-                        final isMe = user.uid == currentUserUid;
-
-                        return Card(
-                          color: isMe ? const Color(0xFF6C63FF).withOpacity(0.2) : const Color(0xFF1E1E3F),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: BorderSide(
-                              color: isMe ? const Color(0xFF6C63FF) : Colors.white12,
-                              width: isMe ? 2 : 1,
-                            ),
-                          ),
-                          margin: const EdgeInsets.only(bottom: 12),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            leading: CircleAvatar(
-                              backgroundColor: _getRankColor(index),
-                              radius: 24,
-                              child: Text(
-                                '${index + 1}',
-                                style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            title: Text(
-                              user.displayName,
-                              style: GoogleFonts.poppins(
-                                fontWeight: isMe ? FontWeight.bold : FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                            subtitle: Text(
-                              'Haftalık En İyi',
-                              style: GoogleFonts.poppins(fontSize: 12, color: Colors.white54),
-                            ),
-                            trailing: Column(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    // This will trigger a rebuild of the StreamBuilder
+                    (context as Element).markNeedsBuild();
+                    await Future.delayed(const Duration(milliseconds: 500));
+                  },
+                  backgroundColor: const Color(0xFF16213E),
+                  color: const Color(0xFF6C63FF),
+                  child: StreamBuilder<List<UserProfile>>(
+                    stream: firestoreService.getWeeklyLeaderboard(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                  
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
+                                const Icon(Icons.error_outline, color: Colors.redAccent, size: 48),
+                                const SizedBox(height: 16),
                                 Text(
-                                  user.highScore.toStringAsFixed(2),
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFFFF6B6B),
-                                  ),
+                                  'Veriler yüklenemedi',
+                                  style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
-                                  'Net',
-                                  style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38),
+                                  'Hata: ${snapshot.error}',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(fontSize: 12, color: Colors.white54),
+                                ),
+                                const SizedBox(height: 24),
+                                ElevatedButton(
+                                  onPressed: () => (context as Element).markNeedsBuild(),
+                                  child: const Text('Tekrar Dene'),
                                 ),
                               ],
                             ),
                           ),
                         );
-                      },
-                    );
-                  },
+                      }
+                  
+                      final users = snapshot.data ?? [];
+                  
+                      if (users.isEmpty) {
+                        return ListView( // Use ListView for RefreshIndicator to work
+                          children: [
+                            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                            Center(
+                              child: Column(
+                                children: [
+                                  const Icon(Icons.emoji_events_outlined, color: Colors.white12, size: 80),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Bu hafta henüz kimse skor kaydetmedi.',
+                                    style: GoogleFonts.poppins(color: Colors.white38),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'İlk sen olmak ister misin? 🚀',
+                                    style: GoogleFonts.poppins(color: Colors.white24, fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                  
+                      return ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        itemCount: users.length,
+                        physics: const AlwaysScrollableScrollPhysics(), // Important for RefreshIndicator
+                        itemBuilder: (context, index) {
+                          final user = users[index];
+                          final isMe = user.uid == currentUserUid;
+                  
+                          return Card(
+                            color: isMe ? const Color(0xFF6C63FF).withOpacity(0.2) : const Color(0xFF1E1E3F),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              side: BorderSide(
+                                color: isMe ? const Color(0xFF6C63FF) : Colors.white12,
+                                width: isMe ? 2 : 1,
+                              ),
+                            ),
+                            margin: const EdgeInsets.only(bottom: 12),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              leading: CircleAvatar(
+                                backgroundColor: _getRankColor(index),
+                                radius: 24,
+                                child: Text(
+                                  '${index + 1}',
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              title: Text(
+                                user.displayName,
+                                style: GoogleFonts.poppins(
+                                  fontWeight: isMe ? FontWeight.bold : FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              subtitle: Text(
+                                'Haftalık En İyi',
+                                style: GoogleFonts.poppins(fontSize: 12, color: Colors.white54),
+                              ),
+                              trailing: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    user.highScore.toStringAsFixed(2),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xFFFF6B6B),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Net',
+                                    style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

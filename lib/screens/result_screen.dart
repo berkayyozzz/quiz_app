@@ -18,6 +18,8 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   bool _scoreSaved = false;
+  bool _isSaving = false;
+  String? _saveError;
 
   @override
   void initState() {
@@ -28,24 +30,64 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   Future<void> _saveScore() async {
+    if (_isSaving) return;
+
     final quiz = Provider.of<QuizProvider>(context, listen: false);
     final result = quiz.result;
     if (result == null) return;
 
     final authService = AuthService();
     final user = authService.currentUser;
+    
     if (user != null) {
-      final firestoreService = FirestoreService();
-      await firestoreService.saveQuizResult(
-        user.uid,
-        user.displayName ?? 'Misafir',
-        result.netScore,
-      );
-      if (mounted) {
-        setState(() {
-          _scoreSaved = true;
-        });
+      setState(() {
+        _isSaving = true;
+        _saveError = null;
+      });
+
+      try {
+        final firestoreService = FirestoreService();
+        await firestoreService.saveQuizResult(
+          user.uid,
+          user.displayName ?? 'Misafir',
+          result.netScore,
+        );
+        if (mounted) {
+          setState(() {
+            _scoreSaved = true;
+            _isSaving = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Skor başarıyla güncellendi! 🚀'),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() {
+            _isSaving = false;
+            _saveError = 'Skor kaydedilirken bir hata oluştu.';
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Hata: $e'),
+              backgroundColor: Colors.redAccent,
+              action: SnackBarAction(
+                label: 'Tekrar Dene',
+                textColor: Colors.white,
+                onPressed: _saveScore,
+              ),
+            ),
+          );
+        }
       }
+    } else {
+      setState(() {
+        _saveError = 'Giriş yapılmış kullanıcı bulunamadı.';
+      });
     }
   }
 
@@ -212,6 +254,28 @@ class _ResultScreenState extends State<ResultScreen> {
                         ],
                       ),
                     ).animate().slideY(begin: 0.2, delay: 600.ms).fadeIn(),
+
+                    if (_saveError != null) ...[
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        width: double.infinity,
+                        child: TextButton.icon(
+                          onPressed: _isSaving ? null : _saveScore,
+                          icon: _isSaving 
+                              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) 
+                              : const Icon(Icons.refresh, color: Colors.orangeAccent),
+                          label: Text(
+                            _isSaving ? 'Kaydediliyor...' : 'Puanı Tekrar Gönder',
+                            style: GoogleFonts.poppins(color: Colors.orangeAccent),
+                          ),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            backgroundColor: Colors.orangeAccent.withOpacity(0.1),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
+                        ),
+                      ),
+                    ],
 
                     const SizedBox(height: 32),
 
