@@ -1,47 +1,38 @@
-# The podfile for any Flutter project.
-# To keep this up to date, run 'flutter build ios' locally.
-
 platform :ios, '12.0'
 
-# CocoaPods analytics sends network stats synchronously affecting build performance.
-ENV['COCOAPODS_DISABLE_STATS'] = '1'
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
   'Debug' => :debug,
+  'Profile' => :release,
   'Release' => :release,
-  'Profile' => :profile,
 }
 
-def flutter_install_all_ios_pods(ios_application_path = nil)
-  native_additions_path = File.join(ios_application_path, 'Flutter', 'ephemeral', 'Packages', 'Flutter')
-  # On older versions of Flutter this was 'Flutter/ephemeral/Flutter'
-  unless File.exist?(native_additions_path)
-    native_additions_path = File.join(ios_application_path, 'Flutter', 'ephemeral', 'Flutter')
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. Run flutter pub get first"
   end
-  # If we still can't find it, we're likely on a version of Flutter that doesn't use ephemeral packages.
-  unless File.exist?(native_additions_path)
-    # This path is relative to the Podfile.
-    return
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT\=(.*)/)
+    return matches[1].strip if matches
   end
-  # This is a bit of a hack to get the Flutter framework into the Pods project.
-  pod 'Flutter', :path => native_additions_path
+  raise "FLUTTER_ROOT not found"
 end
+
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  flutter_install_all_ios_pods File.expand_path('..', __FILE__)
-  target 'RunnerTests' do
-    inherit! :search_paths
-  end
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-    end
   end
 end
