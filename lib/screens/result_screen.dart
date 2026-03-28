@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
+import '../services/ad_service.dart';
 import 'home_screen.dart';
 import 'quiz_screen.dart';
 
@@ -22,10 +23,14 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     super.initState();
+    
+    // Show AdMob Interstitial Ad
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      AdService().showInterstitialAd();
       _saveScore();
     });
   }
+
 
   Future<void> _saveScore() async {
     final quiz = Provider.of<QuizProvider>(context, listen: false);
@@ -199,19 +204,48 @@ class _ResultScreenState extends State<ResultScreen> {
                                 color: Colors.white38, fontSize: 12),
                           ),
                           if (_scoreSaved) ...[
+                            const SizedBox(height: 16),
+                            const Divider(color: Colors.white10),
                             const SizedBox(height: 8),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.cloud_done, color: Colors.greenAccent, size: 16),
-                                SizedBox(width: 4),
-                                Text('Skor Kaydedildi', style: TextStyle(color: Colors.greenAccent, fontSize: 12)),
-                              ],
+                            StreamBuilder<UserProfile?>(
+                              stream: FirestoreService().getUserProfile(AuthService().currentUser!.uid),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) return const SizedBox();
+                                final streak = snapshot.data!.currentStreak;
+                                return Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Text('🔥', style: TextStyle(fontSize: 24)),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '$streak Günlük Seri!',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orangeAccent,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Harika gidiyorsun, yarın da bekleriz!',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 12,
+                                        color: Colors.white54,
+                                      ),
+                                    ),
+                                  ],
+                                ).animate().fadeIn().scale(curve: Curves.elasticOut, duration: 800.ms);
+                              },
                             ),
                           ],
                         ],
                       ),
                     ).animate().slideY(begin: 0.2, delay: 600.ms).fadeIn(),
+
 
                     const SizedBox(height: 32),
 

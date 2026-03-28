@@ -65,6 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHeader() {
+    final user = AuthService().currentUser;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,13 +84,56 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.2),
               const SizedBox(height: 8),
-              Text(
-                'TYT ve AYT sorularıyla kendini sına',
-                style: GoogleFonts.poppins(
-                  fontSize: 13,
-                  color: Colors.white54,
-                ),
-              ).animate().fadeIn(duration: 800.ms).slideX(begin: -0.2),
+              if (user != null)
+                StreamBuilder<UserProfile?>(
+                  stream: FirestoreService().getUserProfile(user.uid),
+                  builder: (context, snapshot) {
+                    final profile = snapshot.data;
+                    final streak = profile?.currentStreak ?? 0;
+                    return Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.orange.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Text('🔥', style: TextStyle(fontSize: 16)),
+                              const SizedBox(width: 4),
+                              Text(
+                                '$streak Günlük Seri',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.orangeAccent,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ).animate().fadeIn(delay: 700.ms).scale(),
+                        const SizedBox(width: 12),
+                        Text(
+                          'TYT ve AYT sorularıyla kendini sına',
+                          style: GoogleFonts.poppins(
+                            fontSize: 11,
+                            color: Colors.white54,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )
+              else
+                Text(
+                  'TYT ve AYT sorularıyla kendini sına',
+                  style: GoogleFonts.poppins(
+                    fontSize: 13,
+                    color: Colors.white54,
+                  ),
+                ).animate().fadeIn(duration: 800.ms).slideX(begin: -0.2),
             ],
           ),
         ),
@@ -108,7 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.logout, color: Colors.white54),
               onPressed: () async {
                 await AuthService().signOut();
-                // AuthWrapper stream dinliyor, otomatik login sayfasına dönecek
               },
             ),
           ],
@@ -116,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+
 
   Widget _buildExamSelector(QuizProvider quiz) {
     final exams = [

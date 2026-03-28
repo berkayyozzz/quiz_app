@@ -1,0 +1,43 @@
+﻿Analyzing quiz_app...                                           
+
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home_screen.dart:169:68 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home_screen.dart:262:82 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home_screen.dart:363:26 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\home_screen.dart:365:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\leaderboard_screen.dart:90:65 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\leaderboard_screen.dart:171:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\leaderboard_screen.dart:171:75 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\leaderboard_screen.dart:178:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\leaderboard_screen.dart:220:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\leaderboard_screen.dart:235:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:171:45 - deprecated_member_use
+warning - The value of the local variable 'timeRatio' isn't used - lib\screens\quiz_screen.dart:268:11 - unused_local_variable
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:308:47 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:310:66 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:370:22 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:372:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:425:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:430:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:460:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:507:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:586:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:587:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\quiz_screen.dart:593:48 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\result_screen.dart:175:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\result_screen.dart:176:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\result_screen.dart:180:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\result_screen.dart:224:67 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\result_screen.dart:296:24 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\result_screen.dart:298:43 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\services\auth_service.dart:25:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\auth_service.dart:44:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\auth_service.dart:87:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\auth_service.dart:98:7 - avoid_print
+   info - The imported package 'quiz_app' isn't a dependency of the importing package - test\widget_test.dart:3:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:quiz_app/main.dart' - test\widget_test.dart:3:8 - uri_does_not_exist
+   info - The imported package 'quiz_app' isn't a dependency of the importing package - test\widget_test.dart:4:8 - depend_on_referenced_packages
+  error - Target of URI doesn't exist: 'package:quiz_app/providers/quiz_provider.dart' - test\widget_test.dart:4:8 - uri_does_not_exist
+  error - The function 'QuizProvider' isn't defined - test\widget_test.dart:10:24 - undefined_function
+  error - The name 'QuizApp' isn't a class - test\widget_test.dart:11:22 - creation_with_non_type
+
+
