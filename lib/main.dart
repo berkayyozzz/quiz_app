@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
-import 'services/notification_service.dart';
-import 'services/ad_service.dart';
 import 'providers/quiz_provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  
-  // Initialize Notification Service
-  await NotificationService().initialize();
-  
-  // Initialize Mobile Ads
-  await MobileAds.instance.initialize();
-  
-  // Pre-load the first Interstitial Ad
-  AdService().loadInterstitialAd();
-
+ await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(
-
-
     ChangeNotifierProvider(
       create: (_) => QuizProvider(),
       child: const QuizApp(),
@@ -74,9 +59,9 @@ class AuthWrapper extends StatelessWidget {
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
         if (snapshot.hasData) {
-          return HomeScreen();
+          return const HomeScreen();
         }
-        return LoginScreen();
+        return const LoginScreen();
       },
     );
   }

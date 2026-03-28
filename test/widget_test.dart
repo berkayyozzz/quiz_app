@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-import 'package:yks_akademi/main.dart';
-import 'package:yks_akademi/providers/quiz_provider.dart';
+import 'package:quiz_app/main.dart';
+import 'package:quiz_app/providers/quiz_provider.dart';
 
 void main() {
   testWidgets('QuizApp smoke test', (WidgetTester tester) async {

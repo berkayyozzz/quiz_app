@@ -17,66 +17,27 @@ class FirestoreService {
     final userRef = _db.collection('users').doc(uid);
     final weekId = _getWeekId(DateTime.now());
     final weeklyRef = _db.collection('weekly_scores').doc('${uid}_$weekId');
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
     
     return _db.runTransaction((transaction) async {
-      // 1. Update Global Profile & Streak
+      // 1. Update Global High Score
       final userSnapshot = await transaction.get(userRef);
       if (!userSnapshot.exists) {
         transaction.set(userRef, {
           'displayName': displayName,
           'highScore': score,
           'totalGamesPlayed': 1,
-          'currentStreak': 1,
-          'longestStreak': 1,
-          'lastActivityDate': Timestamp.fromDate(today),
         });
       } else {
-        final data = userSnapshot.data()!;
-        double currentHighScore = (data['highScore'] ?? 0).toDouble();
+        double currentHighScore = (userSnapshot.data()?['highScore'] ?? 0).toDouble();
         double newHighScore = score > currentHighScore ? score : currentHighScore;
-        int totalGames = (data['totalGamesPlayed'] ?? 0) + 1;
-        
-        // Streak Logic
-        int currentStreak = data['currentStreak'] ?? 0;
-        int longestStreak = data['longestStreak'] ?? 0;
-        DateTime? lastActivity;
-        if (data['lastActivityDate'] != null) {
-          lastActivity = (data['lastActivityDate'] as Timestamp).toDate();
-        }
-
-        if (lastActivity != null) {
-          final lastDate = DateTime(lastActivity.year, lastActivity.month, lastActivity.day);
-          final difference = today.difference(lastDate).inDays;
-
-          if (difference == 1) {
-            // Consecutive day
-            currentStreak += 1;
-          } else if (difference > 1) {
-            // Gap between days
-            currentStreak = 1;
-          } else if (difference == 0) {
-            // Already played today, no streak change
-          }
-        } else {
-          currentStreak = 1;
-        }
-
-        if (currentStreak > longestStreak) {
-          longestStreak = currentStreak;
-        }
+        int totalGames = (userSnapshot.data()?['totalGamesPlayed'] ?? 0) + 1;
 
         transaction.update(userRef, {
           'displayName': displayName,
           'highScore': newHighScore,
           'totalGamesPlayed': totalGames,
-          'currentStreak': currentStreak,
-          'longestStreak': longestStreak,
-          'lastActivityDate': Timestamp.fromDate(today),
         });
       }
-
 
       // 2. Update Weekly High Score
       final weeklySnapshot = await transaction.get(weeklyRef);
@@ -157,14 +118,6 @@ class FirestoreService {
         totalGamesPlayed: 0,
       );
     }
-  // Get Single User Profile
-  Stream<UserProfile?> getUserProfile(String uid) {
-    return _db.collection('users').doc(uid).snapshots().map((snapshot) {
-      if (snapshot.exists) {
-        return UserProfile.fromMap(snapshot.data()!, snapshot.id);
-      }
-      return null;
-    });
+    return null;
   }
 }
-
