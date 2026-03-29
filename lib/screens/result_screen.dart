@@ -49,7 +49,7 @@ class _ResultScreenState extends State<ResultScreen> {
         final firestoreService = FirestoreService();
         await firestoreService.saveQuizResult(
           user.uid,
-          user.displayName ?? 'Misafir',
+          user.displayName ?? 'Misafir-${(user.uid.length >= 5) ? user.uid.substring(0, 5) : user.uid}',
           result.netScore,
         );
         if (mounted) {

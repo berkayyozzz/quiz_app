@@ -14,7 +14,7 @@ class UserProfile {
   factory UserProfile.fromMap(Map<String, dynamic> data, String documentId) {
     return UserProfile(
       uid: documentId,
-      displayName: data['displayName'] ?? 'Misafir',
+      displayName: data['displayName'] ?? 'Misafir-${(documentId.length >= 5) ? documentId.substring(0, 5) : documentId}',
       highScore: (data['highScore'] ?? 0).toDouble(),
       totalGamesPlayed: data['totalGamesPlayed'] ?? 0,
     );

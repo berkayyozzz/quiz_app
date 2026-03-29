@@ -84,7 +84,7 @@ class FirestoreService {
         .map((snapshot) => snapshot.docs
             .map((doc) => UserProfile(
                   uid: doc.id,
-                  displayName: doc.data()['displayName'] ?? 'Misafir',
+                  displayName: doc.data()['displayName'] ?? 'Misafir-${(doc.id.length >= 5) ? doc.id.substring(0, 5) : doc.id}',
                   highScore: (doc.data()['highScore'] ?? 0).toDouble(),
                   totalGamesPlayed: doc.data()['totalGamesPlayed'] ?? 0,
                 ))
@@ -103,7 +103,7 @@ class FirestoreService {
         .map((snapshot) => snapshot.docs
             .map((doc) => UserProfile(
                   uid: doc.data()['uid'],
-                  displayName: doc.data()['displayName'] ?? 'Misafir',
+                  displayName: doc.data()['displayName'] ?? 'Misafir-${(doc.data()['uid'].toString().length >= 5) ? doc.data()['uid'].toString().substring(0, 5) : doc.data()['uid']}',
                   highScore: (doc.data()['score'] ?? 0).toDouble(),
                   // totalGamesPlayed is not tracked weekly in this simple version, 
                   // but we could if needed. Setting to 0 for now.
@@ -126,7 +126,7 @@ class FirestoreService {
       final doc = snapshot.docs.first;
       return UserProfile(
         uid: doc.data()['uid'],
-        displayName: doc.data()['displayName'] ?? 'Misafir',
+        displayName: doc.data()['displayName'] ?? 'Misafir-${(doc.data()['uid'].toString().length >= 5) ? doc.data()['uid'].toString().substring(0, 5) : doc.data()['uid']}',
         highScore: (doc.data()['score'] ?? 0).toDouble(),
         totalGamesPlayed: 0,
       );
