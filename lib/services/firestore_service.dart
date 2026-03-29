@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_profile.dart';
+import 'notification_service.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -18,6 +19,8 @@ class FirestoreService {
       final userRef = _db.collection('users').doc(uid);
       final weekId = _getWeekId(DateTime.now());
       final weeklyRef = _db.collection('weekly_scores').doc('${uid}_$weekId');
+      
+      int finalStreak = 1;
       
       await _db.runTransaction((transaction) async {
         // 1. Update Global High Score
@@ -56,6 +59,7 @@ class FirestoreService {
           } else {
              currentStreak = 1;
           }
+          finalStreak = currentStreak;
 
           transaction.update(userRef, {
             'displayName': displayName,
@@ -93,6 +97,10 @@ class FirestoreService {
           transaction.update(weeklyRef, updateData);
         }
       });
+      
+      // Schedule the next reminder with the calculated streak
+      await NotificationService().scheduleStreakReminder(finalStreak);
+      
     } catch (e) {
       print('Error saving quiz result: $e');
       rethrow; // Rethrow to handle in UI

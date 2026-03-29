@@ -9,6 +9,7 @@ import 'providers/quiz_provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'services/ad_manager.dart';
+import 'services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,9 @@ void main() async {
   await MobileAds.instance.initialize();
   // Request tracking authorization for iOS
   AdManager.requestTrackingAuthorization();
+  
+  // Initialize Local Notifications
+  await NotificationService().init();
   
   runApp(
     ChangeNotifierProvider(

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../services/auth_service.dart';
+import '../services/notification_service.dart';
 import 'quiz_screen.dart';
 import 'leaderboard_screen.dart';
 
@@ -16,6 +17,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Ask for notification permissions right away
+    NotificationService().requestPermissions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
