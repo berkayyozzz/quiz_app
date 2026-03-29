@@ -27,6 +27,8 @@ class FirestoreService {
             'displayName': displayName,
             'highScore': score,
             'totalGamesPlayed': 1,
+            'currentStreak': 1,
+            'lastQuizDate': FieldValue.serverTimestamp(),
             'lastUpdated': FieldValue.serverTimestamp(),
           });
         } else {
@@ -34,10 +36,33 @@ class FirestoreService {
           double newHighScore = score > currentHighScore ? score : currentHighScore;
           int totalGames = (userSnapshot.data()?['totalGamesPlayed'] ?? 0) + 1;
 
+          int currentStreak = userSnapshot.data()?['currentStreak'] ?? 0;
+          Timestamp? lastQuizTimestamp = userSnapshot.data()?['lastQuizDate'] as Timestamp?;
+          
+          DateTime now = DateTime.now().toUtc();
+          DateTime today = DateTime.utc(now.year, now.month, now.day);
+          
+          if (lastQuizTimestamp != null) {
+            DateTime lastDate = lastQuizTimestamp.toDate().toUtc();
+            DateTime lastDay = DateTime.utc(lastDate.year, lastDate.month, lastDate.day);
+            
+            final difference = today.difference(lastDay).inDays;
+            
+            if (difference == 1) {
+              currentStreak += 1;
+            } else if (difference > 1) {
+              currentStreak = 1;
+            }
+          } else {
+             currentStreak = 1;
+          }
+
           transaction.update(userRef, {
-            'displayName': displayName, // Always update name from the current session
+            'displayName': displayName,
             'highScore': newHighScore,
             'totalGamesPlayed': totalGames,
+            'currentStreak': currentStreak,
+            'lastQuizDate': FieldValue.serverTimestamp(),
             'lastUpdated': FieldValue.serverTimestamp(),
           });
         }

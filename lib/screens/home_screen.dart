@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -95,6 +96,46 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(AuthService().currentUser?.uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                int streak = 0;
+                if (snapshot.hasData && snapshot.data!.exists) {
+                   final data = snapshot.data!.data() as Map<String, dynamic>?;
+                   streak = data?['currentStreak'] ?? 0;
+                }
+                if (streak > 0) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.orange.withOpacity(0.4)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text('🔥', style: TextStyle(fontSize: 16)),
+                        const SizedBox(width: 4),
+                        Text(
+                          '$streak',
+                          style: GoogleFonts.poppins(
+                            color: Colors.orangeAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ).animate().fadeIn();
+                }
+                return const SizedBox.shrink();
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.leaderboard, color: Colors.amberAccent, size: 28),
               onPressed: () {
@@ -108,7 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: const Icon(Icons.logout, color: Colors.white54),
               onPressed: () async {
                 await AuthService().signOut();
-                // AuthWrapper stream dinliyor, otomatik login sayfasına dönecek
               },
             ),
           ],
