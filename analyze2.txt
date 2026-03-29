@@ -1,0 +1,64 @@
+﻿ERROR|COMPILE_TIME_ERROR|MISSING_REQUIRED_ARGUMENT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|30|43|10|The named parameter 'settings' is required, but there's no corresponding argument.
+ERROR|COMPILE_TIME_ERROR|EXTRA_POSITIONAL_ARGUMENTS_COULD_BE_NAMED|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|30|54|22|Too many positional arguments: 0 expected, but 1 found.
+ERROR|COMPILE_TIME_ERROR|UNDEFINED_CLASS|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|42|11|37|Undefined class 'DarwinFlutterLocalNotificationsPlugin'.
+ERROR|COMPILE_TIME_ERROR|NON_TYPE_AS_TYPE_ARGUMENT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|44|13|37|The name 'DarwinFlutterLocalNotificationsPlugin' isn't a type, so it can't be used as a type argument.
+ERROR|COMPILE_TIME_ERROR|MISSING_REQUIRED_ARGUMENT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|54|43|6|The named parameter 'id' is required, but there's no corresponding argument.
+ERROR|COMPILE_TIME_ERROR|EXTRA_POSITIONAL_ARGUMENTS_COULD_BE_NAMED|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|54|50|1|Too many positional arguments: 0 expected, but 1 found.
+ERROR|COMPILE_TIME_ERROR|MISSING_REQUIRED_ARGUMENT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|97|45|13|The named parameter 'id' is required, but there's no corresponding argument.
+ERROR|COMPILE_TIME_ERROR|MISSING_REQUIRED_ARGUMENT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|97|45|13|The named parameter 'notificationDetails' is required, but there's no corresponding argument.
+ERROR|COMPILE_TIME_ERROR|MISSING_REQUIRED_ARGUMENT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|97|45|13|The named parameter 'scheduledDate' is required, but there's no corresponding argument.
+ERROR|COMPILE_TIME_ERROR|EXTRA_POSITIONAL_ARGUMENTS_COULD_BE_NAMED|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|98|9|1|Too many positional arguments: 0 expected, but 5 found.
+ERROR|COMPILE_TIME_ERROR|UNDEFINED_NAMED_PARAMETER|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|104|9|37|The named parameter 'uiLocalNotificationDateInterpretation' isn't defined.
+ERROR|COMPILE_TIME_ERROR|UNDEFINED_IDENTIFIER|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|105|13|37|Undefined name 'UILocalNotificationDateInterpretation'.
+ERROR|COMPILE_TIME_ERROR|URI_DOES_NOT_EXIST|C:\\Users\\berka\\qq\\quiz_app\\test\\widget_test.dart|3|8|28|Target of URI doesn't exist: 'package:quiz_app/main.dart'.
+ERROR|COMPILE_TIME_ERROR|URI_DOES_NOT_EXIST|C:\\Users\\berka\\qq\\quiz_app\\test\\widget_test.dart|4|8|47|Target of URI doesn't exist: 'package:quiz_app/providers/quiz_provider.dart'.
+ERROR|COMPILE_TIME_ERROR|UNDEFINED_FUNCTION|C:\\Users\\berka\\qq\\quiz_app\\test\\widget_test.dart|10|24|12|The function 'QuizProvider' isn't defined.
+ERROR|COMPILE_TIME_ERROR|CREATION_WITH_NON_TYPE|C:\\Users\\berka\\qq\\quiz_app\\test\\widget_test.dart|11|22|7|The name 'QuizApp' isn't a class.
+WARNING|STATIC_WARNING|UNUSED_LOCAL_VARIABLE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|288|11|9|The value of the local variable 'timeRatio' isn't used.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\home_screen.dart|123|44|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\home_screen.dart|125|63|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\home_screen.dart|217|68|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\home_screen.dart|310|82|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\home_screen.dart|411|26|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\home_screen.dart|413|45|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\leaderboard_screen.dart|141|67|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\leaderboard_screen.dart|223|37|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\leaderboard_screen.dart|223|75|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\leaderboard_screen.dart|230|37|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\leaderboard_screen.dart|272|45|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\leaderboard_screen.dart|287|45|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|191|45|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|328|47|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|330|66|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|390|22|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|392|41|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|445|32|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|450|30|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|480|40|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|527|49|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|606|46|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|607|46|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\quiz_screen.dart|613|48|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|217|42|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|218|42|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|222|64|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|273|66|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|288|67|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|360|24|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|HINT|DEPRECATED_MEMBER_USE|C:\\Users\\berka\\qq\\quiz_app\\lib\\screens\\result_screen.dart|362|43|11|'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|47|5|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|55|11|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|58|11|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|74|11|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|77|11|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|91|11|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\ad_manager.dart|105|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\auth_service.dart|25|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\auth_service.dart|44|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\auth_service.dart|87|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\auth_service.dart|98|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\firestore_service.dart|105|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|107|7|5|Don't invoke 'print' in production code.
+INFO|LINT|AVOID_PRINT|C:\\Users\\berka\\qq\\quiz_app\\lib\\services\\notification_service.dart|109|7|5|Don't invoke 'print' in production code.
+INFO|LINT|DEPEND_ON_REFERENCED_PACKAGES|C:\\Users\\berka\\qq\\quiz_app\\test\\widget_test.dart|3|8|28|The imported package 'quiz_app' isn't a dependency of the importing package.
+INFO|LINT|DEPEND_ON_REFERENCED_PACKAGES|C:\\Users\\berka\\qq\\quiz_app\\test\\widget_test.dart|4|8|47|The imported package 'quiz_app' isn't a dependency of the importing package.

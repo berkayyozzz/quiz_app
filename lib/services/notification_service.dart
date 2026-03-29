@@ -27,7 +27,12 @@ class NotificationService {
     const InitializationSettings initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsDarwin);
 
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+      settings: initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        // Handle notification tap
+      },
+    );
   }
 
   Future<void> requestPermissions() async {
@@ -39,10 +44,10 @@ class NotificationService {
     await androidImplementation?.requestExactAlarmsPermission();
 
     // iOS
-    final DarwinFlutterLocalNotificationsPlugin? darwinImplementation =
+    final iOSImplementation =
         flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-            DarwinFlutterLocalNotificationsPlugin>();
-    await darwinImplementation?.requestPermissions(
+            IOSFlutterLocalNotificationsPlugin>();
+    await iOSImplementation?.requestPermissions(
       alert: true,
       badge: true,
       sound: true,
@@ -51,7 +56,7 @@ class NotificationService {
 
   Future<void> scheduleStreakReminder(int currentStreak) async {
     // Cancel any existing streak alarms
-    await flutterLocalNotificationsPlugin.cancel(0);
+    await flutterLocalNotificationsPlugin.cancel(id: 0); 
 
     // Prepare motivational messages
     final List<String> titles = [
@@ -95,14 +100,12 @@ class NotificationService {
 
     try {
       await flutterLocalNotificationsPlugin.zonedSchedule(
-        0, 
-        selectedTitle,
-        selectedBody,
-        scheduledDate,
-        platformChannelSpecifics,
+        id: 0,
+        title: selectedTitle,
+        body: selectedBody,
+        scheduledDate: scheduledDate,
+        notificationDetails: platformChannelSpecifics,
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
       );
       print('✅ Streak reminder scheduled for $scheduledDate');
     } catch (e) {
