@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
+import '../services/ad_manager.dart';
 import 'result_screen.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -19,6 +20,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
+    AdManager.loadInterstitialAd();
     _startTimer();
   }
 
@@ -28,9 +30,15 @@ class _QuizScreenState extends State<QuizScreen> {
       quiz.tickTimer();
       if (quiz.quizFinished) {
         _timer?.cancel();
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const ResultScreen()),
+        AdManager.showInterstitialAd(
+          onAdDismissed: () {
+            if (mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const ResultScreen()),
+              );
+            }
+          },
         );
       }
     });
@@ -52,9 +60,15 @@ class _QuizScreenState extends State<QuizScreen> {
       if (quiz.currentIndex == quiz.questions.length - 1) {
         _timer?.cancel();
         quiz.finishQuiz();
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const ResultScreen()),
+        AdManager.showInterstitialAd(
+          onAdDismissed: () {
+            if (mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const ResultScreen()),
+              );
+            }
+          },
         );
       } else {
         quiz.nextQuestion();
@@ -63,9 +77,15 @@ class _QuizScreenState extends State<QuizScreen> {
       _timer?.cancel();
       if (quiz.currentIndex == quiz.questions.length - 1) {
         quiz.finishQuiz();
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const ResultScreen()),
+        AdManager.showInterstitialAd(
+          onAdDismissed: () {
+            if (mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const ResultScreen()),
+              );
+            }
+          },
         );
       } else {
         quiz.nextQuestion();
@@ -613,7 +633,11 @@ class _SoruNavigatorSheet extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
               quiz.finishQuiz();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ResultScreen()));
+              AdManager.showInterstitialAd(
+                onAdDismissed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ResultScreen()));
+                },
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
