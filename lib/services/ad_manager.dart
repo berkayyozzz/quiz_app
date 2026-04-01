@@ -11,7 +11,7 @@ class AdManager {
   /// Canlı Reklam ID'leri
   static const String _iosRealAdUnitId = 'ca-app-pub-6164147837428706/3800001636';
   // TODO: Kullanıcı Android ID'yi verdiğinde burayı güncelleyin!
-  static const String _androidRealAdUnitId = 'ca-app-pub-3940256099942544/1033173712'; // Şimdilik Test Kimliği
+  static const String _androidRealAdUnitId = 'ca-app-pub-6164147837428706/7867727286';
 
   /// Google Mobile Ads Test Interstitial ID'leri
   static String get interstitialAdUnitId {
@@ -85,7 +85,7 @@ class AdManager {
           }
           
           // Tekrardan kullanamayacağımız için arka planda yeni bir tane yükleyebiliriz
-          // loadInterstitialAd(); 
+          loadInterstitialAd(); 
         },
         onAdFailedToShowFullScreenContent: (ad, error) {
           print('Reklam gösterilemedi: \${error.message}');

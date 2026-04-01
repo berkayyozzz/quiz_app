@@ -29,6 +29,7 @@ class FirestoreService {
           transaction.set(userRef, {
             'displayName': displayName,
             'highScore': score,
+            'totalNet': score,
             'totalGamesPlayed': 1,
             'currentStreak': 1,
             'lastQuizDate': FieldValue.serverTimestamp(),
@@ -36,7 +37,9 @@ class FirestoreService {
           });
         } else {
           double currentHighScore = (userSnapshot.data()?['highScore'] ?? 0).toDouble();
+          double currentTotalNet = (userSnapshot.data()?['totalNet'] ?? currentHighScore).toDouble();
           double newHighScore = score > currentHighScore ? score : currentHighScore;
+          double newTotalNet = currentTotalNet + score;
           int totalGames = (userSnapshot.data()?['totalGamesPlayed'] ?? 0) + 1;
 
           int currentStreak = userSnapshot.data()?['currentStreak'] ?? 0;
@@ -64,6 +67,7 @@ class FirestoreService {
           transaction.update(userRef, {
             'displayName': displayName,
             'highScore': newHighScore,
+            'totalNet': newTotalNet,
             'totalGamesPlayed': totalGames,
             'currentStreak': currentStreak,
             'lastQuizDate': FieldValue.serverTimestamp(),
@@ -87,12 +91,9 @@ class FirestoreService {
           Map<String, dynamic> updateData = {
             'displayName': displayName,
             'uid': uid, // Ensure UID is always there
+            'score': currentWeeklyScore + score,
+            'timestamp': FieldValue.serverTimestamp(),
           };
-          
-          if (score > currentWeeklyScore) {
-            updateData['score'] = score;
-            updateData['timestamp'] = FieldValue.serverTimestamp();
-          }
           
           transaction.update(weeklyRef, updateData);
         }
@@ -111,7 +112,7 @@ class FirestoreService {
   Stream<List<UserProfile>> getLeaderboard({int limit = 20}) {
     return _db
         .collection('users')
-        .orderBy('highScore', descending: true)
+        .orderBy('totalNet', descending: true)
         .limit(limit)
         .snapshots()
         .map((snapshot) => snapshot.docs
@@ -119,6 +120,7 @@ class FirestoreService {
                   uid: doc.id,
                   displayName: doc.data()['displayName'] ?? 'Misafir-${(doc.id.length >= 5) ? doc.id.substring(0, 5) : doc.id}',
                   highScore: (doc.data()['highScore'] ?? 0).toDouble(),
+                  totalNet: (doc.data()['totalNet'] ?? (doc.data()['highScore'] ?? 0)).toDouble(),
                   totalGamesPlayed: doc.data()['totalGamesPlayed'] ?? 0,
                 ))
             .toList());
@@ -137,7 +139,8 @@ class FirestoreService {
             .map((doc) => UserProfile(
                   uid: doc.data()['uid'],
                   displayName: doc.data()['displayName'] ?? 'Misafir-${(doc.data()['uid'].toString().length >= 5) ? doc.data()['uid'].toString().substring(0, 5) : doc.data()['uid']}',
-                  highScore: (doc.data()['score'] ?? 0).toDouble(),
+                  highScore: 0, // Not relevant for weekly summary display
+                  totalNet: (doc.data()['score'] ?? 0).toDouble(),
                   // totalGamesPlayed is not tracked weekly in this simple version, 
                   // but we could if needed. Setting to 0 for now.
                   totalGamesPlayed: 0, 
@@ -160,7 +163,8 @@ class FirestoreService {
       return UserProfile(
         uid: doc.data()['uid'],
         displayName: doc.data()['displayName'] ?? 'Misafir-${(doc.data()['uid'].toString().length >= 5) ? doc.data()['uid'].toString().substring(0, 5) : doc.data()['uid']}',
-        highScore: (doc.data()['score'] ?? 0).toDouble(),
+        totalNet: (doc.data()['score'] ?? 0).toDouble(),
+        highScore: 0,
         totalGamesPlayed: 0,
       );
     }

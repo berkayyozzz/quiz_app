@@ -16,7 +16,7 @@ class LeaderboardScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text(
-          'Haftalık Sıralama',
+          'Liderlik Tablosu',
           style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.transparent,
@@ -45,7 +45,7 @@ class LeaderboardScreen extends StatelessWidget {
                     const Icon(Icons.leaderboard, color: Colors.amber, size: 20),
                     const SizedBox(width: 8),
                     Text(
-                      'Haftanın En İyileri',
+                      'Haftalık Toplam Net',
                       style: GoogleFonts.poppins(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -169,7 +169,7 @@ class LeaderboardScreen extends StatelessWidget {
                                 ),
                               ),
                               subtitle: Text(
-                                'Haftalık En İyi',
+                                'Toplam Net',
                                 style: GoogleFonts.poppins(fontSize: 12, color: Colors.white54),
                               ),
                               trailing: Column(
@@ -177,7 +177,7 @@ class LeaderboardScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    user.highScore.toStringAsFixed(2),
+                                    user.totalNet.toStringAsFixed(2),
                                     style: GoogleFonts.poppins(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -185,7 +185,7 @@ class LeaderboardScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    'Net',
+                                    'Puan',
                                     style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38),
                                   ),
                                 ],
@@ -265,7 +265,7 @@ class LeaderboardScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Geçen Haftanın Birincisi',
+                      'Geçen Haftanın Şampiyonu',
                       style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -281,7 +281,7 @@ class LeaderboardScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Skor: ${winner.highScore.toStringAsFixed(2)} Net',
+                      'Skor: ${winner.totalNet.toStringAsFixed(2)} Puan',
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         color: Colors.white.withOpacity(0.9),

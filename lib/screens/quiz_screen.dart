@@ -70,6 +70,15 @@ class _QuizScreenState extends State<QuizScreen> {
             }
           },
         );
+      } else if ((quiz.currentIndex + 1) % 20 == 0) {
+        // Her 20 soruda bir reklam göster (Deneme Modunda)
+        AdManager.showInterstitialAd(
+          onAdDismissed: () {
+            if (mounted) {
+              quiz.nextQuestion();
+            }
+          },
+        );
       } else {
         quiz.nextQuestion();
       }
