@@ -10,6 +10,9 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  /// Oturum boyunca yalnızca bir kez izin sorulmasını sağlayan bayrak
+  static bool _permissionsAlreadyRequested = false;
+
   NotificationService._internal();
 
   Future<void> init() async {
@@ -36,6 +39,10 @@ class NotificationService {
   }
 
   Future<void> requestPermissions() async {
+    // Daha önce sorulduysa bir daha sorma
+    if (_permissionsAlreadyRequested) return;
+    _permissionsAlreadyRequested = true;
+
     // Android
     final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
         flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
