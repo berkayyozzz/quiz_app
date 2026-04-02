@@ -23,6 +23,8 @@ class _ResultScreenState extends State<ResultScreen> {
   String? _saveError;
   bool _rewardClaimed = false;
   bool _isRewardLoading = false;
+  int _rewardWatchCount = 0;
+  bool _isCheckingLimit = true;
 
   @override
   void initState() {
@@ -31,7 +33,51 @@ class _ResultScreenState extends State<ResultScreen> {
     AdManager.loadRewardedAd();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _saveScore();
+      _checkRewardLimit();
     });
+  }
+
+  Future<void> _checkRewardLimit() async {
+    final authService = AuthService();
+    final user = authService.currentUser;
+    if (user != null) {
+      try {
+        final firestoreService = FirestoreService();
+        final profile = await firestoreService.getUserProfile(user.uid);
+        if (profile != null && mounted) {
+          int count = profile.rewardedAdsWatchedToday;
+          
+          // Gün kontrolü yap (resetleme mantığı modelde olsa da UI'da da kontrol edelim)
+          if (profile.lastRewardedAdDate != null) {
+            DateTime now = DateTime.now();
+            DateTime today = DateTime(now.year, now.month, now.day);
+            DateTime lastAdDate = profile.lastRewardedAdDate!;
+            DateTime lastAdDay = DateTime(lastAdDate.year, lastAdDate.month, lastAdDate.day);
+            
+            if (today.isAfter(lastAdDay)) {
+              count = 0;
+            }
+          }
+
+          setState(() {
+            _rewardWatchCount = count;
+            _isCheckingLimit = false;
+          });
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() {
+            _isCheckingLimit = false;
+          });
+        }
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _isCheckingLimit = false;
+        });
+      }
+    }
   }
 
   Future<void> _saveScore() async {
@@ -115,24 +161,36 @@ class _ResultScreenState extends State<ResultScreen> {
         if (user != null) {
           try {
             final firestoreService = FirestoreService();
-            await firestoreService.saveQuizResult(
+            final success = await firestoreService.claimRewardedAdBonus(
               user.uid,
-              user.displayName ?? 'Misafir-${(user.uid.length >= 5) ? user.uid.substring(0, 5) : user.uid}',
-              10.0, // +10 bonus puan
+              user.displayName ?? 'Misafir',
             );
 
             if (mounted) {
-              setState(() {
-                _rewardClaimed = true;
-                _isRewardLoading = false;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('+10 bonus puan eklendi! 🎉'),
-                  backgroundColor: Colors.green,
-                  duration: Duration(seconds: 2),
-                ),
-              );
+              if (success) {
+                setState(() {
+                  _rewardClaimed = true;
+                  _rewardWatchCount += 1;
+                  _isRewardLoading = false;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('+10 bonus puan eklendi! 🎉'),
+                    backgroundColor: Colors.green,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              } else {
+                setState(() {
+                  _isRewardLoading = false;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Günlük ödül limitine ulaştınız (Maks 3).'),
+                    backgroundColor: Colors.orangeAccent,
+                  ),
+                );
+              }
             }
           } catch (e) {
             if (mounted) {
@@ -357,63 +415,98 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                     ],
 
-                    // Ödül Reklamı Butonu
-                    if (!_rewardClaimed) ...[
-                      const SizedBox(height: 20),
-                      Container(
-                        width: double.infinity,
-                        height: 56,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              const Color(0xFFFFD700),
-                              const Color(0xFFFFA500),
+                    // Ödül Reklamı Butonu / Limit Bilgisi
+                    if (!_rewardClaimed && !_isCheckingLimit) ...[
+                      if (_rewardWatchCount < 3) ...[
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.infinity,
+                          height: 56,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color(0xFFFFD700),
+                                const Color(0xFFFFA500),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFFFFD700).withOpacity(0.4),
+                                blurRadius: 16,
+                                offset: const Offset(0, 4),
+                              ),
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFFFFD700).withOpacity(0.4),
-                              blurRadius: 16,
-                              offset: const Offset(0, 4),
+                          child: ElevatedButton.icon(
+                            onPressed: _isRewardLoading
+                                ? null
+                                : () => _watchRewardedAd(result.netScore),
+                            icon: _isRewardLoading
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.black87,
+                                    ),
+                                  )
+                                : const Text('🎬', style: TextStyle(fontSize: 20)),
+                            label: Text(
+                              _isRewardLoading
+                                  ? 'Reklam Yükleniyor...'
+                                  : 'Reklam İzle  +10 Puan',
+                              style: GoogleFonts.poppins(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black87,
+                              ),
                             ),
-                          ],
-                        ),
-                        child: ElevatedButton.icon(
-                          onPressed: _isRewardLoading
-                              ? null
-                              : () => _watchRewardedAd(result.netScore),
-                          icon: _isRewardLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.black87,
-                                  ),
-                                )
-                              : const Text('🎬', style: TextStyle(fontSize: 20)),
-                          label: Text(
-                            _isRewardLoading
-                                ? 'Reklam Yükleniyor...'
-                                : 'Reklam İzle  +10 Puan',
-                            style: GoogleFonts.poppins(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black87,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16)),
                             ),
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
+                        ).animate().fadeIn(delay: 700.ms).shimmer(
+                              duration: 2000.ms,
+                              color: Colors.white.withOpacity(0.3),
+                            ),
+                         Padding(
+                           padding: const EdgeInsets.only(top: 8.0),
+                           child: Text(
+                             'Kalan günlük ödül hakkı: ${3 - _rewardWatchCount}',
+                             style: GoogleFonts.poppins(color: Colors.white38, fontSize: 11),
+                           ),
+                         ),
+                      ] else ...[
+                        const SizedBox(height: 20),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.orangeAccent.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.orangeAccent.withOpacity(0.3)),
                           ),
-                        ),
-                      ).animate().fadeIn(delay: 700.ms).shimmer(
-                            duration: 2000.ms,
-                            color: Colors.white.withOpacity(0.3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.info_outline, color: Colors.orangeAccent, size: 20),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Günde en fazla 3 kez ödül alabilirsiniz.',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.orangeAccent,
+                                ),
+                              ),
+                            ],
                           ),
+                        ).animate().fadeIn(delay: 700.ms),
+                      ],
                     ],
 
                     if (_rewardClaimed) ...[

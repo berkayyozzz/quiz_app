@@ -8,6 +8,8 @@ class UserProfile {
   final int totalGamesPlayed;
   final int currentStreak;
   final DateTime? lastQuizDate;
+  final int rewardedAdsWatchedToday;
+  final DateTime? lastRewardedAdDate;
 
   UserProfile({
     required this.uid,
@@ -17,6 +19,8 @@ class UserProfile {
     required this.totalGamesPlayed,
     this.currentStreak = 0,
     this.lastQuizDate,
+    this.rewardedAdsWatchedToday = 0,
+    this.lastRewardedAdDate,
   });
 
   factory UserProfile.fromMap(Map<String, dynamic> data, String documentId) {
@@ -28,6 +32,8 @@ class UserProfile {
       totalGamesPlayed: data['totalGamesPlayed'] ?? 0,
       currentStreak: data['currentStreak'] ?? 0,
       lastQuizDate: data['lastQuizDate'] != null ? (data['lastQuizDate'] as Timestamp).toDate() : null,
+      rewardedAdsWatchedToday: data['rewardedAdsWatchedToday'] ?? 0,
+      lastRewardedAdDate: data['lastRewardedAdDate'] != null ? (data['lastRewardedAdDate'] as Timestamp).toDate() : null,
     );
   }
 
@@ -39,6 +45,8 @@ class UserProfile {
       'totalGamesPlayed': totalGamesPlayed,
       'currentStreak': currentStreak,
       'lastQuizDate': lastQuizDate != null ? Timestamp.fromDate(lastQuizDate!) : null,
+      'rewardedAdsWatchedToday': rewardedAdsWatchedToday,
+      'lastRewardedAdDate': lastRewardedAdDate != null ? Timestamp.fromDate(lastRewardedAdDate!) : null,
     };
   }
 }

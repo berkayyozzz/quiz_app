@@ -109,7 +109,7 @@ class FirestoreService {
   }
 
   // Get Top Users for Global Leaderboard
-  Stream<List<UserProfile>> getLeaderboard({int limit = 20}) {
+  Stream<List<UserProfile>> getLeaderboard({int limit = 50}) {
     return _db
         .collection('users')
         .orderBy('totalNet', descending: true)
@@ -127,7 +127,7 @@ class FirestoreService {
   }
 
   // Get Top Users for Weekly Leaderboard
-  Stream<List<UserProfile>> getWeeklyLeaderboard({int limit = 20}) {
+  Stream<List<UserProfile>> getWeeklyLeaderboard({int limit = 50}) {
     final weekId = _getWeekId(DateTime.now());
     return _db
         .collection('weekly_scores')
@@ -169,5 +169,81 @@ class FirestoreService {
       );
     }
     return null;
+  }
+
+  // Get User Profile
+  Future<UserProfile?> getUserProfile(String uid) async {
+    try {
+      final doc = await _db.collection('users').doc(uid).get();
+      if (doc.exists) {
+        return UserProfile.fromMap(doc.data()!, doc.id);
+      }
+    } catch (e) {
+      print('Error getting user profile: $e');
+    }
+    return null;
+  }
+
+  // Claim Rewarded Ad Bonus (+10 Points) with Daily Limit (Max 3)
+  Future<bool> claimRewardedAdBonus(String uid, String displayName) async {
+    try {
+      final userRef = _db.collection('users').doc(uid);
+      
+      return await _db.runTransaction((transaction) async {
+        final userSnapshot = await transaction.get(userRef);
+        
+        if (!userSnapshot.exists) return false;
+
+        final data = userSnapshot.data()!;
+        int watchedToday = data['rewardedAdsWatchedToday'] ?? 0;
+        Timestamp? lastAdTimestamp = data['lastRewardedAdDate'] as Timestamp?;
+        
+        DateTime now = DateTime.now();
+        DateTime today = DateTime(now.year, now.month, now.day);
+        
+        // Reset count if last ad was not today
+        if (lastAdTimestamp != null) {
+          DateTime lastAdDate = lastAdTimestamp.toDate();
+          DateTime lastAdDay = DateTime(lastAdDate.year, lastAdDate.month, lastAdDate.day);
+          
+          if (today.isAfter(lastAdDay)) {
+            watchedToday = 0;
+          }
+        }
+
+        // Check Limit
+        if (watchedToday >= 3) {
+          return false; // Limit reached
+        }
+
+        // Update Score and Limit
+        double currentTotalNet = (data['totalNet'] ?? (data['highScore'] ?? 0)).toDouble();
+        
+        transaction.update(userRef, {
+          'totalNet': currentTotalNet + 10,
+          'rewardedAdsWatchedToday': watchedToday + 1,
+          'lastRewardedAdDate': FieldValue.serverTimestamp(),
+          'lastUpdated': FieldValue.serverTimestamp(),
+        });
+
+        // Also update weekly score if needed
+        final weekId = _getWeekId(now);
+        final weeklyRef = _db.collection('weekly_scores').doc('${uid}_$weekId');
+        
+        final weeklySnapshot = await transaction.get(weeklyRef);
+        if (weeklySnapshot.exists) {
+          double currentWeeklyScore = (weeklySnapshot.data()?['score'] ?? 0).toDouble();
+          transaction.update(weeklyRef, {
+            'score': currentWeeklyScore + 10,
+            'timestamp': FieldValue.serverTimestamp(),
+          });
+        }
+
+        return true;
+      });
+    } catch (e) {
+      print('Error claiming reward bonus: $e');
+      return false;
+    }
   }
 }
