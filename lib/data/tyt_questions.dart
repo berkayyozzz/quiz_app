@@ -1,4 +1,8 @@
 import '../models/question.dart';
+import 'tyt_new_questions_1.dart';
+import 'tyt_new_questions_2.dart';
+import 'tyt_new_questions_3.dart';
+import 'tyt_new_questions_4.dart';
 
 final List<Question> tytQuestions = [
   // ─────────────── TÜRKÇE (ÖSYM TARZI / YENİ NESİL) ───────────────
@@ -1929,5 +1933,8 @@ final List<Question> tytQuestions = [
       questionText: 'Aşağıdakilerden hangisi bir "Dış Kuvvet" tir?',
       options: ['Deprem', 'Rüzgarlar', 'Volkanizma', 'Epirojenez'],
       correctIndex: 1),
+  ...tytNewQuestions1,
+  ...tytNewQuestions2,
+  ...tytNewQuestions3,
+  ...tytNewQuestions4,
 ];
-

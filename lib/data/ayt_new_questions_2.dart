@@ -1,0 +1,436 @@
+import '../models/question.dart';
+
+/// AYT Ek Sorular - Parti 2 (Biyoloji, Edebiyat, Tarih, Coğrafya, Felsefe) - ÖSYM Tarzı
+final List<Question> aytNewQuestions2 = [
+  // ─────────────── AYT BİYOLOJİ (25 SORU) ───────────────
+  Question(
+    id: 671, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Mayoz bölünmenin mitoz bölünmeden en önemli farkı aşağıdakilerden hangisidir?',
+    options: ['Hücre büyümesi', 'Kromozom sayısının yarıya inmesi', 'DNA eşlenmesi', 'Sitoplazma bölünmesi'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 672, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Krebs döngüsü (Sitrik asit döngüsü) mitokondrinin hangi bölümünde gerçekleşir?',
+    options: ['Dış zar', 'İç zar (Krista)', 'Matriks', 'Zarlar arası boşluk'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 673, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Genetik kodun "dejenere" (yoz) olması ne anlama gelir?',
+    options: ['Her kodon farklı bir amino asit kodlar', 'Bir amino asit birden fazla kodon tarafından kodlanabilir', 'Kodonlar anlamsızdır', 'Genetik kod türler arasında farklıdır'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 674, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'İnsan bağışıklık sisteminde bellek (hafıza) hücreleri oluşmasının önemi nedir?',
+    options: ['İlk enfeksiyonda hızlı yanıt vermek', 'Aynı patojenle ikinci karşılaşmada hızlı ve güçlü yanıt vermek', 'Antijen tanımayı engellemek', 'Alerji tepkilerini önlemek'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 675, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Bitkilerde stomaların gündüz açılıp gece kapanmasının temel nedeni nedir?',
+    options: ['Suyun korunması', 'Fotosentez için CO₂ alış verişi', 'Oksijen üretimi', 'Sıcaklık düzenlemesi'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 676, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Kan grubu sistemi ile ilgili olarak A kan grubuna sahip bir bireyde hangi aglütinojen (antijen) bulunur?',
+    options: ['A antijeni', 'B antijeni', 'A ve B antijeni', 'Hiçbiri'],
+    correctIndex: 0,
+  ),
+  Question(
+    id: 677, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'PCR (Polimeraz Zincir Tepkimesi) tekniğinin amacı nedir?',
+    options: ['Protein sentezlemek', 'Belirli bir DNA bölgesini çoğaltmak', 'RNA\'yı DNA\'ya çevirmek', 'Hücre kültürü oluşturmak'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 678, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Ototrof canlılar ile heterotrof canlılar arasındaki temel fark nedir?',
+    options: ['Ototroflar inorganik maddelerden organik madde sentezleyebilir', 'Heterotroflar fotosentez yapar', 'Ototroflar yalnızca hayvan hücreleridir', 'Heterotroflar oksijen kullanmaz'],
+    correctIndex: 0,
+  ),
+  Question(
+    id: 679, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Mendel genetiğinde Aa x Aa çaprazlamasında fenotip oranı kaçtır?',
+    options: ['1:1', '3:1', '1:2:1', '1:1:1:1'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 680, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'İnsan sinir sisteminde refleks yayı hangi yapıları içerir?',
+    options: ['Sadece motor nöron', 'Reseptör, duyu nöronu, ara nöron, motor nöron, efektör', 'Sadece beyin ve omurilik', 'Sadece kaslar'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 681, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Ekosistemde biyokütle piramidinde üreticilerden tüketicilere geçerken biyokütle miktarı nasıl değişir?',
+    options: ['Artar', 'Sabit kalır', 'Azalır', 'Önce artar sonra azalır'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 682, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Eşeyli üremede genetik çeşitliliğin artmasına katkı sağlayan olaylar hangileridir?\nI. Krossing-over\nII. Bağımsız açılım\nIII. Rastgele döllenme',
+    options: ['Yalnız I', 'I ve II', 'II ve III', 'I, II ve III'],
+    correctIndex: 3,
+  ),
+  Question(
+    id: 683, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Aşağıdakilerden hangisi biyoteknolojik bir uygulama değildir?',
+    options: ['Gen klonlama', 'GDO üretimi', 'Aşı geliştirme', 'Fotosentez'],
+    correctIndex: 3,
+  ),
+  Question(
+    id: 684, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'İnsan boşaltım sisteminde ADH (Antidiüretik Hormon) eksikliğinde ne olur?',
+    options: ['İdrar miktarı azalır', 'İdrar miktarı çok artar (şekersiz diyabet)', 'Kan basıncı yükselir', 'Böbrekler çalışmayı durdurur'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 685, examType: 'AYT', subject: 'Biyoloji',
+    questionText: 'Fotosentezin ışığa bağımlı tepkimelerinde suyun fotolizi sonucunda hangi ürünler oluşur?',
+    options: ['CO₂ ve H₂O', 'O₂, H⁺ ve elektron', 'Glikoz ve O₂', 'ATP ve NADPH'],
+    correctIndex: 1,
+  ),
+
+  // ─────────────── AYT EDEBİYAT (20 SORU) ───────────────
+  Question(
+    id: 686, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Tanzimat edebiyatında ilk Türkçe roman olarak kabul edilen eser hangisidir?',
+    options: ['İntibah', 'Taaşşuk-ı Talat ve Fitnat', 'Araba Sevdası', 'Sergüzeşt'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 687, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Divan edebiyatında "kaside"nin konusuna göre türlerinden hangisi padişah veya devlet büyüklerini övmek için yazılır?',
+    options: ['Tevhid', 'Münacaat', 'Medhiye', 'Mersiye'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 688, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"Natüralizm" akımının edebiyattaki temel ilkesi aşağıdakilerden hangisidir?',
+    options: ['Duygu ve hayal gücünü ön plana çıkarmak', 'İnsan davranışlarını kalıtım ve çevre koşullarıyla açıklamak', 'Bilinçaltını keşfetmek', 'Toplumsal sorunları idealize etmek'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 689, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"Tutunamayanlar" romanıyla tanınan ve postmodern Türk edebiyatının öncülerinden kabul edilen yazar kimdir?',
+    options: ['Yusuf Atılgan', 'Oğuz Atay', 'Orhan Pamuk', 'Adalet Ağaoğlu'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 690, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Halk edebiyatında "koşma" nazım biçiminin özellikleri arasında hangisi yer alır?',
+    options: ['Aruz ölçüsüyle yazılır', '11\'li hece ölçüsüyle yazılır', 'Beyitlerden oluşur', 'Kafiye şeması aa-bb-cc şeklindedir'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 691, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"İnce Memed" romanının yazarı kimdir?',
+    options: ['Halide Edib Adıvar', 'Yaşar Kemal', 'Orhan Pamuk', 'Kemal Tahir'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 692, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Şiirde "redif" nedir?',
+    options: ['Dize sonlarındaki ses benzerliği', 'Mısraların sonundaki aynen tekrar eden ek ya da sözcükler', 'Şiirdeki ölçü', 'Şiirin konusu'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 693, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Tanzimat döneminde yazılan ilk Türk tiyatro eseri aşağıdakilerden hangisidir?',
+    options: ['Vatan Yahut Silistre', 'Şair Evlenmesi', 'Zavallı Çocuk', 'Celalettin Harzemşah'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 694, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"Sürgün" ve "Panorama I-II" romanlarının yazarı olan Tanzimat-Cumhuriyet arası dönüşüm kuşağı temsilcisi kimdir?',
+    options: ['Reşat Nuri Güntekin', 'Yakup Kadri Karaosmanoğlu', 'Peyami Safa', 'Halide Edib Adıvar'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 695, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Romantizm akımının edebiyattaki temel özelliği aşağıdakilerden hangisidir?',
+    options: ['Akıl ve kurallara bağlılık', 'Duygu, hayal gücü ve bireyin iç dünyasını ön plana çıkarma', 'Bilimsel gözlem ve deney', 'Toplumsal sorunlara nesnel yaklaşım'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 696, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"Divanu Lugati\'t Türk" adlı eserin yazarı ve eserin önemi nedir?',
+    options: ['Yusuf Has Hacip, siyasetname', 'Kaşgarlı Mahmut, ilk Türkçe sözlük ve dilbilgisi kitabı', 'Edip Ahmet Yükneki, ahlak kitabı', 'Ahmet Yesevi, tasavvuf eseri'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 697, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"Sürrealizm" (Gerçeküstücülük) akımında şiir yazımında hangi teknik kullanılır?',
+    options: ['Biçimsel mükemmellik', 'Bilinçaltının otomatik yazım yoluyla dışa vurumu', 'Toplumsal gerçekçilik', 'Klasik ölçü ve kafiye'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 698, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Nobel Edebiyat Ödülü alan ilk Türk yazar kimdir?',
+    options: ['Yaşar Kemal', 'Orhan Pamuk', 'Nazım Hikmet', 'Ahmet Hamdi Tanpınar'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 699, examType: 'AYT', subject: 'Edebiyat',
+    questionText: '"Dokuzuncu Hariciye Koğuşu" adlı romanın yazarı kimdir?',
+    options: ['Sait Faik Abasıyanık', 'Peyami Safa', 'Halide Edib Adıvar', 'Haldun Taner'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 700, examType: 'AYT', subject: 'Edebiyat',
+    questionText: 'Halk edebiyatında "mâni" kaç dizeden oluşur?',
+    options: ['3', '4', '5', '7'],
+    correctIndex: 1,
+  ),
+
+  // ─────────────── AYT TARİH (20 SORU) ───────────────
+  Question(
+    id: 701, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Osmanlı Devleti\'nde "Divan-ı Hümayun" hangi padişah döneminde kaldırılarak yerine "Nazırlıklar" (Bakanlıklar) sistemi getirilmiştir?',
+    options: ['II. Mahmut', 'III. Selim', 'Abdülmecit', 'Abdülaziz'],
+    correctIndex: 0,
+  ),
+  Question(
+    id: 702, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Osmanlı\'da "Tımar Sistemi"nin temel amacı nedir?',
+    options: ['Ticaret gelirlerini artırmak', 'Toprak geliriyle asker beslemek ve eyaletlerde düzeni sağlamak', 'Saray masraflarını karşılamak', 'Dış borçları ödemek'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 703, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Osmanlı\'nın Trablusgarp Savaşı (1911-1912) hangi devlete karşı yapılmıştır?',
+    options: ['Fransa', 'İngiltere', 'İtalya', 'Rusya'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 704, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Milli Mücadele döneminde TBMM\'ye karşı çıkan isyanların (Azınlık ve Çerkez Ethem isyanları vb.) bastırılması için çıkarılan kanun aşağıdakilerden hangisidir?',
+    options: ['Tekâlif-i Milliye Emirleri', 'Hıyanet-i Vataniye Kanunu', 'Takrir-i Sükûn Kanunu', 'Tevhid-i Tedrisat Kanunu'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 705, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Soğuk Savaş döneminde NATO\'nun karşısında kurulan askeri ittifak (Doğu Bloğu) aşağıdakilerden hangisidir?',
+    options: ['Bağlantısızlar Hareketi', 'Avrupa Birliği', 'Varşova Paktı', 'NAFTA'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 706, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Anadolu\'da kurulan ilk Türk beyliklerinden olan Danişmentliler hangi bölgede kurulmuştur?',
+    options: ['Batı Anadolu', 'Güney Anadolu', 'Orta ve Doğu Anadolu (Sivas-Tokat)', 'Karadeniz kıyıları'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 707, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Osmanlı\'da Lale Devri\'ni sona erdiren olay aşağıdakilerden hangisidir?',
+    options: ['Yeniçeri İsyanı (Patrona Halil İsyanı)', 'Tanzimat Fermanı', 'II. Meşrutiyet', 'Mondros Ateşkesi'],
+    correctIndex: 0,
+  ),
+  Question(
+    id: 708, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Türkiye\'de kadınlara seçme ve seçilme hakkı hangi yılda verilmiştir?',
+    options: ['1930', '1934', '1935', '1938'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 709, examType: 'AYT', subject: 'Tarih',
+    questionText: 'BM (Birleşmiş Milletler) hangi yılda kurulmuştur?',
+    options: ['1920', '1939', '1945', '1950'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 710, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Osmanlı\'da İlmiye sınıfının başındaki kişi kimdir?',
+    options: ['Sadrazam', 'Şeyhülislam', 'Defterdar', 'Kaptan-ı Derya'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 711, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Kurtuluş Savaşı döneminde Ankara\'nın merkez seçilmesinin temel nedeni aşağıdakilerden hangisidir?',
+    options: ['Ekonomik gelişmişliği', 'Stratejik konumu ve güvenliği', 'Nüfus yoğunluğu', 'Denize kıyısı olması'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 712, examType: 'AYT', subject: 'Tarih',
+    questionText: '1929 Dünya Ekonomik Buhranı\'nın Türkiye\'deki en önemli etkisi aşağıdakilerden hangisi olmuştur?',
+    options: ['Serbest piyasa ekonomisinin güçlenmesi', 'Devletçilik politikasının benimsenmesi', 'Dış borçların artması', 'Tarımın tamamen terk edilmesi'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 713, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Osmanlı\'da "Devşirme Sistemi" hangi amaçla uygulanmıştır?',
+    options: ['Vergi toplamak', 'Kapıkulu ordusuna asker yetiştirmek', 'Ticaret anlaşmaları yapmak', 'Eğitim reformu'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 714, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Misakımilli (Ulusal Ant) hangi kongrede kabul edilmiştir?',
+    options: ['Erzurum Kongresi', 'Sivas Kongresi', 'Son Osmanlı Mebusan Meclisi', 'TBMM\'nin açılışında'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 715, examType: 'AYT', subject: 'Tarih',
+    questionText: 'Tanzimat Fermanı ile getirilen en önemli yenilik aşağıdakilerden hangisidir?',
+    options: ['Padişahın yetkilerinin sınırlandırılması ve herkesin yasa önünde eşit sayılması', 'Cumhuriyetin ilanı', 'Halifeliğin kaldırılması', 'Kadınlara seçme hakkı'],
+    correctIndex: 0,
+  ),
+
+  // ─────────────── AYT COĞRAFYA (15 SORU) ───────────────
+  Question(
+    id: 716, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Türkiye\'de Doğu Karadeniz kıyılarında yağışın fazla olmasının temel nedeni nedir?',
+    options: ['Akdeniz iklimi etkisi', 'Dağların denize paralel uzanması ve nemli hava kütlelerinin yükselmesi', 'Kurak iklim', 'Düşük sıcaklık'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 717, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Tektonik göller nasıl oluşur?',
+    options: ['Volkanik patlama sonucu', 'Buzul aşındırmasıyla', 'Fay hatları boyunca çökmelerle', 'Kıyı kordonlarıyla'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 718, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Türkiye\'de en fazla petrol çıkarılan bölge hangisidir?',
+    options: ['İç Anadolu', 'Doğu Anadolu', 'Güneydoğu Anadolu', 'Marmara'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 719, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Tropikal yağmur ormanlarında biyoçeşitliliğin yüksek olmasının nedeni nedir?',
+    options: ['Düşük sıcaklık', 'Yıl boyunca yüksek sıcaklık ve bol yağış', 'Kısa yetişme dönemi', 'Rüzgâr erozyonu'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 720, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Türkiye\'de çay üretimi en çok hangi bölgede yapılır?',
+    options: ['Ege', 'Akdeniz', 'Doğu Karadeniz', 'Marmara'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 721, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Aşağıdakilerden hangisi bir dış kuvvet (dış etken) değildir?',
+    options: ['Akarsu aşınması', 'Rüzgâr erozyonu', 'Buzul aşındırması', 'Orojenez (Dağ oluşumu)'],
+    correctIndex: 3,
+  ),
+  Question(
+    id: 722, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Orografik (yamaç) yağışların oluşabilmesi için hangi koşul gereklidir?',
+    options: ['Düz ova arazisi', 'Nemli hava kütlesinin dağ yamacına çarparak yükselmesi', 'Kuru hava akımları', 'Buzul oluşumu'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 723, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'GAP (Güneydoğu Anadolu Projesi) kapsamında kurulan en büyük baraj hangisidir?',
+    options: ['Keban Barajı', 'Atatürk Barajı', 'Hirfanlı Barajı', 'Altınkaya Barajı'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 724, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Dünya üzerinde nüfus yoğunluğunun en düşük olduğu kıta hangisidir?',
+    options: ['Avrupa', 'Afrika', 'Antarktika', 'Avustralya'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 725, examType: 'AYT', subject: 'Coğrafya',
+    questionText: 'Karstik şekillerin (dolin, uvala, polye, lapya) oluşabilmesi için hangi tür kayacın yaygın olması gerekir?',
+    options: ['Granit', 'Bazalt', 'Kireçtaşı', 'Andezit'],
+    correctIndex: 2,
+  ),
+
+  // ─────────────── AYT FELSEFE GRUBU (15 SORU) ───────────────
+  Question(
+    id: 726, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'John Locke\'un "Tabula Rasa" kavramı ne anlama gelir?',
+    options: ['Akıl doğuştan bilgi içerir', 'Zihin doğuştan boş bir levhadır; bilgi deneyimle oluşur', 'Bilgi yalnızca sezgiyle elde edilir', 'İnsan doğuştan ahlaklıdır'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 727, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Varoluşçuluk (Egzistansiyalizm) felsefesinin temel tezi nedir?',
+    options: ['Varlık özden önce gelir', 'Akıl her şeyin temelidir', 'Tanrı evrenin merkezindedir', 'Madde tek gerçekliktir'],
+    correctIndex: 0,
+  ),
+  Question(
+    id: 728, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Psikolojide Abraham Maslow\'un "İhtiyaçlar Hiyerarşisi" piramidinin en üst basamağında ne yer alır?',
+    options: ['Fizyolojik ihtiyaçlar', 'Güvenlik ihtiyacı', 'Sevgi ve aidiyet', 'Kendini gerçekleştirme'],
+    correctIndex: 3,
+  ),
+  Question(
+    id: 729, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Sosyolojide Karl Marx\'ın toplum anlayışına göre tarihin itici gücü nedir?',
+    options: ['Din', 'Sınıf çatışması', 'Teknoloji', 'Bireysel irade'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 730, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Mantıkta "tümdengelim" (dedüksiyon) akıl yürütmesinde çıkış noktası nedir?',
+    options: ['Tek tek gözlemler', 'Genel bir önerme veya kural', 'Duygusal sezgi', 'Benzerlik ilişkisi'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 731, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Jean-Jacques Rousseau\'nun toplum sözleşmesi teorisine göre devletin meşruiyeti nereden gelir?',
+    options: ['Tanrısal haktan', 'Bireylerin ortak iradeye dayalı rızasından', 'Askeri güçten', 'Ekonomik zenginlikten'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 732, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Psikolojide "Edimsel Koşullanma" teorisinin öncüsü kimdir?',
+    options: ['Pavlov', 'Freud', 'B.F. Skinner', 'Jung'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 733, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Auguste Comte\'un üç hal yasasında toplumun son aşaması hangisidir?',
+    options: ['Teolojik aşama', 'Metafizik aşama', 'Pozitif (Bilimsel) aşama', 'Endüstriyel aşama'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 734, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: '"Nihilizm" ne anlama gelir?',
+    options: ['Her şeyin bir anlamı vardır', 'Hiçbir şeyin anlamı, değeri ve amacı yoktur', 'Tanrı her şeyi kontrol eder', 'Bilgi kesindir'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 735, examType: 'AYT', subject: 'Felsefe Grubu',
+    questionText: 'Sosyolojide Max Weber\'in bürokrasi kavramında temel özellik nedir?',
+    options: ['Kişisel ilişkiler ön plandadır', 'Yasalara ve kurallara dayalı rasyonel örgütlenme', 'Karizmatik liderlik', 'Geleneksel otorite'],
+    correctIndex: 1,
+  ),
+
+  // ─────────────── AYT DİN KÜLTÜRÜ (5 SORU) ───────────────
+  Question(
+    id: 736, examType: 'AYT', subject: 'Din Kültürü',
+    questionText: 'İslam\'da ibadetlerin yerine getirilmesi için gerekli olan "niyet" hangi organla yapılır?',
+    options: ['Dil', 'Kalp', 'Akıl', 'El'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 737, examType: 'AYT', subject: 'Din Kültürü',
+    questionText: 'İslam\'da "Kader" kavramı neyi ifade eder?',
+    options: ['İnsanın tamamen özgür iradesi', 'Allah\'ın her şeyi önceden bilmesi ve takdir etmesi', 'İnsanın kendi kaderini belirlemesi', 'Rastgelelik'],
+    correctIndex: 1,
+  ),
+  Question(
+    id: 738, examType: 'AYT', subject: 'Din Kültürü',
+    questionText: 'Hac ibadeti İslam\'ın beş şartından hangisidir? (Sıralaması)',
+    options: ['Birincisi', 'İkincisi', 'Üçüncüsü', 'Beşincisi'],
+    correctIndex: 3,
+  ),
+  Question(
+    id: 739, examType: 'AYT', subject: 'Din Kültürü',
+    questionText: 'Kur\'an-ı Kerim kaç sureden oluşur?',
+    options: ['30', '60', '114', '124'],
+    correctIndex: 2,
+  ),
+  Question(
+    id: 740, examType: 'AYT', subject: 'Din Kültürü',
+    questionText: 'Hz. Muhammed\'in Medine\'ye hicret ettiği yıl (622) hangi takvimin başlangıcı olarak kabul edilmiştir?',
+    options: ['Miladi takvim', 'Hicri takvim', 'Gregoryen takvim', 'Rumi takvim'],
+    correctIndex: 1,
+  ),
+];
