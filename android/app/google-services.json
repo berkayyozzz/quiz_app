@@ -7,18 +7,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:781456365983:android:1e4792fa1c5796db5405aa",
+        "mobilesdk_app_id": "1:781456365983:android:bc0b0d7f6e4afe5d5405aa",
         "android_client_info": {
-          "package_name": "com.example.quiz_app"
+          "package_name": "com.yksakademi.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "781456365983-e5o3ma358nuhct4anis52kvo8eb62f1a.apps.googleusercontent.com",
+          "client_id": "781456365983-7veoqkbrgled26u413otgq82gk062els.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.quiz_app",
+            "package_name": "com.yksakademi.app",
+            "certificate_hash": "b7f25b502c2c05e729f9a3ba20650fc8d71aa52a"
+          }
+        },
+        {
+          "client_id": "781456365983-l49o6ul82sulmeaqb39t1j0qakg2712j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yksakademi.app",
             "certificate_hash": "fd616344accf6238b473c029430e5bcd0023e84f"
+          }
+        },
+        {
+          "client_id": "781456365983-u83tjaf3t6aigqlqb4p162o46e2eldoc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yksakademi.app",
+            "certificate_hash": "0288782b6739d54b815b010b8c56f6940a938488"
           }
         },
         {
@@ -37,35 +53,13 @@
             {
               "client_id": "781456365983-ce1v1vo3nt6bbuu5vdpmodr3uag0h42d.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:781456365983:android:bc0b0d7f6e4afe5d5405aa",
-        "android_client_info": {
-          "package_name": "com.yksakademi.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "781456365983-ce1v1vo3nt6bbuu5vdpmodr3uag0h42d.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyALt6rnO6mlbjxX7K280A8sNSNoSk_1NDE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "781456365983-ce1v1vo3nt6bbuu5vdpmodr3uag0h42d.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "781456365983-ebmfivcere3qk54b17gtp3rglcag31be.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.berkayoz.quizapp"
+              }
             }
           ]
         }

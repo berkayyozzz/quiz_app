@@ -7,9 +7,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId: '781456365983-ebmfivcere3qk54b17gtp3rglcag31be.apps.googleusercontent.com',
-  );
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   // Get current user stream
   Stream<User?> get user => _auth.authStateChanges();

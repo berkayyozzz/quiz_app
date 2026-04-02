@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
+import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import 'home_screen.dart';
@@ -20,10 +21,14 @@ class _ResultScreenState extends State<ResultScreen> {
   bool _scoreSaved = false;
   bool _isSaving = false;
   String? _saveError;
+  bool _rewardClaimed = false;
+  bool _isRewardLoading = false;
 
   @override
   void initState() {
     super.initState();
+    // Ödül reklamını önceden yükle
+    AdManager.loadRewardedAd();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _saveScore();
     });
@@ -89,6 +94,81 @@ class _ResultScreenState extends State<ResultScreen> {
         _saveError = 'Giriş yapılmış kullanıcı bulunamadı.';
       });
     }
+  }
+
+  Future<void> _watchRewardedAd(double currentNetScore) async {
+    setState(() {
+      _isRewardLoading = true;
+    });
+
+    // Reklam yüklenmediyse kısa bir süre bekle
+    if (!AdManager.isRewardedAdLoaded) {
+      await Future.delayed(const Duration(seconds: 2));
+    }
+
+    AdManager.showRewardedAd(
+      onRewarded: () async {
+        // Ödül kazanıldı, +10 puan ekle
+        final authService = AuthService();
+        final user = authService.currentUser;
+
+        if (user != null) {
+          try {
+            final firestoreService = FirestoreService();
+            await firestoreService.saveQuizResult(
+              user.uid,
+              user.displayName ?? 'Misafir-${(user.uid.length >= 5) ? user.uid.substring(0, 5) : user.uid}',
+              10.0, // +10 bonus puan
+            );
+
+            if (mounted) {
+              setState(() {
+                _rewardClaimed = true;
+                _isRewardLoading = false;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('+10 bonus puan eklendi! 🎉'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          } catch (e) {
+            if (mounted) {
+              setState(() {
+                _isRewardLoading = false;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Bonus puan kaydedilirken hata: $e'),
+                  backgroundColor: Colors.redAccent,
+                ),
+              );
+            }
+          }
+        } else {
+          if (mounted) {
+            setState(() {
+              _isRewardLoading = false;
+            });
+          }
+        }
+      },
+      onAdFailed: () {
+        if (mounted) {
+          setState(() {
+            _isRewardLoading = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Reklam yüklenemedi. Lütfen daha sonra tekrar deneyin.'),
+              backgroundColor: Colors.orangeAccent,
+            ),
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -275,6 +355,93 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ),
                       ),
+                    ],
+
+                    // Ödül Reklamı Butonu
+                    if (!_rewardClaimed) ...[
+                      const SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xFFFFD700),
+                              const Color(0xFFFFA500),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFFFD700).withOpacity(0.4),
+                              blurRadius: 16,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: ElevatedButton.icon(
+                          onPressed: _isRewardLoading
+                              ? null
+                              : () => _watchRewardedAd(result.netScore),
+                          icon: _isRewardLoading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.black87,
+                                  ),
+                                )
+                              : const Text('🎬', style: TextStyle(fontSize: 20)),
+                          label: Text(
+                            _isRewardLoading
+                                ? 'Reklam Yükleniyor...'
+                                : 'Reklam İzle  +10 Puan',
+                            style: GoogleFonts.poppins(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                          ),
+                        ),
+                      ).animate().fadeIn(delay: 700.ms).shimmer(
+                            duration: 2000.ms,
+                            color: Colors.white.withOpacity(0.3),
+                          ),
+                    ],
+
+                    if (_rewardClaimed) ...[
+                      const SizedBox(height: 20),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.greenAccent.withOpacity(0.4)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.check_circle, color: Colors.greenAccent, size: 20),
+                            const SizedBox(width: 8),
+                            Text(
+                              '+10 Bonus Puan Eklendi! 🎉',
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.greenAccent,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ).animate().scale(curve: Curves.elasticOut),
                     ],
 
                     const SizedBox(height: 32),
