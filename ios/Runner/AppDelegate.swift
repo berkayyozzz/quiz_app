@@ -1,11 +1,9 @@
 import Flutter
 import UIKit
 import GoogleSignIn
-import Firebase
-import FirebaseMessaging
 
 @main
-@objc class AppDelegate: FlutterAppDelegate, MessagingDelegate {
+@objc class AppDelegate: FlutterAppDelegate {
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -14,8 +12,8 @@ import FirebaseMessaging
       UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }
     
-    FirebaseApp.configure()
-    Messaging.messaging().delegate = self
+    // Register for remote notifications
+    application.registerForRemoteNotifications()
     
     GeneratedPluginRegistrant.register(with: self)
     
@@ -31,15 +29,5 @@ import FirebaseMessaging
   
   override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
     return GIDSignIn.sharedInstance.handle(url)
-  }
-  
-  func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-    print("Firebase registration token: \(String(describing: fcmToken))")
-    let dataDict: [String: String] = ["token": fcmToken ?? ""]
-    NotificationCenter.default.post(
-      name: Notification.Name("FCMToken"),
-      object: nil,
-      userInfo: dataDict
-    )
   }
 }
