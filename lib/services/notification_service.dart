@@ -1,5 +1,5 @@
-import 'dart:math';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -9,6 +9,7 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   /// Oturum boyunca yalnızca bir kez izin sorulmasını sağlayan bayrak
   static bool _permissionsAlreadyRequested = false;
@@ -36,6 +37,50 @@ class NotificationService {
         // Handle notification tap
       },
     );
+
+    // Setup FCM
+    await _setupFCMListeners();
+  }
+
+  Future<void> _setupFCMListeners() async {
+    // When the app is in foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("FCM Message received in foreground: ${message.notification?.title}");
+      _showLocalNotification(message);
+    });
+
+    // When the app is in background but opened by tapping the notification
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("FCM Message opened app: ${message.notification?.title}");
+    });
+  }
+
+  Future<void> _showLocalNotification(RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+
+    if (notification != null) {
+      await flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel',
+            'Genel Bildirimler',
+            channelDescription: 'Bu kanal genel uygulama bildirmleri içindir.',
+            importance: Importance.max,
+            priority: Priority.high,
+            icon: android?.smallIcon ?? '@mipmap/ic_launcher',
+          ),
+          iOS: const DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+          ),
+        ),
+      );
+    }
   }
 
   Future<void> requestPermissions() async {
@@ -59,6 +104,28 @@ class NotificationService {
       badge: true,
       sound: true,
     );
+
+    // FCM Permissions
+    NotificationSettings settings = await _fcm.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    print('FCM Permission status: ${settings.authorizationStatus}');
+
+    // Print FCM Token for testing
+    await getFCMToken();
+  }
+
+  Future<String?> getFCMToken() async {
+    try {
+      String? token = await _fcm.getToken();
+      print("FCM Token: $token");
+      return token;
+    } catch (e) {
+      print("Error getting FCM Token: $e");
+      return null;
+    }
   }
 
   Future<void> scheduleStreakReminder(int currentStreak) async {

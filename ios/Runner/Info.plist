@@ -24,7 +24,7 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
+	<key>UILenauchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
@@ -64,5 +64,10 @@
 	<string>ca-app-pub-6164147837428706~3309047040</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Bu izin, size daha uygun ve kişiselleştirilmiş reklamlar göstermemizi sağlar.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>
