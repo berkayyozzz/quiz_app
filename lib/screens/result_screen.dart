@@ -8,6 +8,7 @@ import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import 'home_screen.dart';
+import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -25,6 +26,7 @@ class _ResultScreenState extends State<ResultScreen> {
   bool _isRewardLoading = false;
   int _rewardWatchCount = 0;
   bool _isCheckingLimit = true;
+  int? _weeklyRank;
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _ResultScreenState extends State<ResultScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _saveScore();
       _checkRewardLimit();
+      _fetchWeeklyRank();
     });
   }
 
@@ -77,6 +80,22 @@ class _ResultScreenState extends State<ResultScreen> {
           _isCheckingLimit = false;
         });
       }
+    }
+  }
+
+  Future<void> _fetchWeeklyRank() async {
+    final authService = AuthService();
+    final user = authService.currentUser;
+    if (user != null) {
+      try {
+        final firestoreService = FirestoreService();
+        final rank = await firestoreService.getUserWeeklyRank(user.uid);
+        if (mounted) {
+          setState(() {
+            _weeklyRank = rank;
+          });
+        }
+      } catch (_) {}
     }
   }
 
@@ -414,6 +433,114 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                       ),
                     ],
+
+                    // Haftalık Sıralama ve Liderlik Tablosu
+                    const SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.amber.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.amber.withOpacity(0.3)),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Center(
+                                  child: Text('🏅', style: TextStyle(fontSize: 22)),
+                                ),
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Haftalık Sıralama',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 13,
+                                        color: Colors.white54,
+                                      ),
+                                    ),
+                                    _weeklyRank != null
+                                        ? RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: '$_weeklyRank',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 28,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.amber,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: '. sıradasın',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white70,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : Text(
+                                            'Yükleniyor...',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              color: Colors.white38,
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 14),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 44,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (_) => const LeaderboardScreen()),
+                                );
+                              },
+                              icon: const Icon(Icons.leaderboard, size: 18),
+                              label: Text(
+                                'Liderlik Tablosunu Gör',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.amber.withOpacity(0.2),
+                                foregroundColor: Colors.amber,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  side: BorderSide(color: Colors.amber.withOpacity(0.4)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).animate().fadeIn(delay: 650.ms).slideY(begin: 0.15),
 
                     // Ödül Reklamı Butonu / Limit Bilgisi
                     if (!_rewardClaimed && !_isCheckingLimit) ...[

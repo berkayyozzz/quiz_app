@@ -171,6 +171,28 @@ class FirestoreService {
     return null;
   }
 
+  // Get User's Weekly Rank
+  Future<int?> getUserWeeklyRank(String uid) async {
+    try {
+      final weekId = _getWeekId(DateTime.now());
+      final snapshot = await _db
+          .collection('weekly_scores')
+          .where('weekId', isEqualTo: weekId)
+          .orderBy('score', descending: true)
+          .get();
+
+      for (int i = 0; i < snapshot.docs.length; i++) {
+        if (snapshot.docs[i].data()['uid'] == uid) {
+          return i + 1; // 1-indexed rank
+        }
+      }
+      return null; // User not found in weekly leaderboard
+    } catch (e) {
+      print('Error getting weekly rank: $e');
+      return null;
+    }
+  }
+
   // Get User Profile
   Future<UserProfile?> getUserProfile(String uid) async {
     try {
