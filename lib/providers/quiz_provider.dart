@@ -15,6 +15,9 @@ class QuizProvider extends ChangeNotifier {
   bool _quizFinished = false;
   QuizResult? _result;
 
+  // Yanlış yapılan soruları sakla (resetQuiz sonrasında da kalır)
+  List<Question> _lastWrongQuestions = [];
+
   // New for Deneme Modu
   bool _isDenemeMode = false;
   int _totalSecondsLeft = 0;
@@ -34,6 +37,8 @@ class QuizProvider extends ChangeNotifier {
   int get secondsLeft => _secondsLeft;
   bool get isDenemeMode => _isDenemeMode;
   int get totalSecondsLeft => _totalSecondsLeft;
+  List<Question> get lastWrongQuestions => _lastWrongQuestions;
+  bool get hasWrongQuestions => _lastWrongQuestions.isNotEmpty;
 
   Question? get currentQuestion =>
       _questions.isNotEmpty ? _questions[_currentIndex] : null;
@@ -115,6 +120,14 @@ class QuizProvider extends ChangeNotifier {
   }
 
   void finishQuiz() {
+    // Yanlış yapılan soruları kaydet
+    _lastWrongQuestions = [];
+    for (int i = 0; i < _questions.length; i++) {
+      if (_answers[i] != null && _answers[i] != _questions[i].correctIndex) {
+        _lastWrongQuestions.add(_questions[i]);
+      }
+    }
+
     _result = QuizService.calculateResult(
       questions: _questions,
       answers: _answers,
@@ -122,6 +135,20 @@ class QuizProvider extends ChangeNotifier {
       subject: _subject,
     );
     _quizFinished = true;
+    notifyListeners();
+  }
+
+  /// Yanlış yapılan soruları tekrar çözmek için quiz başlat
+  void startRetryWrongQuestions() {
+    _isDenemeMode = false;
+    _questions = List.from(_lastWrongQuestions);
+    _answers = List.filled(_questions.length, null);
+    _currentIndex = 0;
+    _quizStarted = true;
+    _quizFinished = false;
+    _result = null;
+    _secondsLeft = 90;
+    _lastWrongQuestions = []; // Kullanıldı, temizle
     notifyListeners();
   }
 

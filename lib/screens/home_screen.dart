@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
+import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/notification_service.dart';
 import 'quiz_screen.dart';
@@ -17,11 +18,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _isRetryAdLoading = false;
+
   @override
   void initState() {
     super.initState();
     // Ask for notification permissions right away
     NotificationService().requestPermissions();
+    // Ödül reklamını önceden yükle
+    AdManager.loadRewardedAd();
   }
 
   @override
@@ -60,6 +65,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildSubjectChips(quiz),
                     const SizedBox(height: 32),
                     _buildDenemeSection(context, quiz),
+                    if (quiz.hasWrongQuestions) ...[
+                      const SizedBox(height: 32),
+                      _buildRetryWrongCard(context, quiz),
+                    ],
                     const SizedBox(height: 32),
                     _buildStartButton(context, quiz),
                     const SizedBox(height: 32),
@@ -438,5 +447,159 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildRetryWrongCard(BuildContext context, QuizProvider quiz) {
+    final wrongCount = quiz.lastWrongQuestions.length;
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xFFFF6B35).withOpacity(0.15),
+            const Color(0xFFFF8C42).withOpacity(0.05),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: const Color(0xFFFF6B35).withOpacity(0.4),
+          width: 1.5,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: _isRetryAdLoading
+              ? null
+              : () => _handleRetryWrongQuestions(context, quiz),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF6B35), Color(0xFFFF8C42)],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: _isRetryAdLoading
+                      ? const Center(
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                      : const Center(
+                          child: Text('🔄', style: TextStyle(fontSize: 24)),
+                        ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Yanlışları Tekrar Çöz',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '$wrongCount yanlış soru • Reklam izle ve çöz',
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: Colors.white54,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF6B35).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: const Color(0xFFFF6B35).withOpacity(0.5),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('🎬', style: TextStyle(fontSize: 14)),
+                      const SizedBox(width: 4),
+                      Text(
+                        'İzle',
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFFFF8C42),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ).animate().fadeIn(delay: 300.ms).slideY(begin: 0.15);
+  }
+
+  void _handleRetryWrongQuestions(BuildContext context, QuizProvider quiz) {
+    setState(() {
+      _isRetryAdLoading = true;
+    });
+
+    // Reklam yüklenmediyse kısa bir süre bekle
+    Future<void> showAd() async {
+      if (!AdManager.isRewardedAdLoaded) {
+        await Future.delayed(const Duration(seconds: 2));
+      }
+
+      AdManager.showRewardedAd(
+        onRewarded: () {
+          if (mounted) {
+            setState(() {
+              _isRetryAdLoading = false;
+            });
+            quiz.startRetryWrongQuestions();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const QuizScreen()),
+            );
+          }
+        },
+        onAdFailed: () {
+          if (mounted) {
+            setState(() {
+              _isRetryAdLoading = false;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Reklam yüklenemedi. Lütfen tekrar deneyin.'),
+                backgroundColor: Colors.orangeAccent,
+              ),
+            );
+          }
+        },
+      );
+    }
+
+    showAd();
   }
 }
