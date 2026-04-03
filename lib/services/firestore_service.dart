@@ -109,7 +109,7 @@ class FirestoreService {
   }
 
   // Get Top Users for Global Leaderboard
-  Stream<List<UserProfile>> getLeaderboard({int limit = 50}) {
+  Stream<List<UserProfile>> getLeaderboard({int limit = 100}) {
     return _db
         .collection('users')
         .orderBy('totalNet', descending: true)
@@ -127,7 +127,7 @@ class FirestoreService {
   }
 
   // Get Top Users for Weekly Leaderboard
-  Stream<List<UserProfile>> getWeeklyLeaderboard({int limit = 50}) {
+  Stream<List<UserProfile>> getWeeklyLeaderboard({int limit = 100}) {
     final weekId = _getWeekId(DateTime.now());
     return _db
         .collection('weekly_scores')
@@ -243,6 +243,34 @@ class FirestoreService {
       });
     } catch (e) {
       print('Error claiming reward bonus: $e');
+      return false;
+    }
+  }
+
+  // Update Display Name (Takma Ad)
+  Future<bool> updateDisplayName(String uid, String newDisplayName) async {
+    try {
+      final userRef = _db.collection('users').doc(uid);
+      
+      // Update users collection
+      await userRef.update({
+        'displayName': newDisplayName,
+        'lastUpdated': FieldValue.serverTimestamp(),
+      });
+
+      // Update weekly_scores collection (current week)
+      final weekId = _getWeekId(DateTime.now());
+      final weeklyRef = _db.collection('weekly_scores').doc('${uid}_$weekId');
+      final weeklyDoc = await weeklyRef.get();
+      if (weeklyDoc.exists) {
+        await weeklyRef.update({
+          'displayName': newDisplayName,
+        });
+      }
+
+      return true;
+    } catch (e) {
+      print('Error updating display name: $e');
       return false;
     }
   }

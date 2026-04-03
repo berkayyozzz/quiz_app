@@ -4,14 +4,169 @@ import '../models/user_profile.dart';
 import '../services/firestore_service.dart';
 import '../services/auth_service.dart';
 
-class LeaderboardScreen extends StatelessWidget {
+class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final firestoreService = FirestoreService();
-    final currentUserUid = AuthService().currentUser?.uid;
+  State<LeaderboardScreen> createState() => _LeaderboardScreenState();
+}
 
+class _LeaderboardScreenState extends State<LeaderboardScreen> {
+  final FirestoreService _firestoreService = FirestoreService();
+  final String? _currentUserUid = AuthService().currentUser?.uid;
+
+  void _showEditNameDialog() {
+    final controller = TextEditingController();
+    final currentName = AuthService().currentUser?.displayName ?? '';
+    controller.text = currentName;
+
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        bool isLoading = false;
+        return StatefulBuilder(
+          builder: (ctx, setDialogState) {
+            return AlertDialog(
+              backgroundColor: const Color(0xFF1A1A2E),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              title: Row(
+                children: [
+                  const Text('✏️', style: TextStyle(fontSize: 24)),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Takma Ad Değiştir',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Liderlik tablosunda görünecek takma adını gir:',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white54,
+                      fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: controller,
+                    maxLength: 20,
+                    style: GoogleFonts.poppins(color: Colors.white),
+                    decoration: InputDecoration(
+                      hintText: 'Takma adını yaz...',
+                      hintStyle: GoogleFonts.poppins(color: Colors.white30),
+                      filled: true,
+                      fillColor: Colors.white.withOpacity(0.05),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white12),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Colors.white12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF6C63FF)),
+                      ),
+                      counterStyle: GoogleFonts.poppins(color: Colors.white38, fontSize: 11),
+                      prefixIcon: const Icon(Icons.person, color: Colors.white38),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: isLoading ? null : () => Navigator.pop(ctx),
+                  child: Text(
+                    'İptal',
+                    style: GoogleFonts.poppins(color: Colors.white54),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                          final newName = controller.text.trim();
+                          if (newName.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Takma ad boş olamaz!'),
+                                backgroundColor: Colors.redAccent,
+                              ),
+                            );
+                            return;
+                          }
+                          if (newName.length < 2) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Takma ad en az 2 karakter olmalı!'),
+                                backgroundColor: Colors.redAccent,
+                              ),
+                            );
+                            return;
+                          }
+
+                          setDialogState(() => isLoading = true);
+
+                          final uid = _currentUserUid;
+                          if (uid != null) {
+                            final success = await _firestoreService.updateDisplayName(uid, newName);
+                            if (mounted) {
+                              Navigator.pop(ctx);
+                              if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Takma ad "$newName" olarak güncellendi! ✅'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Takma ad güncellenirken hata oluştu.'),
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6C63FF),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  child: isLoading
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                        )
+                      : Text(
+                          'Kaydet',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -21,6 +176,14 @@ class LeaderboardScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          if (_currentUserUid != null)
+            IconButton(
+              onPressed: _showEditNameDialog,
+              icon: const Icon(Icons.edit, color: Colors.white70),
+              tooltip: 'Takma Ad Değiştir',
+            ),
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -33,8 +196,7 @@ class LeaderboardScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Last Week's Winner Section
-              _buildLastWeekWinner(firestoreService),
+              _buildLastWeekWinner(_firestoreService),
               
               const SizedBox(height: 16),
               
@@ -59,14 +221,13 @@ class LeaderboardScreen extends StatelessWidget {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    // This will trigger a rebuild of the StreamBuilder
                     (context as Element).markNeedsBuild();
                     await Future.delayed(const Duration(milliseconds: 500));
                   },
                   backgroundColor: const Color(0xFF16213E),
                   color: const Color(0xFF6C63FF),
                   child: StreamBuilder<List<UserProfile>>(
-                    stream: firestoreService.getWeeklyLeaderboard(),
+                    stream: _firestoreService.getWeeklyLeaderboard(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
@@ -105,7 +266,7 @@ class LeaderboardScreen extends StatelessWidget {
                       final users = snapshot.data ?? [];
                   
                       if (users.isEmpty) {
-                        return ListView( // Use ListView for RefreshIndicator to work
+                        return ListView(
                           children: [
                             SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                             Center(
@@ -132,10 +293,10 @@ class LeaderboardScreen extends StatelessWidget {
                       return ListView.builder(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         itemCount: users.length,
-                        physics: const AlwaysScrollableScrollPhysics(), // Important for RefreshIndicator
+                        physics: const AlwaysScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           final user = users[index];
-                          final isMe = user.uid == currentUserUid;
+                          final isMe = user.uid == _currentUserUid;
                   
                           return Card(
                             color: isMe ? const Color(0xFF6C63FF).withOpacity(0.2) : const Color(0xFF1E1E3F),
@@ -161,12 +322,33 @@ class LeaderboardScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              title: Text(
-                                user.displayName,
-                                style: GoogleFonts.poppins(
-                                  fontWeight: isMe ? FontWeight.bold : FontWeight.w500,
-                                  color: Colors.white,
-                                ),
+                              title: Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      user.displayName,
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: isMe ? FontWeight.bold : FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  if (isMe) ...[
+                                    const SizedBox(width: 6),
+                                    GestureDetector(
+                                      onTap: _showEditNameDialog,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF6C63FF).withOpacity(0.3),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: const Icon(Icons.edit, color: Colors.white70, size: 14),
+                                      ),
+                                    ),
+                                  ],
+                                ],
                               ),
                               subtitle: Text(
                                 'Toplam Net',
