@@ -11,6 +11,7 @@ import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'services/ad_manager.dart';
 import 'services/notification_service.dart';
+import 'services/analytics_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -64,6 +65,9 @@ class QuizApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
+      navigatorObservers: [
+        AnalyticsService().getAnalyticsObserver(),
+      ],
       home: const AuthWrapper(),
     );
   }

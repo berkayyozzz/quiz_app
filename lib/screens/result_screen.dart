@@ -10,6 +10,7 @@ import '../services/firestore_service.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
+import '../services/analytics_service.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -33,7 +34,18 @@ class _ResultScreenState extends State<ResultScreen> {
     super.initState();
     // Ödül reklamını önceden yükle
     AdManager.loadRewardedAd();
+    
+    // Analytics: Quiz tamamlanmasını logla
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final quiz = Provider.of<QuizProvider>(context, listen: false);
+      if (quiz.result != null) {
+        AnalyticsService().logQuizCompleted(
+          quiz.result!.subject,
+          quiz.result!.correct,
+          quiz.questions.length,
+        );
+      }
+      
       _saveScore();
       _checkRewardLimit();
       _fetchWeeklyRank();

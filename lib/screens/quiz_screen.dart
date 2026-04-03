@@ -6,6 +6,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../services/ad_manager.dart';
+import '../services/analytics_service.dart';
 import 'result_screen.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -21,6 +22,11 @@ class _QuizScreenState extends State<QuizScreen> {
   void initState() {
     super.initState();
     AdManager.loadInterstitialAd();
+    
+    // Analytics: Quiz başlangıcını logla
+    final quiz = context.read<QuizProvider>();
+    AnalyticsService().logQuizStarted(quiz.examType);
+    
     _startTimer();
   }
 
