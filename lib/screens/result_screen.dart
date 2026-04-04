@@ -129,9 +129,14 @@ class _ResultScreenState extends State<ResultScreen> {
 
       try {
         final firestoreService = FirestoreService();
+        
+        // Firestore'dan en güncel kullanıcı profilini çek (takma ad için)
+        final profile = await firestoreService.getUserProfile(user.uid);
+        final displayName = profile?.displayName ?? user.displayName ?? 'Misafir-${(user.uid.length >= 5) ? user.uid.substring(0, 5) : user.uid}';
+
         await firestoreService.saveQuizResult(
           user.uid,
-          user.displayName ?? 'Misafir-${(user.uid.length >= 5) ? user.uid.substring(0, 5) : user.uid}',
+          displayName,
           result.netScore,
         );
         if (mounted) {

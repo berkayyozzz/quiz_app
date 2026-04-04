@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/user_profile.dart';
 import 'notification_service.dart';
 
@@ -279,6 +280,9 @@ class FirestoreService {
         'displayName': newDisplayName,
         'lastUpdated': FieldValue.serverTimestamp(),
       });
+
+      // Update Firebase Auth profile
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(newDisplayName);
 
       // Update weekly_scores collection (current week)
       final weekId = _getWeekId(DateTime.now());
