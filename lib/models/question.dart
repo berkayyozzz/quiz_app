@@ -14,6 +14,28 @@ class Question {
     required this.options,
     required this.correctIndex,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'examType': examType,
+      'subject': subject,
+      'questionText': questionText,
+      'options': options,
+      'correctIndex': correctIndex,
+    };
+  }
+
+  factory Question.fromMap(Map<String, dynamic> map) {
+    return Question(
+      id: map['id'] as int,
+      examType: map['examType'] as String,
+      subject: map['subject'] as String,
+      questionText: map['questionText'] as String,
+      options: List<String>.from(map['options'] as List),
+      correctIndex: map['correctIndex'] as int,
+    );
+  }
 }
 
 enum ExamType { tyt, ayt }

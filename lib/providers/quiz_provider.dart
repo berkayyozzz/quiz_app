@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/question.dart';
 import '../services/quiz_service.dart';
 
@@ -24,6 +26,40 @@ class QuizProvider extends ChangeNotifier {
 
   // Timer
   int _secondsLeft = 90;
+
+  static const String _wrongQuestionsKey = 'last_wrong_questions';
+
+  QuizProvider() {
+    _loadWrongQuestions();
+  }
+
+  Future<void> _loadWrongQuestions() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? wrongJson = prefs.getString(_wrongQuestionsKey);
+      if (wrongJson != null) {
+        final List<dynamic> decoded = jsonDecode(wrongJson);
+        _lastWrongQuestions = decoded
+            .map((item) => Question.fromMap(item as Map<String, dynamic>))
+            .toList();
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint('Yanlış sorular yüklenirken hata: $e');
+    }
+  }
+
+  Future<void> _saveWrongQuestions() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String wrongJson = jsonEncode(
+        _lastWrongQuestions.map((q) => q.toMap()).toList(),
+      );
+      await prefs.setString(_wrongQuestionsKey, wrongJson);
+    } catch (e) {
+      debugPrint('Yanlış sorular kaydedilirken hata: $e');
+    }
+  }
 
   // Getters
   String get examType => _examType;
@@ -128,6 +164,8 @@ class QuizProvider extends ChangeNotifier {
       }
     }
 
+    _saveWrongQuestions(); // Kalıcı olarak kaydet
+
     _result = QuizService.calculateResult(
       questions: _questions,
       answers: _answers,
@@ -149,6 +187,7 @@ class QuizProvider extends ChangeNotifier {
     _result = null;
     _secondsLeft = 90;
     _lastWrongQuestions = []; // Kullanıldı, temizle
+    _saveWrongQuestions(); // Kaydı da temizle
     notifyListeners();
   }
 
