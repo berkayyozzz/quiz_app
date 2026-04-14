@@ -1,0 +1,61 @@
+import '../models/question.dart';
+
+final List<Question> tytNewQuestions5 = [
+  // ─────────────── TÜRKÇE ───────────────
+  Question(id: 1001, examType: 'TYT', subject: 'Türkçe', questionText: '"Hayatta en hakiki mürşit ilimdir." sözünde geçen "mürşit" sözcüğünün eş anlamlısı aşağıdakilerden hangisidir?', options: ['Kılavuz', 'Öğrenci', 'Yol', 'Hedef'], correctIndex: 0),
+  Question(id: 1002, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki cümlelerin hangisinde mecaz anlamlı bir sözcük yoktur?', options: ['Olayı duyunca küplere bindi.', 'Boş sözlerle beni oyalama.', 'Güneş pırıl pırıl parlıyordu.', 'İnce davranışlarıyla herkesi etkiledi.'], correctIndex: 2),
+  Question(id: 1003, examType: 'TYT', subject: 'Türkçe', questionText: '"Elindekileri hızla yere bıraktı ve koşmaya başladı." cümlesindeki "hızla" sözcüğünün türü nedir?', options: ['Sıfat', 'Zarf', 'Zamir', 'İsim'], correctIndex: 1),
+  Question(id: 1004, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdakilerin hangisinde altı çizili sözcük kök türü bakımından farklıdır?', options: ['Gözcü', 'Yolcu', 'Sevgim', 'Odun'], correctIndex: 2),
+  Question(id: 1005, examType: 'TYT', subject: 'Türkçe', questionText: 'Hangi cümlede noktalama yanlışı vardır?', options: ['Geldi, gördü, yendi.', 'Yarın hava güzel olacak mı?', 'Kitap, insanın en iyi dostudur.', 'Ne zaman geleceğini, sordu.'], correctIndex: 3),
+  Question(id: 1006, examType: 'TYT', subject: 'Türkçe', questionText: '"Gözden düşmek" deyiminin anlamı aşağıdakilerden hangisidir?', options: ['Ağlamak', 'Değerini kaybetmek', 'Gözlük takmak', 'Görme yetisini yitirmek'], correctIndex: 1),
+  Question(id: 1007, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki sözcüklerden hangisi türemiş yapılıdır?', options: ['Ağaç', 'Kalem', 'Silgi', 'Masa'], correctIndex: 2),
+  Question(id: 1008, examType: 'TYT', subject: 'Türkçe', questionText: '"Seninle aynı fikirde değilim." cümlesinin yüklemi aşağıdakilerden hangisidir?', options: ['Değilim', 'Aynı fikirde', 'Aynı fikirde değilim', 'Seninle'], correctIndex: 2),
+  Question(id: 1009, examType: 'TYT', subject: 'Türkçe', questionText: '"Ankara\'nın ayazı meşhurdur." cümlesindeki kesme işareti hangi amaçla kullanılmıştır?', options: ['Özel ada gelen çekim ekini ayırmak için', 'Kısaltmaları ayırmak için', 'Sayılara gelen ekleri ayırmak için', 'Tarihleri ayırmak için'], correctIndex: 0),
+  Question(id: 1010, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki eşleştirmelerden hangisi yanlıştır?', options: ['Fakir – Yoksul', 'Cimri – Eli açık', 'Yaşlı – İhtiyar', 'Hediye – Armağan'], correctIndex: 1),
+  Question(id: 1011, examType: 'TYT', subject: 'Türkçe', questionText: 'Hangi cümlede zaman zarfı kullanılmıştır?', options: ['Ağır ağır çıkacaksın bu merdivenlerden.', 'Yarın sabah erkenden yola çıkacağız.', 'Çok çalışarak buralara geldi.', 'Hızlı araba kullanmak tehlikelidir.'], correctIndex: 1),
+  Question(id: 1012, examType: 'TYT', subject: 'Türkçe', questionText: '"Kitap okumak, ufku genişletir." cümlesindeki "okumak" fiilimsi türü aşağıdakilerden hangisidir?', options: ['Sıfat-fiil', 'Zarf-fiil', 'İsim-fiil', 'Çekimli fiil'], correctIndex: 2),
+  Question(id: 1013, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki cümlelerin hangisinde dolaylı tümleç vardır?', options: ['Hava bugün çok sıcak.', 'Ali okula gitti.', 'Hızlıca içeri girdi.', 'Kitabı dün bitirdim.'], correctIndex: 1),
+  Question(id: 1014, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki sözcüklerden hangisinde ünlü düşmesi vardır?', options: ['Burun', 'Şehir', 'Sabır', 'Fikri'], correctIndex: 3),
+  Question(id: 1015, examType: 'TYT', subject: 'Türkçe', questionText: '"Dağ gibi adam bir anda çöktü." cümlesinde hangi söz sanatı yapılmıştır?', options: ['Mübalağa (Abartma)', 'Teşbih (Benzetme)', 'Mecazımürsel', 'Kişileştirme'], correctIndex: 1),
+  Question(id: 1016, examType: 'TYT', subject: 'Türkçe', questionText: 'Hangi cümlede yazım yanlışı yapılmıştır?', options: ['Hiç kimse onu anlamıyor.', 'Herkez bu konuda hemfikir.', 'Bugün hava çok güzel.', 'Yarın bir şeyler yapalım.'], correctIndex: 1),
+  Question(id: 1017, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki sözcüklerden hangisi yapım eki almamıştır?', options: ['Simitçi', 'Gözlük', 'Evler', 'Kalemlik'], correctIndex: 2),
+  Question(id: 1018, examType: 'TYT', subject: 'Türkçe', questionText: '"Bu işi ancak sen yaparsın." cümlesindeki "ancak" sözcüğünün türü nedir?', options: ['Bağlaç', 'Edat', 'Zarf', 'Sıfat'], correctIndex: 1),
+  Question(id: 1019, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki cümlelerin hangisi yapıca basittir?', options: ['Güneş doğunca uyandı.', 'Hava soğuk olduğu için dışarı çıkmadık.', 'Kitap okudu ve uyudu.', 'Çocuklar bahçede oynuyor.'], correctIndex: 3),
+  Question(id: 1020, examType: 'TYT', subject: 'Türkçe', questionText: '"Ağacın yaşken eğildiği saptanmıştır." Bu cümledeki deyimin anlamı nedir?', options: ['Eğitimin küçük yaşta verilmesi gerektiği', 'Ağaçların kolay şekil aldığı', 'Zorluklar karşısında eğilmemek gerektiği', 'Doğanın korunması gerektiği'], correctIndex: 0),
+  Question(id: 1021, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdakilerden hangisi bir isim tamlaması değildir?', options: ['Çalışma masası', 'Mavi gökyüzü', 'Okul yolu', 'Ev kapısı'], correctIndex: 1),
+  Question(id: 1022, examType: 'TYT', subject: 'Türkçe', questionText: '"Kırılan kalbini onarmak çok zordur." cümlesindeki "kırılan" sözcüğünün eylemsi türü nedir?', options: ['İsim-fiil', 'Zarf-fiil', 'Çekimli fiil', 'Sıfat-fiil'], correctIndex: 3),
+  Question(id: 1023, examType: 'TYT', subject: 'Türkçe', questionText: 'Aşağıdaki cümlelerin hangisinde ünsüz sertleşmesi (benzeşmesi) kuralına aykırı bir kullanım vardır?', options: ['Çiçekciden gül aldım.', 'Ağaçtan elma düştü.', 'Kitapta çok güzel bilgiler var.', 'Simitçi geldi.'], correctIndex: 0),
+  Question(id: 1024, examType: 'TYT', subject: 'Türkçe', questionText: '"Açlıktan midem zil çalıyor." cümlesinde hangi anlatım özelliği ağır basmaktadır?', options: ['Gerçeklik', 'Mecaz', 'Terim', 'Somutlama'], correctIndex: 1),
+  Question(id: 1025, examType: 'TYT', subject: 'Türkçe', questionText: 'Hangi cümlede "ki" bağlaç olarak kullanılmıştır?', options: ['Akşamki maç harikaydı.', 'Biliyorum ki başaracaksın.', 'Yarınki toplantı iptal.', 'Evdeki hesap çarşıya uymadı.'], correctIndex: 1),
+
+  // ─────────────── MATEMATİK ───────────────
+  Question(id: 1026, examType: 'TYT', subject: 'Matematik', questionText: 'Bir sayının 4 katının 5 eksiği, aynı sayının 2 katının 7 fazlasına eşittir. Bu sayı kaçtır?', options: ['5', '6', '8', '12'], correctIndex: 1),
+  Question(id: 1027, examType: 'TYT', subject: 'Matematik', questionText: '2 üzeri 4 ile 3 üzeri 3 sayılarının toplamı kaçtır?', options: ['25', '43', '50', '64'], correctIndex: 1),
+  Question(id: 1028, examType: 'TYT', subject: 'Matematik', questionText: 'Aralarında asal iki sayının çarpımı 72\'dir. Bu iki sayının toplamı en az kaç olabilir?', options: ['17', '18', '22', '38'], correctIndex: 0),
+  Question(id: 1029, examType: 'TYT', subject: 'Matematik', questionText: 'Bir sınıftaki 30 öğrencinin %40\'ı gözlüklüdür. Gözlüksüz öğrenci sayısı kaçtır?', options: ['12', '15', '18', '20'], correctIndex: 2),
+  Question(id: 1030, examType: 'TYT', subject: 'Matematik', questionText: 'x² - 9 = 0 denkleminin çözüm kümesi aşağıdakilerden hangisidir?', options: ['{-3}', '{3}', '{-3, 3}', '{0, 9}'], correctIndex: 2),
+  Question(id: 1031, examType: 'TYT', subject: 'Matematik', questionText: 'Dikdörtgen şeklindeki bir bahçenin kısa kenarı uzun kenarının yarısıdır. Bahçenin çevresi 60 m ise alanı kaç metrekaredir?', options: ['100', '150', '200', '250'], correctIndex: 2),
+  Question(id: 1032, examType: 'TYT', subject: 'Matematik', questionText: '|2x - 4| = 6 denklemini sağlayan x değerlerinin toplamı kaçtır?', options: ['-2', '2', '4', '8'], correctIndex: 2),
+  Question(id: 1033, examType: 'TYT', subject: 'Matematik', questionText: 'Bir işi Ali 6 günde, Veli 12 günde bitirebilmektedir. İkisi birlikte aynı işi kaç günde bitirir?', options: ['2', '3', '4', '5'], correctIndex: 2),
+  Question(id: 1034, examType: 'TYT', subject: 'Matematik', questionText: 'Karekök(144) + Karekök(25) - Karekök(16) işleminin sonucu kaçtır?', options: ['10', '13', '15', '17'], correctIndex: 1),
+  Question(id: 1035, examType: 'TYT', subject: 'Matematik', questionText: '1\'den 100\'e kadar olan asal sayıların en büyüğü kaçtır?', options: ['91', '97', '99', '101'], correctIndex: 1),
+
+  // ─────────────── FEN BİLİMLERİ ───────────────
+  Question(id: 1036, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Aşağıdakilerden hangisi fiziksel bir değişimdir?', options: ['Demirin paslanması', 'Sütün ekşimesi', 'Buzun erimesi', 'Odunun yanması'], correctIndex: 2),
+  Question(id: 1037, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Hücrede enerji üretiminden sorumlu organel aşağıdakilerden hangisidir?', options: ['Ribozom', 'Mitokondri', 'Kloroplast', 'Golgi cisimciği'], correctIndex: 1),
+  Question(id: 1038, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Atom numarası 8 olan Oksijen elementinin katman elektron dizilimi nasıldır?', options: ['2, 6', '2, 8', '2, 4, 2', '2, 8, 8'], correctIndex: 0),
+  Question(id: 1039, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Kuvvetin birimi aşağıdakilerden hangisidir?', options: ['Metre', 'Saniye', 'Newton', 'Kelvin'], correctIndex: 2),
+  Question(id: 1040, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'DNA\'nın yapısında bulunan şeker aşağıdakilerden hangisidir?', options: ['Riboz', 'Deoksiriboz', 'Glikoz', 'Fruktoz'], correctIndex: 1),
+  Question(id: 1041, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Saf suyun deniz seviyesinde kaynama noktası kaç santigrat derecedir?', options: ['0', '50', '100', '212'], correctIndex: 2),
+  Question(id: 1042, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Ses dalgaları hangi ortamda boşluğa göre daha hızlı yayılır?', options: ['Katı', 'Sıvı', 'Gaz', 'Ses boşlukta yayılmaz'], correctIndex: 0),
+  Question(id: 1043, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'İnsan vücudundaki en uzun kemik aşağıdakilerden hangisidir?', options: ['Pazı kemiği', 'Uyluk kemiği', 'Kaval kemiği', 'Kafatası'], correctIndex: 1),
+  Question(id: 1044, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Aşağıdakilerden hangisi asidik bir maddedir?', options: ['Çamaşır suyu', 'Sabun', 'Limon suyu', 'Sodyum hidroksit'], correctIndex: 2),
+  Question(id: 1045, examType: 'TYT', subject: 'Fen Bilimleri', questionText: 'Isı alışverişi sonucu sıvı halden gaz haline geçme olayına ne ad verilir?', options: ['Erime', 'Donma', 'Buharlaşma', 'Süblimleşme'], correctIndex: 2),
+
+  // ─────────────── SOSYAL BİLİMLER ───────────────
+  Question(id: 1046, examType: 'TYT', subject: 'Sosyal Bilimler', questionText: 'Türkiye Cumhuriyeti\'nin kurucusu ulu önderimiz kimdir?', options: ['İsmet İnönü', 'Adnan Menderes', 'Mustafa Kemal Atatürk', 'Fevzi Çakmak'], correctIndex: 2),
+  Question(id: 1047, examType: 'TYT', subject: 'Sosyal Bilimler', questionText: 'Osmanlı Devleti\'nin ilk başkenti hangi şehirdir?', options: ['İstanbul', 'Edirne', 'Bursa', 'Söğüt'], correctIndex: 3),
+  Question(id: 1048, examType: 'TYT', subject: 'Sosyal Bilimler', questionText: 'Dünya haritasında en geniş yüzölçümüne sahip ülke hangisidir?', options: ['Amerika Birleşik Devletleri', 'Kanada', 'Çin', 'Rusya'], correctIndex: 3),
+  Question(id: 1049, examType: 'TYT', subject: 'Sosyal Bilimler', questionText: '"Düşünüyorum, öyleyse varım." sözü kime aittir?', options: ['Sokrates', 'Aristoteles', 'René Descartes', 'Immanuel Kant'], correctIndex: 2),
+  Question(id: 1050, examType: 'TYT', subject: 'Sosyal Bilimler', questionText: 'Türkiye\'nin en yüksek dağı aşağıdakilerden hangisidir?', options: ['Erciyes Dağı', 'Süphan Dağı', 'Ağrı Dağı', 'Uludağ'], correctIndex: 2),
+];

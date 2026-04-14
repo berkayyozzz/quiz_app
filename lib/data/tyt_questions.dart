@@ -3,8 +3,10 @@ import 'tyt_new_questions_1.dart';
 import 'tyt_new_questions_2.dart';
 import 'tyt_new_questions_3.dart';
 import 'tyt_new_questions_4.dart';
+import 'tyt_new_questions_5.dart';
 
 final List<Question> tytQuestions = [
+  ...tytNewQuestions5,
   // ─────────────── TÜRKÇE (ÖSYM TARZI / YENİ NESİL) ───────────────
   Question(
       id: 1,

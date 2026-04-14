@@ -29,8 +29,58 @@ class QuizProvider extends ChangeNotifier {
 
   static const String _wrongQuestionsKey = 'last_wrong_questions';
 
+  // New for Deneme Modu seen questions
+  Map<String, List<int>> _seenQuestions = {'TYT': [], 'AYT': []};
+  static const String _seenQuestionsKey = 'seen_deneme_questions';
+
   QuizProvider() {
-    _loadWrongQuestions();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    await _loadWrongQuestions();
+    await _loadSeenQuestions();
+  }
+
+  Future<void> _loadSeenQuestions() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? seenJson = prefs.getString(_seenQuestionsKey);
+      if (seenJson != null) {
+        final Map<String, dynamic> decoded = jsonDecode(seenJson);
+        _seenQuestions = {
+          'TYT': List<int>.from(decoded['TYT'] ?? []),
+          'AYT': List<int>.from(decoded['AYT'] ?? []),
+        };
+      }
+    } catch (e) {
+      debugPrint('Çıkmış sorular yüklenirken hata: $e');
+    }
+  }
+
+  Future<void> _saveSeenQuestions() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_seenQuestionsKey, jsonEncode(_seenQuestions));
+    } catch (e) {
+      debugPrint('Çıkmış sorular kaydedilirken hata: $e');
+    }
+  }
+
+  void _addSeenQuestions(String examType, List<int> ids) {
+    if (_seenQuestions[examType] == null) {
+      _seenQuestions[examType] = [];
+    }
+    bool changed = false;
+    for (int id in ids) {
+      if (!_seenQuestions[examType]!.contains(id)) {
+        _seenQuestions[examType]!.add(id);
+        changed = true;
+      }
+    }
+    if (changed) {
+      _saveSeenQuestions();
+    }
   }
 
   Future<void> _loadWrongQuestions() async {
@@ -107,7 +157,13 @@ class QuizProvider extends ChangeNotifier {
       examType: _examType,
       subject: _isDenemeMode ? 'Karışık' : _subject,
       count: count,
+      excludeIds: _isDenemeMode ? _seenQuestions[_examType] ?? [] : [],
     );
+
+    if (_isDenemeMode) {
+      _addSeenQuestions(_examType, _questions.map((q) => q.id).toList());
+    }
+
     _answers = List.filled(_questions.length, null);
     _currentIndex = 0;
     _quizStarted = true;

@@ -17,12 +17,28 @@ class QuizService {
     required String examType,
     required String subject,
     int count = 15,
+    List<int> excludeIds = const [],
   }) {
     List<Question> pool =
         examType == 'TYT' ? tytQuestions : aytQuestions;
 
     if (subject != 'Karışık') {
       pool = pool.where((q) => q.subject == subject).toList();
+    }
+
+    if (excludeIds.isNotEmpty) {
+      final unseen = pool.where((q) => !excludeIds.contains(q.id)).toList();
+      if (unseen.length >= count) {
+        pool = unseen;
+      } else {
+        final seen = pool.where((q) => excludeIds.contains(q.id)).toList();
+        seen.shuffle(_random);
+        final needed = count - unseen.length;
+        pool = [
+          ...unseen,
+          ...seen.take(needed),
+        ];
+      }
     }
 
     pool = List.from(pool)..shuffle(_random);

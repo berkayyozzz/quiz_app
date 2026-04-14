@@ -3,8 +3,10 @@ import 'ayt_new_questions_1.dart';
 import 'ayt_new_questions_2.dart';
 import 'ayt_new_questions_3.dart';
 import 'ayt_new_questions_4.dart';
+import 'ayt_new_questions_5.dart';
 
 final List<Question> aytQuestions = [
+  ...aytNewQuestions5,
   // ─────────────── AYT MATEMATİK ───────────────
   Question(
       id: 101,
