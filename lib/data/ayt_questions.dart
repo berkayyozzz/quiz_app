@@ -4,9 +4,11 @@ import 'ayt_new_questions_2.dart';
 import 'ayt_new_questions_3.dart';
 import 'ayt_new_questions_4.dart';
 import 'ayt_new_questions_5.dart';
+import 'ayt_new_questions_6.dart';
 
 final List<Question> aytQuestions = [
   ...aytNewQuestions5,
+  ...aytNewQuestions6,
   // ─────────────── AYT MATEMATİK ───────────────
   Question(
       id: 101,
