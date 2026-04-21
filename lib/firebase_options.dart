@@ -55,5 +55,6 @@ class DefaultFirebaseOptions {
     projectId: 'quizapp-a4de4',
     storageBucket: 'quizapp-a4de4.firebasestorage.app',
     iosBundleId: 'com.berkayoz.quizapp',
+    iosClientId: '781456365983-ebmfivcere3qk54b17gtp3rglcag31be.apps.googleusercontent.com',
   );
 }

@@ -468,7 +468,7 @@ class _QuizScreenState extends State<QuizScreen> {
       }
     }
 
-    final labels = ['A', 'B', 'C', 'D'];
+    final labels = ['A', 'B', 'C', 'D', 'E'];
 
     return GestureDetector(
       onTap: () => _handleAnswer(index, quiz),

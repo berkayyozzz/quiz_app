@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:math' as dart_math;
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,7 +9,11 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId: (!kIsWeb && Platform.isIOS) 
+        ? '781456365983-ebmfivcere3qk54b17gtp3rglcag31be.apps.googleusercontent.com' 
+        : null,
+  );
 
   // Get current user stream
   Stream<User?> get user => _auth.authStateChanges();
