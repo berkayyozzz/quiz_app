@@ -81,6 +81,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   void _startMatchmaking() {
     _searchSecondsLeft = 10;
+    int targetMatchSecond = Random().nextInt(8); // Matches when seconds hit anywhere between 0 and 7 (taking 3 to 10 seconds)
+    
     _searchTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) {
         timer.cancel();
@@ -89,7 +91,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       setState(() {
         _searchSecondsLeft--;
       });
-      if (_searchSecondsLeft <= 0) {
+      if (_searchSecondsLeft <= targetMatchSecond) {
         timer.cancel();
         _matchWithBot();
       }

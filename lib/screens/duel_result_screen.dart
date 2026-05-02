@@ -249,12 +249,12 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
                                       ),
                                     ],
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      widget.isBot ? '🤖' : '👤',
-                                      style: const TextStyle(fontSize: 28),
+                                    child: const Center(
+                                      child: Text(
+                                        '👤',
+                                        style: TextStyle(fontSize: 28),
+                                      ),
                                     ),
-                                  ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
