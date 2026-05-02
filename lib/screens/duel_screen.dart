@@ -490,10 +490,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
-                          _isBot ? '🤖' : '👤',
-                          style: const TextStyle(fontSize: 36),
+                          '👤',
+                          style: TextStyle(fontSize: 36),
                         ),
                       ),
                     ),
@@ -692,10 +692,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                           colors: [Color(0xFFFF4757), Color(0xFFFF6B81)],
                         ),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
-                          _isBot ? '🤖' : '👤',
-                          style: const TextStyle(fontSize: 18),
+                          '👤',
+                          style: TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
@@ -839,7 +839,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             if (isBotChoice)
               const Padding(
                 padding: EdgeInsets.only(right: 8.0),
-                child: Text('🤖', style: TextStyle(fontSize: 20)),
+                child: Text('👤', style: TextStyle(fontSize: 20)),
               ),
             if (trailingIcon != null)
               Icon(trailingIcon,
