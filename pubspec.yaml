@@ -1,7 +1,7 @@
 name: yks_akademi
 description: YKS Akademi - Deneme Çöz
 publish_to: 'none'
-version: 1.2.37+37
+version: 1.2.38+38
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
