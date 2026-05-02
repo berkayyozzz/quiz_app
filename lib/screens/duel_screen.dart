@@ -41,6 +41,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   bool _duelFinished = false;
   int? _botAnsweredIndex;
   double _botSkill = 0.5;
+  bool _botAnswered = false;
+  int _botTargetSeconds = -1;
 
   // Animation
   late AnimationController _pulseController;
@@ -127,6 +129,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _selectedAnswer = null;
       _botAnsweredIndex = null;
       _answered = false;
+      _botAnswered = false;
+      _botTargetSeconds = -1;
       _secondsLeft = 15;
     });
     _startQuestionTimer();
@@ -142,6 +146,17 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       setState(() {
         _secondsLeft--;
       });
+
+      if (_answered && !_botAnswered && _secondsLeft <= _botTargetSeconds) {
+        timer.cancel();
+        _botAnswered = true;
+        _simulateBotAnswer();
+        Future.delayed(const Duration(milliseconds: 2500), () {
+          if (mounted) _moveToNext();
+        });
+        return;
+      }
+
       if (_secondsLeft <= 0) {
         timer.cancel();
         _handleTimeUp();
@@ -154,10 +169,15 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       setState(() {
         _answered = true;
       });
-      // Bot answers
+      _botAnswered = true;
       _simulateBotAnswer();
-      // Move to next after delay
-      Future.delayed(const Duration(milliseconds: 3000), () {
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        if (mounted) _moveToNext();
+      });
+    } else if (!_botAnswered) {
+      _botAnswered = true;
+      _simulateBotAnswer();
+      Future.delayed(const Duration(milliseconds: 2500), () {
         if (mounted) _moveToNext();
       });
     }
@@ -165,8 +185,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   void _handleAnswer(int index) {
     if (_answered || _duelFinished) return;
-
-    _questionTimer?.cancel();
 
     final isCorrect = index == _questions[_currentIndex].correctIndex;
 
@@ -177,14 +195,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _playerScore += 10;
         _playerCorrect++;
       }
-    });
-
-    // Bot answers
-    _simulateBotAnswer();
-
-    // Move to next after delay
-    Future.delayed(const Duration(milliseconds: 3000), () {
-      if (mounted) _moveToNext();
+      
+      int botWait = Random().nextInt(3) + 1;
+      _botTargetSeconds = _secondsLeft - botWait;
+      if (_botTargetSeconds < 0) _botTargetSeconds = 0;
     });
   }
 
@@ -218,6 +232,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _selectedAnswer = null;
         _botAnsweredIndex = null;
         _answered = false;
+        _botAnswered = false;
+        _botTargetSeconds = -1;
         _secondsLeft = 15;
       });
       _startQuestionTimer();
