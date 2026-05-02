@@ -52,6 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 40),
                     _buildHeader(),
                     const SizedBox(height: 40),
+                    _buildDuelCard(context),
+                    const SizedBox(height: 32),
                     _buildExamSelector(quiz),
                     const SizedBox(height: 32),
                     Text(
@@ -66,8 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildSubjectChips(quiz),
                     const SizedBox(height: 32),
                     _buildDenemeSection(context, quiz),
-                    const SizedBox(height: 32),
-                    _buildDuelCard(context),
                     if (quiz.hasWrongQuestions) ...[
                       const SizedBox(height: 32),
                       _buildRetryWrongCard(context, quiz),

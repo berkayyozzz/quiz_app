@@ -36,7 +36,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   int _opponentScore = 0;
   int _playerCorrect = 0;
   int _opponentCorrect = 0;
-  int _secondsLeft = 30;
+  int _secondsLeft = 15;
   Timer? _questionTimer;
   bool _duelFinished = false;
 
@@ -123,7 +123,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _currentIndex = 0;
       _selectedAnswer = null;
       _answered = false;
-      _secondsLeft = 30;
+      _secondsLeft = 15;
     });
     _startQuestionTimer();
   }
@@ -552,9 +552,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildDuelTopBar(Color primaryColor) {
-    final timerColor = _secondsLeft > 15
+    final timerColor = _secondsLeft > 8
         ? Colors.greenAccent
-        : _secondsLeft > 7
+        : _secondsLeft > 4
             ? Colors.orange
             : Colors.redAccent;
 
