@@ -39,6 +39,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   int _secondsLeft = 15;
   Timer? _questionTimer;
   bool _duelFinished = false;
+  int? _botAnsweredIndex;
+  double _botSkill = 0.5;
 
   // Animation
   late AnimationController _pulseController;
@@ -99,6 +101,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _isBot = true;
       _opponentName = _turkishNames[nameIndex];
       _isSearching = false;
+      _botSkill = 0.3 + random.nextDouble() * 0.6; // Bot skill between 0.3 and 0.9
     });
     _vsController.forward();
 
@@ -122,6 +125,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     setState(() {
       _currentIndex = 0;
       _selectedAnswer = null;
+      _botAnsweredIndex = null;
       _answered = false;
       _secondsLeft = 15;
     });
@@ -153,7 +157,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       // Bot answers
       _simulateBotAnswer();
       // Move to next after delay
-      Future.delayed(const Duration(milliseconds: 1500), () {
+      Future.delayed(const Duration(milliseconds: 3000), () {
         if (mounted) _moveToNext();
       });
     }
@@ -179,21 +183,32 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     _simulateBotAnswer();
 
     // Move to next after delay
-    Future.delayed(const Duration(milliseconds: 1500), () {
+    Future.delayed(const Duration(milliseconds: 3000), () {
       if (mounted) _moveToNext();
     });
   }
 
   void _simulateBotAnswer() {
     final random = Random();
-    // Bot difficulty: ~60% chance of correct answer
-    final botCorrectChance = 0.55 + random.nextDouble() * 0.15;
-    final botCorrect = random.nextDouble() < botCorrectChance;
+    final q = _questions[_currentIndex];
+    
+    // Bot correctness depends on its skill
+    final botCorrect = random.nextDouble() < _botSkill;
 
-    if (botCorrect) {
-      _opponentScore += 10;
-      _opponentCorrect++;
-    }
+    setState(() {
+      if (botCorrect) {
+        _opponentScore += 10;
+        _opponentCorrect++;
+        _botAnsweredIndex = q.correctIndex;
+      } else {
+        // Pick a random wrong answer
+        List<int> wrongIndices = [];
+        for (int i = 0; i < q.options.length; i++) {
+          if (i != q.correctIndex) wrongIndices.add(i);
+        }
+        _botAnsweredIndex = wrongIndices[random.nextInt(wrongIndices.length)];
+      }
+    });
   }
 
   void _moveToNext() {
@@ -201,8 +216,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       setState(() {
         _currentIndex++;
         _selectedAnswer = null;
+        _botAnsweredIndex = null;
         _answered = false;
-        _secondsLeft = 30;
+        _secondsLeft = 15;
       });
       _startQuestionTimer();
     } else {
@@ -769,6 +785,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       }
     }
 
+    final isBotChoice = _answered && _botAnsweredIndex == index;
     final labels = ['A', 'B', 'C', 'D', 'E'];
 
     return GestureDetector(
@@ -819,6 +836,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 ),
               ),
             ),
+            if (isBotChoice)
+              const Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Text('🤖', style: TextStyle(fontSize: 20)),
+              ),
             if (trailingIcon != null)
               Icon(trailingIcon,
                   color: isCorrect ? Colors.greenAccent : Colors.redAccent,
