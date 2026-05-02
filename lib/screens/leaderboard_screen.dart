@@ -343,7 +343,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (snapshot.hasError) {
-                  return _buildErrorWidget(snapshot.error.toString());
+                  return _buildEmptyDuelWidget();
                 }
                 final users = snapshot.data ?? [];
                 if (users.isEmpty) return _buildEmptyDuelWidget();
@@ -443,7 +443,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     return FutureBuilder<Map<String, dynamic>?>(
       future: _firestoreService.getLastWeekDuelWinner(),
       builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data == null) return const SizedBox.shrink();
+        if (snapshot.hasError || !snapshot.hasData || snapshot.data == null) {
+          return const SizedBox.shrink();
+        }
         final winner = snapshot.data!;
         return Container(
           margin: const EdgeInsets.all(16),

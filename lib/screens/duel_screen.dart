@@ -36,7 +36,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   int _opponentScore = 0;
   int _playerCorrect = 0;
   int _opponentCorrect = 0;
-  int _secondsLeft = 15;
+  int _secondsLeft = 30;
   Timer? _questionTimer;
   bool _duelFinished = false;
 
@@ -123,7 +123,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _currentIndex = 0;
       _selectedAnswer = null;
       _answered = false;
-      _secondsLeft = 15;
+      _secondsLeft = 30;
     });
     _startQuestionTimer();
   }
@@ -202,7 +202,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _currentIndex++;
         _selectedAnswer = null;
         _answered = false;
-        _secondsLeft = 15;
+        _secondsLeft = 30;
       });
       _startQuestionTimer();
     } else {
@@ -346,18 +346,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
               ).animate().fadeIn().shimmer(duration: 2000.ms, color: Colors.white24),
               const SizedBox(height: 12),
               Text(
-                'Kalan süre: $_searchSecondsLeft saniye',
+                'Tahmini bekleme süresi: $_searchSecondsLeft saniye',
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   color: Colors.white54,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Rakip bulunamazsa bot ile eşleşeceksiniz',
-                style: GoogleFonts.poppins(
-                  fontSize: 12,
-                  color: Colors.white30,
                 ),
               ),
               const SizedBox(height: 40),
@@ -560,9 +552,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildDuelTopBar(Color primaryColor) {
-    final timerColor = _secondsLeft > 8
+    final timerColor = _secondsLeft > 15
         ? Colors.greenAccent
-        : _secondsLeft > 4
+        : _secondsLeft > 7
             ? Colors.orange
             : Colors.redAccent;
 
