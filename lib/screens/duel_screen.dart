@@ -196,9 +196,19 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _playerCorrect++;
       }
       
-      int botWait = Random().nextInt(3) + 1;
-      _botTargetSeconds = _secondsLeft - botWait;
-      if (_botTargetSeconds < 0) _botTargetSeconds = 0;
+      int botWait = Random().nextInt(5); // 0 to 4 seconds
+      
+      if (botWait == 0) {
+        _questionTimer?.cancel();
+        _botAnswered = true;
+        _simulateBotAnswer();
+        Future.delayed(const Duration(milliseconds: 2500), () {
+          if (mounted) _moveToNext();
+        });
+      } else {
+        _botTargetSeconds = _secondsLeft - botWait;
+        if (_botTargetSeconds < 0) _botTargetSeconds = 0;
+      }
     });
   }
 
