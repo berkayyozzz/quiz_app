@@ -294,10 +294,113 @@ class FirestoreService {
         });
       }
 
+      // Update weekly_duel_scores collection (current week)
+      final duelWeeklyRef = _db.collection('weekly_duel_scores').doc('${uid}_$weekId');
+      final duelWeeklyDoc = await duelWeeklyRef.get();
+      if (duelWeeklyDoc.exists) {
+        await duelWeeklyRef.update({
+          'displayName': newDisplayName,
+        });
+      }
+
       return true;
     } catch (e) {
       print('Error updating display name: $e');
       return false;
     }
+  }
+
+  // ==================== DUEL MODE ====================
+
+  /// Save Duel Result
+  Future<void> saveDuelResult({
+    required String uid,
+    required String displayName,
+    required int duelPoints,
+    required bool won,
+    required bool isDraw,
+  }) async {
+    try {
+      final weekId = _getWeekId(DateTime.now());
+      final duelWeeklyRef = _db.collection('weekly_duel_scores').doc('${uid}_$weekId');
+
+      await _db.runTransaction((transaction) async {
+        final snapshot = await transaction.get(duelWeeklyRef);
+        
+        if (!snapshot.exists) {
+          transaction.set(duelWeeklyRef, {
+            'uid': uid,
+            'displayName': displayName,
+            'weekId': weekId,
+            'duelPoints': duelPoints,
+            'wins': won ? 1 : 0,
+            'losses': (!won && !isDraw) ? 1 : 0,
+            'draws': isDraw ? 1 : 0,
+            'totalDuels': 1,
+            'timestamp': FieldValue.serverTimestamp(),
+          });
+        } else {
+          final data = snapshot.data()!;
+          transaction.update(duelWeeklyRef, {
+            'displayName': displayName,
+            'duelPoints': (data['duelPoints'] ?? 0) + duelPoints,
+            'wins': (data['wins'] ?? 0) + (won ? 1 : 0),
+            'losses': (data['losses'] ?? 0) + ((!won && !isDraw) ? 1 : 0),
+            'draws': (data['draws'] ?? 0) + (isDraw ? 1 : 0),
+            'totalDuels': (data['totalDuels'] ?? 0) + 1,
+            'timestamp': FieldValue.serverTimestamp(),
+          });
+        }
+      });
+    } catch (e) {
+      print('Error saving duel result: $e');
+      rethrow;
+    }
+  }
+
+  /// Get Weekly Duel Leaderboard
+  Stream<List<Map<String, dynamic>>> getWeeklyDuelLeaderboard({int limit = 100}) {
+    final weekId = _getWeekId(DateTime.now());
+    return _db
+        .collection('weekly_duel_scores')
+        .where('weekId', isEqualTo: weekId)
+        .orderBy('duelPoints', descending: true)
+        .limit(limit)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+            .map((doc) => {
+                  'uid': doc.data()['uid'] as String,
+                  'displayName': doc.data()['displayName'] ?? 'Misafir',
+                  'duelPoints': doc.data()['duelPoints'] ?? 0,
+                  'wins': doc.data()['wins'] ?? 0,
+                  'losses': doc.data()['losses'] ?? 0,
+                  'draws': doc.data()['draws'] ?? 0,
+                  'totalDuels': doc.data()['totalDuels'] ?? 0,
+                })
+            .toList());
+  }
+
+  /// Get Last Week's Duel Winner
+  Future<Map<String, dynamic>?> getLastWeekDuelWinner() async {
+    final lastWeekId = _getWeekId(DateTime.now().subtract(const Duration(days: 7)));
+    final snapshot = await _db
+        .collection('weekly_duel_scores')
+        .where('weekId', isEqualTo: lastWeekId)
+        .orderBy('duelPoints', descending: true)
+        .limit(1)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      final doc = snapshot.docs.first;
+      return {
+        'uid': doc.data()['uid'] as String,
+        'displayName': doc.data()['displayName'] ?? 'Misafir',
+        'duelPoints': doc.data()['duelPoints'] ?? 0,
+        'wins': doc.data()['wins'] ?? 0,
+        'losses': doc.data()['losses'] ?? 0,
+        'totalDuels': doc.data()['totalDuels'] ?? 0,
+      };
+    }
+    return null;
   }
 }
