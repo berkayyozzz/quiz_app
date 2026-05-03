@@ -7,7 +7,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sağ el kuralı ile bulunur', 'Sola doğrudur'],
       correctIndex: 3),
   Question(
       id: 2152,
@@ -15,7 +15,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['13', '1', '7', '14', '10'],
       correctIndex: 0),
   Question(
       id: 2153,
@@ -23,7 +23,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Glikoliz evresi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 1),
   Question(
       id: 2154,
@@ -31,7 +31,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'Ulufe', 'İkta', 'Cizye'],
       correctIndex: 2),
   Question(
       id: 2155,
@@ -39,7 +39,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Maden çeşitliliğinin fazla olması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 3),
   Question(
       id: 2156,
@@ -47,7 +47,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Şakaklarıma kar mı yağdı ne var?', 'Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 0),
   Question(
       id: 2157,
@@ -55,7 +55,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x+3', 'x-3', '2x+1', 'x+2'],
       correctIndex: 1),
   Question(
       id: 2158,
@@ -63,7 +63,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 2),
   Question(
       id: 2159,
@@ -71,7 +71,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '14', '13', '10'],
       correctIndex: 3),
   Question(
       id: 2160,
@@ -79,7 +79,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Glikoliz evresi', 'Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 0),
   Question(
       id: 2161,
@@ -87,7 +87,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ulufe', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 1),
   Question(
       id: 2162,
@@ -95,7 +95,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Maden çeşitliliğinin fazla olması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 2),
   Question(
       id: 2163,
@@ -103,7 +103,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Şakaklarıma kar mı yağdı ne var?', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 3),
   Question(
       id: 2164,
@@ -111,7 +111,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['x+3', '2x-1', 'x-3', '2x+1', 'x+2'],
       correctIndex: 0),
   Question(
       id: 2165,
@@ -119,7 +119,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 1),
   Question(
       id: 2166,
@@ -127,7 +127,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '13', '14', '10'],
       correctIndex: 2),
   Question(
       id: 2167,
@@ -135,7 +135,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Glikoliz evresi', 'Su açığa çıkması'],
       correctIndex: 3),
   Question(
       id: 2168,
@@ -143,7 +143,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Ulufe', 'Cülus', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 0),
   Question(
       id: 2169,
@@ -151,7 +151,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Maden çeşitliliğinin fazla olması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 1),
   Question(
       id: 2170,
@@ -159,7 +159,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Şakaklarıma kar mı yağdı ne var?', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 2),
   Question(
       id: 2171,
@@ -167,7 +167,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x-3', '2x+1', 'x+3', 'x+2'],
       correctIndex: 3),
   Question(
       id: 2172,
@@ -175,7 +175,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sağ el kuralı ile bulunur', 'Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 0),
   Question(
       id: 2173,
@@ -183,7 +183,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '13', '7', '14', '10'],
       correctIndex: 1),
   Question(
       id: 2174,
@@ -191,7 +191,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Glikoliz evresi', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 2),
   Question(
       id: 2175,
@@ -199,7 +199,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'İkta', 'Ulufe', 'Cizye'],
       correctIndex: 3),
   Question(
       id: 2176,
@@ -207,7 +207,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Maden çeşitliliğinin fazla olması', 'Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 0),
   Question(
       id: 2177,
@@ -215,7 +215,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Şakaklarıma kar mı yağdı ne var?', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 1),
   Question(
       id: 2178,
@@ -223,7 +223,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x-3', 'x+3', '2x+1', 'x+2'],
       correctIndex: 2),
   Question(
       id: 2179,
@@ -231,7 +231,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sağ el kuralı ile bulunur', 'Sola doğrudur'],
       correctIndex: 3),
   Question(
       id: 2180,
@@ -239,7 +239,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['13', '1', '7', '14', '10'],
       correctIndex: 0),
   Question(
       id: 2181,
@@ -247,7 +247,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Glikoliz evresi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 1),
   Question(
       id: 2182,
@@ -255,7 +255,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'Ulufe', 'İkta', 'Cizye'],
       correctIndex: 2),
   Question(
       id: 2183,
@@ -263,7 +263,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Maden çeşitliliğinin fazla olması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 3),
   Question(
       id: 2184,
@@ -271,7 +271,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Şakaklarıma kar mı yağdı ne var?', 'Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 0),
   Question(
       id: 2185,
@@ -279,7 +279,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x+3', 'x-3', '2x+1', 'x+2'],
       correctIndex: 1),
   Question(
       id: 2186,
@@ -287,7 +287,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 2),
   Question(
       id: 2187,
@@ -295,7 +295,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '14', '13', '10'],
       correctIndex: 3),
   Question(
       id: 2188,
@@ -303,7 +303,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Glikoliz evresi', 'Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 0),
   Question(
       id: 2189,
@@ -311,7 +311,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ulufe', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 1),
   Question(
       id: 2190,
@@ -319,7 +319,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Maden çeşitliliğinin fazla olması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 2),
   Question(
       id: 2191,
@@ -327,7 +327,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Şakaklarıma kar mı yağdı ne var?', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 3),
   Question(
       id: 2192,
@@ -335,7 +335,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['x+3', '2x-1', 'x-3', '2x+1', 'x+2'],
       correctIndex: 0),
   Question(
       id: 2193,
@@ -343,7 +343,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 1),
   Question(
       id: 2194,
@@ -351,7 +351,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '13', '14', '10'],
       correctIndex: 2),
   Question(
       id: 2195,
@@ -359,7 +359,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Glikoliz evresi', 'Su açığa çıkması'],
       correctIndex: 3),
   Question(
       id: 2196,
@@ -367,7 +367,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Ulufe', 'Cülus', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 0),
   Question(
       id: 2197,
@@ -375,7 +375,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Maden çeşitliliğinin fazla olması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 1),
   Question(
       id: 2198,
@@ -383,7 +383,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Şakaklarıma kar mı yağdı ne var?', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 2),
   Question(
       id: 2199,
@@ -391,7 +391,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x-3', '2x+1', 'x+3', 'x+2'],
       correctIndex: 3),
   Question(
       id: 2200,
@@ -399,7 +399,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sağ el kuralı ile bulunur', 'Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 0),
   Question(
       id: 2201,
@@ -407,7 +407,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '13', '7', '14', '10'],
       correctIndex: 1),
   Question(
       id: 2202,
@@ -415,7 +415,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Glikoliz evresi', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 2),
   Question(
       id: 2203,
@@ -423,7 +423,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'İkta', 'Ulufe', 'Cizye'],
       correctIndex: 3),
   Question(
       id: 2204,
@@ -431,7 +431,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Maden çeşitliliğinin fazla olması', 'Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 0),
   Question(
       id: 2205,
@@ -439,7 +439,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Şakaklarıma kar mı yağdı ne var?', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 1),
   Question(
       id: 2206,
@@ -447,7 +447,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x-3', 'x+3', '2x+1', 'x+2'],
       correctIndex: 2),
   Question(
       id: 2207,
@@ -455,7 +455,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sağ el kuralı ile bulunur', 'Sola doğrudur'],
       correctIndex: 3),
   Question(
       id: 2208,
@@ -463,7 +463,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['13', '1', '7', '14', '10'],
       correctIndex: 0),
   Question(
       id: 2209,
@@ -471,7 +471,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Glikoliz evresi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 1),
   Question(
       id: 2210,
@@ -479,7 +479,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'Ulufe', 'İkta', 'Cizye'],
       correctIndex: 2),
   Question(
       id: 2211,
@@ -487,7 +487,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Maden çeşitliliğinin fazla olması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 3),
   Question(
       id: 2212,
@@ -495,7 +495,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Şakaklarıma kar mı yağdı ne var?', 'Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 0),
   Question(
       id: 2213,
@@ -503,7 +503,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x+3', 'x-3', '2x+1', 'x+2'],
       correctIndex: 1),
   Question(
       id: 2214,
@@ -511,7 +511,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 2),
   Question(
       id: 2215,
@@ -519,7 +519,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '14', '13', '10'],
       correctIndex: 3),
   Question(
       id: 2216,
@@ -527,7 +527,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Glikoliz evresi', 'Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 0),
   Question(
       id: 2217,
@@ -535,7 +535,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ulufe', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 1),
   Question(
       id: 2218,
@@ -543,7 +543,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Maden çeşitliliğinin fazla olması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 2),
   Question(
       id: 2219,
@@ -551,7 +551,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Şakaklarıma kar mı yağdı ne var?', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 3),
   Question(
       id: 2220,
@@ -559,7 +559,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['x+3', '2x-1', 'x-3', '2x+1', 'x+2'],
       correctIndex: 0),
   Question(
       id: 2221,
@@ -567,7 +567,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 1),
   Question(
       id: 2222,
@@ -575,7 +575,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '13', '14', '10'],
       correctIndex: 2),
   Question(
       id: 2223,
@@ -583,7 +583,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Glikoliz evresi', 'Su açığa çıkması'],
       correctIndex: 3),
   Question(
       id: 2224,
@@ -591,7 +591,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Ulufe', 'Cülus', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 0),
   Question(
       id: 2225,
@@ -599,7 +599,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Maden çeşitliliğinin fazla olması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 1),
   Question(
       id: 2226,
@@ -607,7 +607,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Şakaklarıma kar mı yağdı ne var?', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 2),
   Question(
       id: 2227,
@@ -615,7 +615,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x-3', '2x+1', 'x+3', 'x+2'],
       correctIndex: 3),
   Question(
       id: 2228,
@@ -623,7 +623,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sağ el kuralı ile bulunur', 'Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 0),
   Question(
       id: 2229,
@@ -631,7 +631,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '13', '7', '14', '10'],
       correctIndex: 1),
   Question(
       id: 2230,
@@ -639,7 +639,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Glikoliz evresi', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 2),
   Question(
       id: 2231,
@@ -647,7 +647,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'İkta', 'Ulufe', 'Cizye'],
       correctIndex: 3),
   Question(
       id: 2232,
@@ -655,7 +655,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Maden çeşitliliğinin fazla olması', 'Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 0),
   Question(
       id: 2233,
@@ -663,7 +663,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Şakaklarıma kar mı yağdı ne var?', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 1),
   Question(
       id: 2234,
@@ -671,7 +671,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x-3', 'x+3', '2x+1', 'x+2'],
       correctIndex: 2),
   Question(
       id: 2235,
@@ -679,7 +679,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sağ el kuralı ile bulunur', 'Sola doğrudur'],
       correctIndex: 3),
   Question(
       id: 2236,
@@ -687,7 +687,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['13', '1', '7', '14', '10'],
       correctIndex: 0),
   Question(
       id: 2237,
@@ -695,7 +695,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Mitokondride gerçekleşmesi', 'Glikoliz evresi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 1),
   Question(
       id: 2238,
@@ -703,7 +703,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ganimet', 'Ulufe', 'İkta', 'Cizye'],
       correctIndex: 2),
   Question(
       id: 2239,
@@ -711,7 +711,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Dört mevsimin belirgin yaşanması', 'Maden çeşitliliğinin fazla olması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 3),
   Question(
       id: 2240,
@@ -719,7 +719,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Şakaklarıma kar mı yağdı ne var?', 'Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 0),
   Question(
       id: 2241,
@@ -727,7 +727,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['2x-1', 'x+3', 'x-3', '2x+1', 'x+2'],
       correctIndex: 1),
   Question(
       id: 2242,
@@ -735,7 +735,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Manyetik alanla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 2),
   Question(
       id: 2243,
@@ -743,7 +743,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '14', '13', '10'],
       correctIndex: 3),
   Question(
       id: 2244,
@@ -751,7 +751,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Biyoloji',
       questionText:
           "Oksijenli solunum ve laktik asit fermantasyonunda aşağıdakilerden hangisi ortaktır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Glikoliz evresi', 'Mitokondride gerçekleşmesi', 'Oksijen kullanılması', 'Laktik asit oluşumu', 'Su açığa çıkması'],
       correctIndex: 0),
   Question(
       id: 2245,
@@ -759,7 +759,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Tarih',
       questionText:
           "Osmanlı Devleti\'nde Kapıkulu askerlerinin üç ayda bir aldıkları maaşa ne ad verilir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Cülus', 'Ulufe', 'Ganimet', 'İkta', 'Cizye'],
       correctIndex: 1),
   Question(
       id: 2246,
@@ -767,7 +767,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Coğrafya',
       questionText:
           "Türkiye\'nin matematik konumunun sonuçları arasında aşağıdakilerden hangisi gösterilemez?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Kuzeye gidildikçe gölge boyunun uzaması', 'Güneyden esen rüzgarların sıcaklığı artırması', 'Maden çeşitliliğinin fazla olması', 'Dört mevsimin belirgin yaşanması', 'Dağların güney yamaçlarının daha sıcak olması'],
       correctIndex: 2),
   Question(
       id: 2247,
@@ -775,7 +775,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Edebiyat',
       questionText:
           "Aşağıdaki dizelerin hangisinde tecahül-i arif sanatı vardır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Gül hasretinle yollara tutsun kulağını', 'Aslanlarımız bugün destan yazdı', 'Bir ah çeksem dağı taşı eritir', 'Şakaklarıma kar mı yağdı ne var?', 'Kömür gözlüm sana doyamadım'],
       correctIndex: 3),
   Question(
       id: 2248,
@@ -783,7 +783,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "P(x) polinomunun (x-2) ile bölümünden kalan 5, (x+1) ile bölümünden kalan 2\'dir.\n\nBuna göre P(x)\'in (x²-x-2) ile bölümünden kalan aşağıdakilerden hangisidir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['x+3', '2x-1', 'x-3', '2x+1', 'x+2'],
       correctIndex: 0),
   Question(
       id: 2249,
@@ -791,7 +791,7 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Fizik',
       questionText:
           "Düzgün manyetik alan içerisindeki iletken telin uzunluğu L, üzerinden geçen akım i\'dir.\n\nBuna göre tele etki eden manyetik kuvvetin yönü nedir?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Akımla aynı yöndedir', 'Sağ el kuralı ile bulunur', 'Manyetik alanla aynı yöndedir', 'Tele paraleldir', 'Sola doğrudur'],
       correctIndex: 1),
   Question(
       id: 2250,
@@ -799,6 +799,6 @@ final List<Question> aytNewQuestions7 = [
       subject: 'Kimya',
       questionText:
           "Belirli bir sıcaklıkta 0,1 M NaOH çözeltisinin pH değeri kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['1', '7', '13', '14', '10'],
       correctIndex: 2),
 ];

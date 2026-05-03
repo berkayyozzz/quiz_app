@@ -7,7 +7,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2052,
@@ -15,7 +15,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2053,
@@ -23,7 +23,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2054,
@@ -31,7 +31,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2055,
@@ -39,7 +39,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2056,
@@ -47,7 +47,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2057,
@@ -55,7 +55,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2058,
@@ -63,7 +63,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2059,
@@ -71,7 +71,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2060,
@@ -79,7 +79,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2061,
@@ -87,7 +87,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2062,
@@ -95,7 +95,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2063,
@@ -103,7 +103,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2064,
@@ -111,7 +111,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2065,
@@ -119,7 +119,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2066,
@@ -127,7 +127,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2067,
@@ -135,7 +135,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2068,
@@ -143,7 +143,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2069,
@@ -151,7 +151,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2070,
@@ -159,7 +159,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2071,
@@ -167,7 +167,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2072,
@@ -175,7 +175,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2073,
@@ -183,7 +183,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2074,
@@ -191,7 +191,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2075,
@@ -199,7 +199,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2076,
@@ -207,7 +207,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2077,
@@ -215,7 +215,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2078,
@@ -223,7 +223,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2079,
@@ -231,7 +231,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2080,
@@ -239,7 +239,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2081,
@@ -247,7 +247,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2082,
@@ -255,7 +255,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2083,
@@ -263,7 +263,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2084,
@@ -271,7 +271,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2085,
@@ -279,7 +279,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2086,
@@ -287,7 +287,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2087,
@@ -295,7 +295,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2088,
@@ -303,7 +303,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2089,
@@ -311,7 +311,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2090,
@@ -319,7 +319,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2091,
@@ -327,7 +327,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2092,
@@ -335,7 +335,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2093,
@@ -343,7 +343,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2094,
@@ -351,7 +351,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2095,
@@ -359,7 +359,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2096,
@@ -367,7 +367,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2097,
@@ -375,7 +375,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2098,
@@ -383,7 +383,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2099,
@@ -391,7 +391,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2100,
@@ -399,7 +399,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2101,
@@ -407,7 +407,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2102,
@@ -415,7 +415,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2103,
@@ -423,7 +423,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2104,
@@ -431,7 +431,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2105,
@@ -439,7 +439,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2106,
@@ -447,7 +447,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2107,
@@ -455,7 +455,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2108,
@@ -463,7 +463,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2109,
@@ -471,7 +471,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2110,
@@ -479,7 +479,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2111,
@@ -487,7 +487,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2112,
@@ -495,7 +495,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2113,
@@ -503,7 +503,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2114,
@@ -511,7 +511,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2115,
@@ -519,7 +519,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2116,
@@ -527,7 +527,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2117,
@@ -535,7 +535,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2118,
@@ -543,7 +543,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2119,
@@ -551,7 +551,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2120,
@@ -559,7 +559,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2121,
@@ -567,7 +567,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2122,
@@ -575,7 +575,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2123,
@@ -583,7 +583,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2124,
@@ -591,7 +591,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2125,
@@ -599,7 +599,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2126,
@@ -607,7 +607,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2127,
@@ -615,7 +615,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2128,
@@ -623,7 +623,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2129,
@@ -631,7 +631,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2130,
@@ -639,7 +639,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2131,
@@ -647,7 +647,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2132,
@@ -655,7 +655,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2133,
@@ -663,7 +663,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2134,
@@ -671,7 +671,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2135,
@@ -679,7 +679,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2136,
@@ -687,7 +687,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2137,
@@ -695,7 +695,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2138,
@@ -703,7 +703,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2139,
@@ -711,7 +711,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2140,
@@ -719,7 +719,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2141,
@@ -727,7 +727,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2142,
@@ -735,7 +735,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2143,
@@ -743,7 +743,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2144,
@@ -751,7 +751,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2145,
@@ -759,7 +759,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2146,
@@ -767,7 +767,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
   Question(
       id: 2147,
@@ -775,7 +775,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Fen Bilimleri',
       questionText:
           "Sürtünmesiz yatay düzlemde duran K cismine F kuvveti t süre uygulanıyor.\n\nBuna göre cismin ivmesi kaç m/s² olur?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['m/F', 'F.t', 'F.t/m', 'F/m', 'm/(F.t)'],
       correctIndex: 3),
   Question(
       id: 2148,
@@ -783,7 +783,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Türkçe',
       questionText:
           "Parçadaki altı çizili sözle anlatılmak istenen aşağıdakilerden hangisidir?\n\nSanatçı eserlerinde hayatın gerçeklerini bir ayna gibi yansıtır.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Olanı olduğu gibi aktarması', 'Hayal gücünü kullanması', 'Okura yol göstermesi', 'Kendi duygularını katması', 'Geçmişi sorgulaması'],
       correctIndex: 0),
   Question(
       id: 2149,
@@ -791,7 +791,7 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Matematik',
       questionText:
           "a ve b pozitif tam sayılar olmak üzere, a.b = 24 olduğuna göre a+b toplamının alabileceği en küçük değer kaçtır?",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['11', '10', '14', '25', '8'],
       correctIndex: 1),
   Question(
       id: 2150,
@@ -799,6 +799,6 @@ final List<Question> tytNewQuestions7 = [
       subject: 'Sosyal Bilimler',
       questionText:
           "Bu duruma bakarak aşağıdakilerden hangisine ulaşılabilir?\n\nTarih boyunca birçok medeniyet Mezopotamya bölgesinde kurulmuştur.",
-      options: ['A seçeneği', 'B seçeneği', 'C seçeneği', 'D seçeneği'],
+      options: ['Sürekli savaşların yaşandığı', 'Sadece tarımla uğraşıldığı', 'İklim ve coğrafi şartların elverişli olduğu', 'İlk yazının burada bulunduğu', 'Tek tanrılı dinlerin yaygın olduğu'],
       correctIndex: 2),
 ];
