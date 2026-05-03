@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../models/question.dart';
 import '../providers/quiz_provider.dart';
 import '../services/ad_manager.dart';
+import '../services/auth_service.dart';
+import '../services/firestore_service.dart';
 import '../services/quiz_service.dart';
 import 'duel_result_screen.dart';
 
@@ -18,8 +20,13 @@ class DuelScreen extends StatefulWidget {
 }
 
 class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
+  // Ticket state
+  bool _isCheckingTickets = true;
+  bool _hasTickets = false;
+  bool _isRewardLoading = false;
+
   // Matchmaking state
-  bool _isSearching = true;
+  bool _isSearching = false;
   int _searchSecondsLeft = 10;
   Timer? _searchTimer;
 
@@ -76,10 +83,88 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       duration: const Duration(milliseconds: 800),
     );
 
-    _startMatchmaking();
+    _checkTickets();
+  }
+
+  Future<void> _checkTickets() async {
+    final authService = AuthService();
+    final user = authService.currentUser;
+    
+    if (user != null) {
+      final hasTicket = await FirestoreService().consumeDuelTicket(user.uid);
+      if (mounted) {
+        setState(() {
+          _isCheckingTickets = false;
+          _hasTickets = hasTicket;
+        });
+        if (hasTicket) {
+          _startMatchmaking();
+        }
+      }
+    } else {
+      if (mounted) {
+        setState(() {
+          _isCheckingTickets = false;
+          _hasTickets = false; // Need to login
+        });
+      }
+    }
+  }
+
+  void _watchRewardedAdForTickets() async {
+    setState(() {
+      _isRewardLoading = true;
+    });
+
+    if (!AdManager.isRewardedAdLoaded) {
+      await Future.delayed(const Duration(seconds: 2));
+    }
+
+    AdManager.showRewardedAd(
+      onRewarded: () async {
+        final user = AuthService().currentUser;
+        if (user != null) {
+          final success = await FirestoreService().rewardDuelTickets(user.uid);
+          if (mounted) {
+            setState(() {
+              _isRewardLoading = false;
+            });
+            if (success) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('+3 Düello Hakkı Kazandınız! 🎉'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+              // Check tickets again to consume 1 and start
+              setState(() {
+                _isCheckingTickets = true;
+              });
+              _checkTickets();
+            }
+          }
+        }
+      },
+      onAdFailed: () {
+        if (mounted) {
+          setState(() {
+            _isRewardLoading = false;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Reklam yüklenemedi. Daha sonra tekrar deneyin.'),
+              backgroundColor: Colors.orangeAccent,
+            ),
+          );
+        }
+      },
+    );
   }
 
   void _startMatchmaking() {
+    setState(() {
+      _isSearching = true;
+    });
     _searchSecondsLeft = 10;
     int targetMatchSecond = Random().nextInt(8); // Matches when seconds hit anywhere between 0 and 7 (taking 3 to 10 seconds)
     
@@ -293,6 +378,17 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (_isCheckingTickets) {
+      return const Scaffold(
+        backgroundColor: Color(0xFF0D0D1A),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (!_hasTickets) {
+      return _buildNoTicketsScreen();
+    }
+
     if (_isSearching) {
       return _buildSearchingScreen();
     }
@@ -310,6 +406,101 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     }
 
     return _buildDuelQuizScreen();
+  }
+
+  Widget _buildNoTicketsScreen() {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0D0D1A),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white54),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.amber.withOpacity(0.1),
+                ),
+                child: const Center(
+                  child: Text('🎟️', style: TextStyle(fontSize: 60)),
+                ),
+              ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+              const SizedBox(height: 24),
+              Text(
+                'Düello Hakkınız Bitti',
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Günde 3 ücretsiz düello hakkınız bulunur. Reklam izleyerek hemen 3 düello hakkı kazanabilirsiniz.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  color: Colors.white54,
+                ),
+              ),
+              const SizedBox(height: 40),
+              Container(
+                width: double.infinity,
+                height: 56,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFFFD700).withOpacity(0.4),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: ElevatedButton.icon(
+                  onPressed: _isRewardLoading ? null : _watchRewardedAdForTickets,
+                  icon: _isRewardLoading
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black87),
+                        )
+                      : const Text('🎬', style: TextStyle(fontSize: 20)),
+                  label: Text(
+                    _isRewardLoading ? 'Yükleniyor...' : 'Reklam İzle +3 Hak',
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  ),
+                ),
+              ),
+              const Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildSearchingScreen() {

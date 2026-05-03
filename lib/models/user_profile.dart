@@ -10,6 +10,8 @@ class UserProfile {
   final DateTime? lastQuizDate;
   final int rewardedAdsWatchedToday;
   final DateTime? lastRewardedAdDate;
+  final int duelTickets;
+  final DateTime? lastDuelTicketResetDate;
 
   UserProfile({
     required this.uid,
@@ -21,6 +23,8 @@ class UserProfile {
     this.lastQuizDate,
     this.rewardedAdsWatchedToday = 0,
     this.lastRewardedAdDate,
+    this.duelTickets = 3,
+    this.lastDuelTicketResetDate,
   });
 
   factory UserProfile.fromMap(Map<String, dynamic> data, String documentId) {
@@ -34,6 +38,8 @@ class UserProfile {
       lastQuizDate: data['lastQuizDate'] != null ? (data['lastQuizDate'] as Timestamp).toDate() : null,
       rewardedAdsWatchedToday: data['rewardedAdsWatchedToday'] ?? 0,
       lastRewardedAdDate: data['lastRewardedAdDate'] != null ? (data['lastRewardedAdDate'] as Timestamp).toDate() : null,
+      duelTickets: data['duelTickets'] ?? 3,
+      lastDuelTicketResetDate: data['lastDuelTicketResetDate'] != null ? (data['lastDuelTicketResetDate'] as Timestamp).toDate() : null,
     );
   }
 
@@ -47,6 +53,8 @@ class UserProfile {
       'lastQuizDate': lastQuizDate != null ? Timestamp.fromDate(lastQuizDate!) : null,
       'rewardedAdsWatchedToday': rewardedAdsWatchedToday,
       'lastRewardedAdDate': lastRewardedAdDate != null ? Timestamp.fromDate(lastRewardedAdDate!) : null,
+      'duelTickets': duelTickets,
+      'lastDuelTicketResetDate': lastDuelTicketResetDate != null ? Timestamp.fromDate(lastDuelTicketResetDate!) : null,
     };
   }
 }

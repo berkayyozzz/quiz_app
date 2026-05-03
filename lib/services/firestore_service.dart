@@ -403,4 +403,77 @@ class FirestoreService {
     }
     return null;
   }
+
+  // Consume 1 Duel Ticket
+  Future<bool> consumeDuelTicket(String uid) async {
+    try {
+      final userRef = _db.collection('users').doc(uid);
+      
+      return await _db.runTransaction((transaction) async {
+        final userSnapshot = await transaction.get(userRef);
+        
+        if (!userSnapshot.exists) return false;
+
+        final data = userSnapshot.data()!;
+        int tickets = data['duelTickets'] ?? 3;
+        Timestamp? lastResetTimestamp = data['lastDuelTicketResetDate'] as Timestamp?;
+        
+        DateTime now = DateTime.now();
+        DateTime today = DateTime(now.year, now.month, now.day);
+        
+        if (lastResetTimestamp != null) {
+          DateTime lastResetDate = lastResetTimestamp.toDate();
+          DateTime lastResetDay = DateTime(lastResetDate.year, lastResetDate.month, lastResetDate.day);
+          
+          if (today.isAfter(lastResetDay)) {
+            tickets = 3; // Reset tickets daily
+          }
+        } else {
+            // first time playing duel
+            tickets = 3;
+        }
+
+        if (tickets <= 0) {
+          return false; // No tickets left
+        }
+
+        transaction.update(userRef, {
+          'duelTickets': tickets - 1,
+          'lastDuelTicketResetDate': FieldValue.serverTimestamp(),
+          'lastUpdated': FieldValue.serverTimestamp(),
+        });
+
+        return true;
+      });
+    } catch (e) {
+      print('Error consuming duel ticket: $e');
+      return false;
+    }
+  }
+
+  // Reward 3 Duel Tickets (after watching ad)
+  Future<bool> rewardDuelTickets(String uid) async {
+    try {
+      final userRef = _db.collection('users').doc(uid);
+      
+      return await _db.runTransaction((transaction) async {
+        final userSnapshot = await transaction.get(userRef);
+        
+        if (!userSnapshot.exists) return false;
+
+        final data = userSnapshot.data()!;
+        int tickets = data['duelTickets'] ?? 3;
+        
+        transaction.update(userRef, {
+          'duelTickets': tickets + 3,
+          'lastUpdated': FieldValue.serverTimestamp(),
+        });
+
+        return true;
+      });
+    } catch (e) {
+      print('Error rewarding duel tickets: $e');
+      return false;
+    }
+  }
 }
