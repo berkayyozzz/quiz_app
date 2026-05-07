@@ -625,11 +625,13 @@ class FirestoreService {
     required String playerKey,
     required int score,
     required int correct,
+    int? answerIndex,
   }) async {
     try {
       await _db.collection('duel_rooms').doc(roomId).update({
         '${playerKey}Score': score,
         '${playerKey}Correct': correct,
+        '${playerKey}AnswerIndex': answerIndex,
       });
     } catch (e) {
       print('Error updating room score: $e');

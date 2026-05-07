@@ -65,6 +65,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   double _botSkill = 0.5;
   bool _botAnswered = false;
   int _botTargetSeconds = -1;
+  
+  int? _opponentAnswerIndex;
+  bool _opponentAnswered = false;
+  bool _waitingForOpponent = false;
 
   // Animation
   late AnimationController _pulseController;
@@ -295,6 +299,15 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         setState(() {
           _opponentScore = data['${_opponentPlayerKey}Score'] ?? 0;
           _opponentCorrect = data['${_opponentPlayerKey}Correct'] ?? 0;
+
+          if (data.containsKey('${_opponentPlayerKey}AnswerIndex')) {
+            final ans = data['${_opponentPlayerKey}AnswerIndex'];
+            if (ans != null && !_opponentAnswered) {
+              _opponentAnswered = true;
+              _opponentAnswerIndex = ans;
+              _checkBothAnswered();
+            }
+          }
         });
       }
     });
@@ -473,12 +486,26 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     });
   }
 
+  void _checkBothAnswered() {
+    if (_isBot) return;
+    if (_answered && _opponentAnswered && _waitingForOpponent) {
+      setState(() {
+        _waitingForOpponent = false;
+      });
+      _questionTimer?.cancel();
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        if (mounted) _moveToNext();
+      });
+    }
+  }
+
   void _handleTimeUp() {
     if (!_answered) {
       setState(() {
         _answered = true;
+        _selectedAnswer = -1;
       });
-      _handleOnlineUpdate();
+      _handleOnlineUpdate(answerIndex: -1);
       
       if (_isBot) {
          _botAnswered = true;
@@ -487,9 +514,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
            if (mounted) _moveToNext();
          });
       } else {
-         Future.delayed(const Duration(milliseconds: 2500), () {
-           if (mounted) _moveToNext();
+         setState(() {
+           _waitingForOpponent = true;
          });
+         _checkBothAnswered();
       }
     } else if (_isBot && !_botAnswered) {
       _botAnswered = true;
@@ -513,7 +541,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _playerCorrect++;
       }
       
-      _handleOnlineUpdate();
+      _handleOnlineUpdate(answerIndex: index);
 
       if (_isBot) {
         int botWait = Random().nextInt(5);
@@ -529,20 +557,20 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
           if (_botTargetSeconds < 0) _botTargetSeconds = 0;
         }
       } else {
-         Future.delayed(const Duration(milliseconds: 2500), () {
-            if (mounted) _moveToNext();
-         });
+         _waitingForOpponent = true;
+         _checkBothAnswered();
       }
     });
   }
 
-  void _handleOnlineUpdate() {
+  void _handleOnlineUpdate({int? answerIndex}) {
     if (_isOnline && _roomId != null) {
       FirestoreService().updateRoomScore(
         roomId: _roomId!,
         playerKey: _myPlayerKey,
         score: _playerScore,
         correct: _playerCorrect,
+        answerIndex: answerIndex,
       );
     }
   }
@@ -577,7 +605,12 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _botAnswered = false;
         _botTargetSeconds = -1;
         _secondsLeft = 15;
+        
+        _opponentAnswerIndex = null;
+        _opponentAnswered = false;
+        _waitingForOpponent = false;
       });
+      _handleOnlineUpdate(answerIndex: null);
       _startQuestionTimer();
     } else {
       _finishDuel();
@@ -1396,10 +1429,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          _opponentName,
+                          _waitingForOpponent ? 'Bekleniyor...' : _opponentName,
                           style: GoogleFonts.poppins(
                             fontSize: 11,
-                            color: Colors.white54,
+                            color: _waitingForOpponent ? Colors.orangeAccent : Colors.white54,
                           ),
                         ),
                         Text(
@@ -1513,6 +1546,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     }
 
     final isBotChoice = _isBot && _answered && _botAnsweredIndex == index;
+    final showOpponentAnswer = !_isBot && _answered && _opponentAnswered && _opponentAnswerIndex == index;
+    final isOpponentChoice = isBotChoice || showOpponentAnswer;
     final labels = ['A', 'B', 'C', 'D', 'E'];
 
     return GestureDetector(
@@ -1563,10 +1598,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            if (isBotChoice)
+            if (isOpponentChoice)
               const Padding(
                 padding: EdgeInsets.only(right: 8.0),
-                child: Text('🤖', style: TextStyle(fontSize: 20)),
+                child: Text('👤', style: TextStyle(fontSize: 20)),
               ),
             if (trailingIcon != null)
               Icon(trailingIcon,
