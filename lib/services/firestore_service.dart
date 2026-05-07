@@ -510,7 +510,9 @@ class FirestoreService {
         });
         
         final updatedDoc = await roomDoc.reference.get();
-        return updatedDoc.data()..addAll({'roomId': updatedDoc.id});
+        final data = updatedDoc.data();
+        if (data != null) data['roomId'] = updatedDoc.id;
+        return data;
       }
 
       // 2. Create a new room and wait
@@ -531,7 +533,9 @@ class FirestoreService {
       });
 
       final newRoomDoc = await newRoomRef.get();
-      return newRoomDoc.data()..addAll({'roomId': newRoomDoc.id});
+      final data = newRoomDoc.data();
+      if (data != null) data['roomId'] = newRoomDoc.id;
+      return data;
     } catch (e) {
       print('Error in matchmaking: $e');
       return null;
@@ -564,7 +568,9 @@ class FirestoreService {
       });
 
       final roomDoc = await roomRef.get();
-      return roomDoc.data()..addAll({'roomId': roomDoc.id});
+      final data = roomDoc.data();
+      if (data != null) data['roomId'] = roomDoc.id;
+      return data;
     } catch (e) {
       print('Error creating private room: $e');
       return null;
@@ -600,7 +606,9 @@ class FirestoreService {
       });
 
       final updatedDoc = await roomRef.get();
-      return updatedDoc.data()..addAll({'roomId': updatedDoc.id});
+      final data = updatedDoc.data();
+      if (data != null) data['roomId'] = updatedDoc.id;
+      return data;
     } catch (e) {
       print('Error joining private room: $e');
       return {'error': 'Odaya katılırken bir hata oluştu'};

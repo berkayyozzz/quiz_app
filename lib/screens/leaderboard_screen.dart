@@ -313,7 +313,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
               GestureDetector(
                 onTap: () => _sendChallenge(user.uid, user.displayName),
                 child: Container(
-                  margin: const EdgeInsets.top(4),
+                  margin: const EdgeInsets.only(top: 4),
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: const Color(0xFFFF4757).withOpacity(0.2),
@@ -450,7 +450,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                   GestureDetector(
                     onTap: () => _sendChallenge(user['uid'], user['displayName'] ?? 'Oyuncu'),
                     child: Container(
-                      margin: const EdgeInsets.top(4),
+                      margin: const EdgeInsets.only(top: 4),
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFF4757).withOpacity(0.2),
