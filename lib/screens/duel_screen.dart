@@ -1229,7 +1229,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                       ),
                       child: Center(
                         child: Text(
-                          _isBot ? '🤖' : '👤',
+                          '👤',
                           style: const TextStyle(fontSize: 36),
                         ),
                       ),
@@ -1424,7 +1424,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                       ),
                       child: Center(
                         child: Text(
-                          _isBot ? '🤖' : '👤',
+                          '👤',
                           style: const TextStyle(fontSize: 18),
                         ),
                       ),
