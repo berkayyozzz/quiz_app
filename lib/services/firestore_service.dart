@@ -596,7 +596,8 @@ class FirestoreService {
       }
 
       if (data['player1Id'] == uid) {
-         return data..addAll({'roomId': roomDoc.id});
+         data['roomId'] = roomDoc.id;
+         return data;
       }
 
       await roomRef.update({
@@ -606,9 +607,9 @@ class FirestoreService {
       });
 
       final updatedDoc = await roomRef.get();
-      final data = updatedDoc.data();
-      if (data != null) data['roomId'] = updatedDoc.id;
-      return data;
+      final updatedData = updatedDoc.data();
+      if (updatedData != null) updatedData['roomId'] = updatedDoc.id;
+      return updatedData;
     } catch (e) {
       print('Error joining private room: $e');
       return {'error': 'Odaya katılırken bir hata oluştu'};
