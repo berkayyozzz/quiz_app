@@ -1,9 +1,16 @@
+import 'dart:async';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
+import '../services/quiz_service.dart';
+import 'package:provider/provider.dart';
+import '../providers/quiz_provider.dart';
 import 'duel_screen.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
@@ -16,6 +23,9 @@ class DuelResultScreen extends StatefulWidget {
   final String opponentName;
   final int totalQuestions;
   final bool isBot;
+  final String? roomId;
+  final String? myPlayerKey;
+  final String? opponentPlayerKey;
 
   const DuelResultScreen({
     super.key,
@@ -26,6 +36,9 @@ class DuelResultScreen extends StatefulWidget {
     required this.opponentName,
     required this.totalQuestions,
     required this.isBot,
+    this.roomId,
+    this.myPlayerKey,
+    this.opponentPlayerKey,
   });
 
   @override
@@ -36,10 +49,175 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
   bool _scoreSaved = false;
   bool _isSaving = false;
 
+  // Rematch
+  bool _rematchSent = false;
+  bool _rematchLoading = false;
+  StreamSubscription<DocumentSnapshot>? _rematchSub;
+
   @override
   void initState() {
     super.initState();
     _saveDuelScore();
+
+    // Haptic on result
+    final playerWon = widget.playerScore > widget.opponentScore;
+    if (playerWon) {
+      HapticFeedback.heavyImpact();
+    } else {
+      HapticFeedback.lightImpact();
+    }
+
+    // Listen for incoming rematch requests from opponent
+    _listenForRematch();
+  }
+
+  @override
+  void dispose() {
+    _rematchSub?.cancel();
+    super.dispose();
+  }
+
+  void _listenForRematch() {
+    if (widget.roomId == null || widget.isBot) return;
+
+    _rematchSub = FirestoreService().listenToRoom(widget.roomId!).listen((snapshot) {
+      if (!mounted) return;
+      if (!snapshot.exists) return;
+
+      final data = snapshot.data() as Map<String, dynamic>;
+      final rematchRoomId = data['rematchRoomId'] as String?;
+      final requestedBy = data['rematchRequestedBy'] as String?;
+
+      // If the OTHER player requested a rematch, show dialog
+      if (rematchRoomId != null && requestedBy != null && requestedBy != widget.myPlayerKey) {
+        _rematchSub?.cancel();
+        _showRematchDialog(rematchRoomId);
+      }
+    });
+  }
+
+  void _showRematchDialog(String newRoomCode) {
+    if (!mounted) return;
+    HapticFeedback.mediumImpact();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1E1E3F),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          '🔄 Rövanş İsteği!',
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          '${widget.opponentName} seni tekrar düelloya çağırıyor!',
+          style: GoogleFonts.poppins(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+            },
+            child: Text(
+              'Reddet',
+              style: GoogleFonts.poppins(color: Colors.redAccent),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DuelScreen(initialJoinCode: newRoomCode),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text(
+              'Kabul Et',
+              style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _sendRematch() async {
+    if (_rematchSent || _rematchLoading) return;
+    if (widget.roomId == null || widget.isBot) return;
+
+    setState(() => _rematchLoading = true);
+
+    try {
+      final user = AuthService().currentUser;
+      final userProfile = await FirestoreService().getUserProfile(user!.uid);
+      final displayName = userProfile?.displayName ?? 'Oyuncu';
+      final quiz = context.read<QuizProvider>();
+
+      final random = Random();
+      final code = (100000 + random.nextInt(900000)).toString();
+
+      final localQuestions = QuizService.getQuestions(
+        examType: quiz.examType,
+        subject: 'Karışık',
+        count: 10,
+      );
+      final questionMaps = localQuestions.map((q) => q.toMap()).toList();
+
+      final roomData = await FirestoreService().createPrivateRoom(
+        uid: user.uid,
+        displayName: displayName,
+        examType: quiz.examType,
+        roomCode: code,
+        questions: questionMaps,
+      );
+
+      if (roomData != null) {
+        // Tell the old room about the rematch
+        await FirestoreService().requestRematch(
+          widget.roomId!,
+          code,
+          widget.myPlayerKey!,
+        );
+
+        setState(() {
+          _rematchSent = true;
+          _rematchLoading = false;
+        });
+
+        HapticFeedback.mediumImpact();
+
+        // Navigate to the new room as player1
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DuelScreen(initialRoomCode: code),
+            ),
+          );
+        }
+      } else {
+        setState(() => _rematchLoading = false);
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _rematchLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Rövanş isteği gönderilemedi.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
   }
 
   Future<void> _saveDuelScore() async {
@@ -91,6 +269,7 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
   Widget build(BuildContext context) {
     final playerWon = widget.playerScore > widget.opponentScore;
     final isDraw = widget.playerScore == widget.opponentScore;
+    final isOnlineMatch = widget.roomId != null && !widget.isBot;
 
     String emoji;
     String title;
@@ -378,6 +557,62 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
 
                 const SizedBox(height: 16),
 
+                // Rematch button (only for online matches)
+                if (isOnlineMatch) ...[
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF00B894), Color(0xFF00CEC9)],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF00B894).withOpacity(0.4),
+                            blurRadius: 20,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton.icon(
+                        onPressed: _rematchLoading || _rematchSent ? null : _sendRematch,
+                        icon: _rematchLoading
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Icon(
+                                _rematchSent ? Icons.check : Icons.replay,
+                                color: Colors.white,
+                              ),
+                        label: Text(
+                          _rematchSent ? 'Rövanş İsteği Gönderildi!' : 'Rövanş İste 🔄',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          disabledBackgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ).animate().fadeIn(delay: 650.ms),
+                  const SizedBox(height: 12),
+                ],
+
                 // Leaderboard button
                 SizedBox(
                   width: double.infinity,
@@ -516,4 +751,3 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
     );
   }
 }
-

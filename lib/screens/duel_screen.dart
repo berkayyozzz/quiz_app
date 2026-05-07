@@ -70,6 +70,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   bool _opponentAnswered = false;
   bool _waitingForOpponent = false;
 
+  // Emojis
+  String? _showOpponentEmoji;
+  Timer? _emojiTimer;
+  String? _lastOpponentEmojiRaw;
+
   // Animation
   late AnimationController _pulseController;
   late AnimationController _vsController;
@@ -308,6 +313,13 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
               _checkBothAnswered();
             }
           }
+
+          final oppEmojiRaw = data['${_opponentPlayerKey}Emoji'] as String?;
+          if (oppEmojiRaw != null && oppEmojiRaw != _lastOpponentEmojiRaw) {
+             _lastOpponentEmojiRaw = oppEmojiRaw;
+             final emoji = oppEmojiRaw.split('_')[0];
+             _showEmojiAnimation(emoji);
+          }
         });
       }
     });
@@ -315,10 +327,28 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   Future<void> _cleanupRoom() async {
     _roomSubscription?.cancel();
+    _emojiTimer?.cancel();
     if (_roomId != null && _myPlayerKey == 'player1' && (_isSearching || _isCreatingRoom)) {
        await FirestoreService().deleteRoom(_roomId!);
     }
     _roomId = null;
+  }
+
+  void _showEmojiAnimation(String emoji) {
+    setState(() {
+      _showOpponentEmoji = emoji;
+    });
+    _emojiTimer?.cancel();
+    _emojiTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() => _showOpponentEmoji = null);
+      }
+    });
+  }
+
+  void _sendEmoji(String e) {
+     if (!_isOnline || _roomId == null) return;
+     FirestoreService().updateRoomEmoji(_roomId!, _myPlayerKey, '${e}_${DateTime.now().millisecondsSinceEpoch}');
   }
 
   Future<void> _createPrivateRoom() async {
@@ -469,6 +499,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _secondsLeft--;
       });
 
+      if (_secondsLeft <= 3 && _secondsLeft > 0 && !_answered) {
+         HapticFeedback.selectionClick();
+      }
+
       if (_isBot && _answered && !_botAnswered && _secondsLeft <= _botTargetSeconds) {
         timer.cancel();
         _botAnswered = true;
@@ -537,8 +571,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _selectedAnswer = index;
       _answered = true;
       if (isCorrect) {
+        HapticFeedback.mediumImpact();
         _playerScore += 10;
         _playerCorrect++;
+      } else {
+        HapticFeedback.heavyImpact();
       }
       
       _handleOnlineUpdate(answerIndex: index);
@@ -610,6 +647,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _opponentAnswered = false;
         _waitingForOpponent = false;
       });
+      HapticFeedback.selectionClick();
       _handleOnlineUpdate(answerIndex: null);
       _startQuestionTimer();
     } else {
@@ -620,6 +658,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   void _finishDuel() {
     _questionTimer?.cancel();
     _roomSubscription?.cancel();
+    _emojiTimer?.cancel();
     
     // If online, we don't delete the room immediately, let both players see it finished
     // In a full implementation, we might clean it up or mark it finished.
@@ -642,6 +681,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 opponentName: _opponentName,
                 totalQuestions: _questions.length,
                 isBot: _isBot,
+                roomId: _isOnline ? _roomId : null,
+                myPlayerKey: _isOnline ? _myPlayerKey : null,
+                opponentPlayerKey: _isOnline ? _opponentPlayerKey : null,
               ),
             ),
           );
@@ -654,6 +696,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   void dispose() {
     _searchTimer?.cancel();
     _questionTimer?.cancel();
+    _emojiTimer?.cancel();
     _pulseController.dispose();
     _vsController.dispose();
     _cleanupRoom();
@@ -1291,47 +1334,90 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     const primaryColor = Color(0xFFFF4757);
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF0D0D1A), Color(0xFF1A1A2E), Color(0xFF16213E)],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildDuelTopBar(primaryColor),
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
-                        _buildSubjectBadge(q.subject, primaryColor),
-                        const SizedBox(height: 16),
-                        _buildQuestionCard(q.questionText),
-                        const SizedBox(height: 20),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: q.options.length,
-                          itemBuilder: (_, i) =>
-                              _buildOptionTile(i, q.options[i], primaryColor),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF0D0D1A), Color(0xFF1A1A2E), Color(0xFF16213E)],
+              ),
+            ),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  _buildDuelTopBar(primaryColor),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 16),
+                            _buildSubjectBadge(q.subject, primaryColor),
+                            const SizedBox(height: 16),
+                            _buildQuestionCard(q.questionText),
+                            const SizedBox(height: 20),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: q.options.length,
+                              itemBuilder: (_, i) =>
+                                  _buildOptionTile(i, q.options[i], primaryColor),
+                            ),
+                            const SizedBox(height: 16),
+                            _buildEmojiBar(),
+                            const SizedBox(height: 16),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          if (_showOpponentEmoji != null)
+            Positioned(
+              top: 80,
+              right: 20,
+              child: Text(
+                _showOpponentEmoji!,
+                style: const TextStyle(fontSize: 60),
+              ).animate().slideY(begin: 0.5, end: -0.5).fadeIn().fadeOut(delay: 2000.ms),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmojiBar() {
+    if (!_isOnline) return const SizedBox.shrink();
+    final emojis = ['👍', '😢', '🤯', '🔥'];
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: emojis.map((e) {
+          return GestureDetector(
+            onTap: () {
+               _sendEmoji(e);
+               HapticFeedback.lightImpact();
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                shape: BoxShape.circle,
+              ),
+              child: Text(e, style: const TextStyle(fontSize: 28)),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

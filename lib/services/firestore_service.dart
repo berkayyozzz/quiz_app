@@ -638,6 +638,27 @@ class FirestoreService {
     }
   }
 
+  Future<void> updateRoomEmoji(String roomId, String playerKey, String emojiData) async {
+    try {
+      await _db.collection('duel_rooms').doc(roomId).update({
+        '${playerKey}Emoji': emojiData,
+      });
+    } catch (e) {
+      print('Error updating emoji: $e');
+    }
+  }
+
+  Future<void> requestRematch(String roomId, String newRoomId, String playerKey) async {
+    try {
+      await _db.collection('duel_rooms').doc(roomId).update({
+        'rematchRoomId': newRoomId,
+        'rematchRequestedBy': playerKey,
+      });
+    } catch (e) {
+      print('Error requesting rematch: $e');
+    }
+  }
+
   Future<void> deleteRoom(String roomId) async {
     try {
       await _db.collection('duel_rooms').doc(roomId).delete();
