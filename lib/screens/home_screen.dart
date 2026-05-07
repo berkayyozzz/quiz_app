@@ -7,6 +7,7 @@ import '../providers/quiz_provider.dart';
 import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
+import '../services/haptic_helper.dart';
 import '../services/notification_service.dart';
 import 'dart:async';
 import 'quiz_screen.dart';
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Ödül reklamını önceden yükle
     AdManager.loadRewardedAd();
     _listenForInvites();
+    HapticHelper.init();
   }
 
   void _listenForInvites() {
@@ -229,6 +231,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   context,
                   MaterialPageRoute(builder: (_) => const LeaderboardScreen()),
                 );
+              },
+            ),
+            IconButton(
+              icon: Icon(
+                HapticHelper.isEnabled ? Icons.vibration : Icons.phone_android,
+                color: HapticHelper.isEnabled ? Colors.greenAccent : Colors.white30,
+                size: 24,
+              ),
+              tooltip: 'Titreşim',
+              onPressed: () async {
+                await HapticHelper.setEnabled(!HapticHelper.isEnabled);
+                if (HapticHelper.isEnabled) HapticHelper.mediumImpact();
+                setState(() {});
               },
             ),
             IconButton(

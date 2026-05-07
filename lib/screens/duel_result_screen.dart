@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
+import '../services/haptic_helper.dart';
 import '../services/quiz_service.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
@@ -62,9 +63,9 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
     // Haptic on result
     final playerWon = widget.playerScore > widget.opponentScore;
     if (playerWon) {
-      HapticFeedback.heavyImpact();
+      HapticHelper.heavyImpact();
     } else {
-      HapticFeedback.lightImpact();
+      HapticHelper.lightImpact();
     }
 
     // Listen for incoming rematch requests from opponent
@@ -98,7 +99,7 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
 
   void _showRematchDialog(String newRoomCode) {
     if (!mounted) return;
-    HapticFeedback.mediumImpact();
+    HapticHelper.mediumImpact();
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -193,7 +194,7 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
           _rematchLoading = false;
         });
 
-        HapticFeedback.mediumImpact();
+        HapticHelper.mediumImpact();
 
         // Navigate to the new room as player1
         if (mounted) {

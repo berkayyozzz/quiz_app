@@ -11,6 +11,7 @@ import '../providers/quiz_provider.dart';
 import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
+import '../services/haptic_helper.dart';
 import '../services/quiz_service.dart';
 import 'duel_result_screen.dart';
 
@@ -500,7 +501,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       });
 
       if (_secondsLeft <= 3 && _secondsLeft > 0 && !_answered) {
-         HapticFeedback.selectionClick();
+         HapticHelper.selectionClick();
       }
 
       if (_isBot && _answered && !_botAnswered && _secondsLeft <= _botTargetSeconds) {
@@ -571,11 +572,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _selectedAnswer = index;
       _answered = true;
       if (isCorrect) {
-        HapticFeedback.mediumImpact();
+        HapticHelper.mediumImpact();
         _playerScore += 10;
         _playerCorrect++;
       } else {
-        HapticFeedback.heavyImpact();
+        HapticHelper.heavyImpact();
       }
       
       _handleOnlineUpdate(answerIndex: index);
@@ -647,7 +648,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _opponentAnswered = false;
         _waitingForOpponent = false;
       });
-      HapticFeedback.selectionClick();
+      HapticHelper.selectionClick();
       _handleOnlineUpdate(answerIndex: null);
       _startQuestionTimer();
     } else {
@@ -1405,7 +1406,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
           return GestureDetector(
             onTap: () {
                _sendEmoji(e);
-               HapticFeedback.lightImpact();
+               HapticHelper.lightImpact();
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 12),
