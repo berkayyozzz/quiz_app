@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +15,10 @@ import '../services/quiz_service.dart';
 import 'duel_result_screen.dart';
 
 class DuelScreen extends StatefulWidget {
-  const DuelScreen({super.key});
+  final String? initialRoomCode; // If we created a room and are waiting
+  final String? initialJoinCode; // If we are joining an invite
+
+  const DuelScreen({super.key, this.initialRoomCode, this.initialJoinCode});
 
   @override
   State<DuelScreen> createState() => _DuelScreenState();
@@ -25,10 +30,20 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   bool _hasTickets = false;
   bool _isRewardLoading = false;
 
-  // Matchmaking state
+  // Matchmaking / Online State
+  bool _showMenu = false;
+  bool _showJoinRoom = false;
+  final TextEditingController _roomCodeController = TextEditingController();
   bool _isSearching = false;
-  int _searchSecondsLeft = 10;
+  int _searchSecondsLeft = 15;
   Timer? _searchTimer;
+  String? _roomId;
+  StreamSubscription<DocumentSnapshot>? _roomSubscription;
+  bool _isOnline = false;
+  String _myPlayerKey = 'player1';
+  String _opponentPlayerKey = 'player2';
+  bool _isCreatingRoom = false;
+  String? _myRoomCode;
 
   // Bot info
   String _opponentName = '';
@@ -55,7 +70,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   late AnimationController _pulseController;
   late AnimationController _vsController;
 
-  // Random Turkish bot names
   static const List<String> _turkishNames = [
     'Ahmet', 'Mehmet', 'Ayşe', 'Fatma', 'Ali', 'Zeynep', 'Mustafa', 'Emine',
     'Hüseyin', 'Hatice', 'Hasan', 'Elif', 'İbrahim', 'Meryem', 'Yusuf',
@@ -96,16 +110,30 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         setState(() {
           _isCheckingTickets = false;
           _hasTickets = hasTicket;
+          if (hasTicket) {
+             if (widget.initialJoinCode != null) {
+                // Instantly join
+                _joinPrivateRoom(widget.initialJoinCode!);
+             } else if (widget.initialRoomCode != null) {
+                // Instantly wait
+                _myRoomCode = widget.initialRoomCode;
+                _showMenu = false;
+                _roomId = widget.initialRoomCode; // the room ID is the code for private rooms
+                _myPlayerKey = 'player1';
+                _opponentPlayerKey = 'player2';
+                _isSearching = true; // waiting state
+                _listenToRoom();
+             } else {
+                _showMenu = true;
+             }
+          }
         });
-        if (hasTicket) {
-          _startMatchmaking();
-        }
       }
     } else {
       if (mounted) {
         setState(() {
           _isCheckingTickets = false;
-          _hasTickets = false; // Need to login
+          _hasTickets = false;
         });
       }
     }
@@ -136,7 +164,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   backgroundColor: Colors.green,
                 ),
               );
-              // Check tickets again to consume 1 and start
               setState(() {
                 _isCheckingTickets = true;
               });
@@ -161,48 +188,243 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     );
   }
 
-  void _startMatchmaking() {
-    setState(() {
-      _isSearching = true;
-    });
-    _searchSecondsLeft = 10;
-    int targetMatchSecond = Random().nextInt(8); // Matches when seconds hit anywhere between 0 and 7 (taking 3 to 10 seconds)
-    
-    _searchTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) {
-        timer.cancel();
-        return;
-      }
-      setState(() {
-        _searchSecondsLeft--;
-      });
-      if (_searchSecondsLeft <= targetMatchSecond) {
-        timer.cancel();
-        _matchWithBot();
-      }
-    });
-  }
+  // --- Matchmaking & Online Logic ---
 
-  void _matchWithBot() {
-    final random = Random();
-    final nameIndex = random.nextInt(_turkishNames.length);
-    setState(() {
-      _isBot = true;
-      _opponentName = _turkishNames[nameIndex];
-      _isSearching = false;
-      _botSkill = 0.3 + random.nextDouble() * 0.6; // Bot skill between 0.3 and 0.9
-    });
-    _vsController.forward();
-
-    // Load questions
+  Future<void> _startRandomMatchmaking() async {
+    final user = AuthService().currentUser;
+    final userProfile = await FirestoreService().getUserProfile(user!.uid);
+    final displayName = userProfile?.displayName ?? 'Oyuncu';
     final quiz = context.read<QuizProvider>();
-    _questions = QuizService.getQuestions(
+
+    setState(() {
+      _showMenu = false;
+      _isSearching = true;
+      _searchSecondsLeft = 15;
+    });
+
+    // Create 10 local questions first to use if we create the room
+    final localQuestions = QuizService.getQuestions(
       examType: quiz.examType,
       subject: 'Karışık',
       count: 10,
     );
+    final questionMaps = localQuestions.map((q) => q.toMap()).toList();
 
-    // Wait a moment to show VS screen, then start duel
+    final roomData = await FirestoreService().findOrWaitMatch(
+      uid: user.uid,
+      displayName: displayName,
+      examType: quiz.examType,
+      questions: questionMaps,
+    );
+
+    if (roomData == null) {
+      // Something went wrong, fallback to bot
+      _matchWithBot();
+      return;
+    }
+
+    _roomId = roomData['roomId'];
+
+    if (roomData['player2Id'] != null) {
+      // Joined an existing room
+      _isOnline = true;
+      _isBot = false;
+      _myPlayerKey = 'player2';
+      _opponentPlayerKey = 'player1';
+      _opponentName = roomData['player1Name'];
+      _loadQuestionsFromRoom(roomData['questions']);
+      
+      _listenToRoom();
+      _showVSScreen();
+    } else {
+      // Created a new room, wait for someone to join
+      _myPlayerKey = 'player1';
+      _opponentPlayerKey = 'player2';
+      _loadQuestionsFromRoom(roomData['questions']);
+      _listenToRoom();
+
+      _searchTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (!mounted) {
+          timer.cancel();
+          _cleanupRoom();
+          return;
+        }
+        setState(() {
+          _searchSecondsLeft--;
+        });
+
+        if (_searchSecondsLeft <= 0) {
+          timer.cancel();
+          if (_isSearching) {
+            // Timeout, fallback to bot
+            _cleanupRoom();
+            _matchWithBot();
+          }
+        }
+      });
+    }
+  }
+
+  void _loadQuestionsFromRoom(List<dynamic> qList) {
+    _questions = qList.map((q) => Question.fromMap(Map<String, dynamic>.from(q))).toList();
+  }
+
+  void _listenToRoom() {
+    if (_roomId == null) return;
+
+    _roomSubscription = FirestoreService().listenToRoom(_roomId!).listen((snapshot) {
+      if (!mounted) return;
+      if (!snapshot.exists) return;
+
+      final data = snapshot.data() as Map<String, dynamic>;
+
+      // Check if someone joined while we were searching
+      if (_isSearching && data['status'] == 'playing' && data['player2Id'] != null) {
+        _searchTimer?.cancel();
+        setState(() {
+          _isSearching = false;
+          _isOnline = true;
+          _isBot = false;
+          _opponentName = data['player2Name'];
+        });
+        _showVSScreen();
+      }
+
+      // Update opponent score during game
+      if (_isOnline && !_isSearching) {
+        setState(() {
+          _opponentScore = data['${_opponentPlayerKey}Score'] ?? 0;
+          _opponentCorrect = data['${_opponentPlayerKey}Correct'] ?? 0;
+        });
+      }
+    });
+  }
+
+  Future<void> _cleanupRoom() async {
+    _roomSubscription?.cancel();
+    if (_roomId != null && _myPlayerKey == 'player1' && (_isSearching || _isCreatingRoom)) {
+       await FirestoreService().deleteRoom(_roomId!);
+    }
+    _roomId = null;
+  }
+
+  Future<void> _createPrivateRoom() async {
+    final user = AuthService().currentUser;
+    final userProfile = await FirestoreService().getUserProfile(user!.uid);
+    final displayName = userProfile?.displayName ?? 'Oyuncu';
+    final quiz = context.read<QuizProvider>();
+
+    setState(() {
+      _isCreatingRoom = true;
+    });
+
+    final random = Random();
+    final code = (100000 + random.nextInt(900000)).toString();
+
+    final localQuestions = QuizService.getQuestions(
+      examType: quiz.examType,
+      subject: 'Karışık',
+      count: 10,
+    );
+    final questionMaps = localQuestions.map((q) => q.toMap()).toList();
+
+    final roomData = await FirestoreService().createPrivateRoom(
+      uid: user.uid,
+      displayName: displayName,
+      examType: quiz.examType,
+      roomCode: code,
+      questions: questionMaps,
+    );
+
+    setState(() {
+      _isCreatingRoom = false;
+    });
+
+    if (roomData != null) {
+      setState(() {
+        _myRoomCode = code;
+        _showMenu = false;
+        _roomId = roomData['roomId'];
+        _myPlayerKey = 'player1';
+        _opponentPlayerKey = 'player2';
+        _isSearching = true; // reusing searching flag for waiting state
+      });
+      _loadQuestionsFromRoom(roomData['questions']);
+      _listenToRoom();
+    }
+  }
+
+  Future<void> _joinPrivateRoom(String code) async {
+    if (code.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Oda kodu 6 haneli olmalıdır.'), backgroundColor: Colors.redAccent),
+      );
+      return;
+    }
+
+    final user = AuthService().currentUser;
+    final userProfile = await FirestoreService().getUserProfile(user!.uid);
+    final displayName = userProfile?.displayName ?? 'Oyuncu';
+
+    final result = await FirestoreService().joinPrivateRoom(
+      roomCode: code,
+      uid: user.uid,
+      displayName: displayName,
+    );
+
+    if (result != null && result.containsKey('error')) {
+       ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result['error']), backgroundColor: Colors.redAccent),
+      );
+      return;
+    }
+
+    if (result != null) {
+      _roomId = result['roomId'];
+      _isOnline = true;
+      _isBot = false;
+      _myPlayerKey = 'player2';
+      _opponentPlayerKey = 'player1';
+      _opponentName = result['player1Name'];
+      _loadQuestionsFromRoom(result['questions']);
+      
+      setState(() {
+        _showJoinRoom = false;
+        _showMenu = false;
+      });
+      
+      _listenToRoom();
+      _showVSScreen();
+    }
+  }
+
+
+  void _matchWithBot() {
+    final random = Random();
+    final nameIndex = random.nextInt(_turkishNames.length);
+    
+    if (_questions.isEmpty) {
+      final quiz = context.read<QuizProvider>();
+      _questions = QuizService.getQuestions(
+        examType: quiz.examType,
+        subject: 'Karışık',
+        count: 10,
+      );
+    }
+
+    setState(() {
+      _isBot = true;
+      _isOnline = false;
+      _opponentName = _turkishNames[nameIndex];
+      _isSearching = false;
+      _botSkill = 0.3 + random.nextDouble() * 0.6; 
+    });
+    
+    _showVSScreen();
+  }
+
+  void _showVSScreen() {
+    _vsController.forward();
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         _startDuel();
@@ -234,7 +456,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _secondsLeft--;
       });
 
-      if (_answered && !_botAnswered && _secondsLeft <= _botTargetSeconds) {
+      if (_isBot && _answered && !_botAnswered && _secondsLeft <= _botTargetSeconds) {
         timer.cancel();
         _botAnswered = true;
         _simulateBotAnswer();
@@ -256,12 +478,20 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       setState(() {
         _answered = true;
       });
-      _botAnswered = true;
-      _simulateBotAnswer();
-      Future.delayed(const Duration(milliseconds: 2500), () {
-        if (mounted) _moveToNext();
-      });
-    } else if (!_botAnswered) {
+      _handleOnlineUpdate();
+      
+      if (_isBot) {
+         _botAnswered = true;
+         _simulateBotAnswer();
+         Future.delayed(const Duration(milliseconds: 2500), () {
+           if (mounted) _moveToNext();
+         });
+      } else {
+         Future.delayed(const Duration(milliseconds: 2500), () {
+           if (mounted) _moveToNext();
+         });
+      }
+    } else if (_isBot && !_botAnswered) {
       _botAnswered = true;
       _simulateBotAnswer();
       Future.delayed(const Duration(milliseconds: 2500), () {
@@ -283,27 +513,43 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _playerCorrect++;
       }
       
-      int botWait = Random().nextInt(5); // 0 to 4 seconds
-      
-      if (botWait == 0) {
-        _questionTimer?.cancel();
-        _botAnswered = true;
-        _simulateBotAnswer();
-        Future.delayed(const Duration(milliseconds: 2500), () {
-          if (mounted) _moveToNext();
-        });
+      _handleOnlineUpdate();
+
+      if (_isBot) {
+        int botWait = Random().nextInt(5);
+        if (botWait == 0) {
+          _questionTimer?.cancel();
+          _botAnswered = true;
+          _simulateBotAnswer();
+          Future.delayed(const Duration(milliseconds: 2500), () {
+            if (mounted) _moveToNext();
+          });
+        } else {
+          _botTargetSeconds = _secondsLeft - botWait;
+          if (_botTargetSeconds < 0) _botTargetSeconds = 0;
+        }
       } else {
-        _botTargetSeconds = _secondsLeft - botWait;
-        if (_botTargetSeconds < 0) _botTargetSeconds = 0;
+         Future.delayed(const Duration(milliseconds: 2500), () {
+            if (mounted) _moveToNext();
+         });
       }
     });
+  }
+
+  void _handleOnlineUpdate() {
+    if (_isOnline && _roomId != null) {
+      FirestoreService().updateRoomScore(
+        roomId: _roomId!,
+        playerKey: _myPlayerKey,
+        score: _playerScore,
+        correct: _playerCorrect,
+      );
+    }
   }
 
   void _simulateBotAnswer() {
     final random = Random();
     final q = _questions[_currentIndex];
-    
-    // Bot correctness depends on its skill
     final botCorrect = random.nextDouble() < _botSkill;
 
     setState(() {
@@ -312,7 +558,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         _opponentCorrect++;
         _botAnsweredIndex = q.correctIndex;
       } else {
-        // Pick a random wrong answer
         List<int> wrongIndices = [];
         for (int i = 0; i < q.options.length; i++) {
           if (i != q.correctIndex) wrongIndices.add(i);
@@ -341,6 +586,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   void _finishDuel() {
     _questionTimer?.cancel();
+    _roomSubscription?.cancel();
+    
+    // If online, we don't delete the room immediately, let both players see it finished
+    // In a full implementation, we might clean it up or mark it finished.
+
     setState(() {
       _duelFinished = true;
     });
@@ -373,6 +623,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     _questionTimer?.cancel();
     _pulseController.dispose();
     _vsController.dispose();
+    _cleanupRoom();
+    _roomCodeController.dispose();
     super.dispose();
   }
 
@@ -389,6 +641,14 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       return _buildNoTicketsScreen();
     }
 
+    if (_showMenu) {
+      return _buildMenuScreen();
+    }
+
+    if (_myRoomCode != null && _isSearching) {
+      return _buildWaitingRoomScreen();
+    }
+
     if (_isSearching) {
       return _buildSearchingScreen();
     }
@@ -400,14 +660,278 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       );
     }
 
-    // Show VS screen before questions start
-    if (_questions.isEmpty) {
+    if (_questions.isEmpty || (!_isSearching && _selectedAnswer == null && _currentIndex == 0 && !_answered && _secondsLeft == 15 && !_vsController.isCompleted)) {
       return _buildVSScreen();
     }
 
     return _buildDuelQuizScreen();
   }
 
+  Widget _buildMenuScreen() {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0D0D1A),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white54),
+                onPressed: () => Navigator.pop(context),
+              ),
+              const Spacer(),
+              Center(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFFF4757), Color(0xFFFF6B81)],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF4757).withOpacity(0.4),
+                        blurRadius: 20,
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text('⚔️', style: TextStyle(fontSize: 40)),
+                  ),
+                ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+              ),
+              const SizedBox(height: 32),
+              Center(
+                child: Text(
+                  'Düello Modu',
+                  style: GoogleFonts.poppins(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Center(
+                child: Text(
+                  'Gerçek rakiplere veya arkadaşlarına karşı yarış!',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: Colors.white54,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 48),
+
+              if (!_showJoinRoom) ...[
+                _buildMenuButton(
+                  title: 'Rastgele Rakip Bul',
+                  icon: '🌍',
+                  colors: [const Color(0xFF6C63FF), const Color(0xFF3D5AF1)],
+                  onTap: _startRandomMatchmaking,
+                ),
+                const SizedBox(height: 16),
+                _buildMenuButton(
+                  title: 'Oda Kur (Arkadaşınla Oyna)',
+                  icon: '🏠',
+                  colors: [const Color(0xFFFF9F43), const Color(0xFFFFC312)],
+                  onTap: _isCreatingRoom ? null : _createPrivateRoom,
+                  isLoading: _isCreatingRoom,
+                ),
+                const SizedBox(height: 16),
+                _buildMenuButton(
+                  title: 'Odaya Katıl',
+                  icon: '🔑',
+                  colors: [const Color(0xFF10AC84), const Color(0xFF1DD1A1)],
+                  onTap: () {
+                    setState(() {
+                      _showJoinRoom = true;
+                    });
+                  },
+                ),
+              ] else ...[
+                 Text(
+                  'Oda Kodunu Girin:',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _roomCodeController,
+                  style: const TextStyle(color: Colors.white, fontSize: 20, letterSpacing: 8, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white12,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    hintText: '000000',
+                    hintStyle: const TextStyle(color: Colors.white38, letterSpacing: 8),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _showJoinRoom = false;
+                            _roomCodeController.clear();
+                          });
+                        },
+                        child: Text('İptal', style: GoogleFonts.poppins(color: Colors.white54)),
+                      ),
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => _joinPrivateRoom(_roomCodeController.text.trim()),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF10AC84),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        ),
+                        child: Text('Katıl', style: GoogleFonts.poppins(fontWeight: FontWeight.bold, color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              const Spacer(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuButton({
+    required String title,
+    required String icon,
+    required List<Color> colors,
+    required VoidCallback? onTap,
+    bool isLoading = false,
+  }) {
+    return Container(
+      width: double.infinity,
+      height: 64,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: colors),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: colors[0].withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (isLoading)
+                const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+                )
+              else ...[
+                Text(icon, style: const TextStyle(fontSize: 24)),
+                const SizedBox(width: 12),
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    ).animate().fadeIn().slideY(begin: 0.2);
+  }
+
+
+  Widget _buildWaitingRoomScreen() {
+    return Scaffold(
+      backgroundColor: const Color(0xFF0D0D1A),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: const Icon(Icons.close, color: Colors.white54),
+                onPressed: () {
+                  _cleanupRoom();
+                  setState(() {
+                    _myRoomCode = null;
+                    _showMenu = true;
+                    _isSearching = false;
+                  });
+                },
+              ),
+            ),
+            const Spacer(),
+            Text(
+              'Oda Kodunuz',
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                color: Colors.white54,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: const Color(0xFFFF9F43).withOpacity(0.5), width: 2),
+              ),
+              child: Text(
+                _myRoomCode ?? '',
+                style: GoogleFonts.poppins(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 12,
+                  color: const Color(0xFFFF9F43),
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+            Text(
+              'Arkadaşınızın katılmasını bekleniyor...',
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: Colors.white70,
+              ),
+            ).animate(onPlay: (c) => c.repeat(reverse: true)).fade(begin: 0.4, end: 1.0),
+            const Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // --- UI Components ---
   Widget _buildNoTicketsScreen() {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D1A),
@@ -516,19 +1040,21 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         child: SafeArea(
           child: Column(
             children: [
-              // Close button
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
                   icon: const Icon(Icons.close, color: Colors.white54),
                   onPressed: () {
                     _searchTimer?.cancel();
-                    Navigator.pop(context);
+                    _cleanupRoom();
+                    setState(() {
+                      _isSearching = false;
+                      _showMenu = true;
+                    });
                   },
                 ),
               ),
               const Spacer(),
-              // Searching animation
               AnimatedBuilder(
                 animation: _pulseController,
                 builder: (context, child) {
@@ -588,7 +1114,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 ),
               ),
               const SizedBox(height: 40),
-              // Loading dots
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(3, (i) {
@@ -637,7 +1162,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Player 1
                 Column(
                   children: [
                     Container(
@@ -670,10 +1194,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                     ),
                   ],
                 ).animate().slideX(begin: -0.5).fadeIn(),
-
                 const SizedBox(height: 32),
-
-                // VS
                 Text(
                   'VS',
                   style: GoogleFonts.poppins(
@@ -688,10 +1209,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   duration: 600.ms,
                   curve: Curves.elasticOut,
                 ),
-
                 const SizedBox(height: 32),
-
-                // Opponent
                 Column(
                   children: [
                     Container(
@@ -709,10 +1227,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          '👤',
-                          style: TextStyle(fontSize: 36),
+                          _isBot ? '🤖' : '👤',
+                          style: const TextStyle(fontSize: 36),
                         ),
                       ),
                     ),
@@ -751,7 +1269,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         child: SafeArea(
           child: Column(
             children: [
-              // Top bar with scores
               _buildDuelTopBar(primaryColor),
               Expanded(
                 child: SingleChildScrollView(
@@ -801,19 +1318,17 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       ),
       child: Column(
         children: [
-          // Score row
           Row(
             children: [
-              // Player score
               Expanded(
                 child: Row(
                   children: [
                     Container(
                       width: 36,
                       height: 36,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [Color(0xFF6C63FF), Color(0xFF3D5AF1)],
                         ),
                       ),
@@ -845,8 +1360,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   ],
                 ),
               ),
-
-              // Timer & Question count
               Column(
                 children: [
                   Container(
@@ -875,8 +1388,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-
-              // Opponent score
               Expanded(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -905,16 +1416,16 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                     Container(
                       width: 36,
                       height: 36,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: const LinearGradient(
+                        gradient: LinearGradient(
                           colors: [Color(0xFFFF4757), Color(0xFFFF6B81)],
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          '👤',
-                          style: TextStyle(fontSize: 18),
+                          _isBot ? '🤖' : '👤',
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
@@ -923,10 +1434,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
               ),
             ],
           ),
-
           const SizedBox(height: 8),
-
-          // Progress bar
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
@@ -1004,7 +1512,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       }
     }
 
-    final isBotChoice = _answered && _botAnsweredIndex == index;
+    final isBotChoice = _isBot && _answered && _botAnsweredIndex == index;
     final labels = ['A', 'B', 'C', 'D', 'E'];
 
     return GestureDetector(
@@ -1058,7 +1566,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             if (isBotChoice)
               const Padding(
                 padding: EdgeInsets.only(right: 8.0),
-                child: Text('👤', style: TextStyle(fontSize: 20)),
+                child: Text('🤖', style: TextStyle(fontSize: 20)),
               ),
             if (trailingIcon != null)
               Icon(trailingIcon,

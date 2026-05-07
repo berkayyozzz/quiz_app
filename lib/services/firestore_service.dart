@@ -476,4 +476,225 @@ class FirestoreService {
       return false;
     }
   }
+
+  // ==================== ONLINE MATCHMAKING ====================
+
+  Future<Map<String, dynamic>?> findOrWaitMatch({
+    required String uid,
+    required String displayName,
+    required String examType,
+    required List<Map<String, dynamic>> questions,
+  }) async {
+    try {
+      // 1. Try to find an existing waiting public room
+      final querySnapshot = await _db
+          .collection('duel_rooms')
+          .where('status', isEqualTo: 'waiting')
+          .where('isPrivate', isEqualTo: false)
+          .where('examType', isEqualTo: examType)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Found a room, try to join
+        final roomDoc = querySnapshot.docs.first;
+        if (roomDoc.data()['player1Id'] == uid) {
+             // It's our own room (shouldn't happen usually but just in case), delete it and create new or just return null to wait
+             return null;
+        }
+
+        await roomDoc.reference.update({
+          'player2Id': uid,
+          'player2Name': displayName,
+          'status': 'playing',
+        });
+        
+        final updatedDoc = await roomDoc.reference.get();
+        return updatedDoc.data()..addAll({'roomId': updatedDoc.id});
+      }
+
+      // 2. Create a new room and wait
+      final newRoomRef = await _db.collection('duel_rooms').add({
+        'player1Id': uid,
+        'player1Name': displayName,
+        'player1Score': 0,
+        'player1Correct': 0,
+        'player2Id': null,
+        'player2Name': null,
+        'player2Score': 0,
+        'player2Correct': 0,
+        'status': 'waiting',
+        'isPrivate': false,
+        'examType': examType,
+        'questions': questions,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      final newRoomDoc = await newRoomRef.get();
+      return newRoomDoc.data()..addAll({'roomId': newRoomDoc.id});
+    } catch (e) {
+      print('Error in matchmaking: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> createPrivateRoom({
+    required String uid,
+    required String displayName,
+    required String examType,
+    required String roomCode,
+    required List<Map<String, dynamic>> questions,
+  }) async {
+    try {
+      final roomRef = _db.collection('duel_rooms').doc(roomCode);
+      await roomRef.set({
+        'player1Id': uid,
+        'player1Name': displayName,
+        'player1Score': 0,
+        'player1Correct': 0,
+        'player2Id': null,
+        'player2Name': null,
+        'player2Score': 0,
+        'player2Correct': 0,
+        'status': 'waiting',
+        'isPrivate': true,
+        'examType': examType,
+        'questions': questions,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      final roomDoc = await roomRef.get();
+      return roomDoc.data()..addAll({'roomId': roomDoc.id});
+    } catch (e) {
+      print('Error creating private room: $e');
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> joinPrivateRoom({
+    required String roomCode,
+    required String uid,
+    required String displayName,
+  }) async {
+    try {
+      final roomRef = _db.collection('duel_rooms').doc(roomCode);
+      final roomDoc = await roomRef.get();
+
+      if (!roomDoc.exists) {
+        return {'error': 'Oda bulunamadı'};
+      }
+
+      final data = roomDoc.data()!;
+      if (data['status'] != 'waiting') {
+        return {'error': 'Oyun zaten başlamış'};
+      }
+
+      if (data['player1Id'] == uid) {
+         return data..addAll({'roomId': roomDoc.id});
+      }
+
+      await roomRef.update({
+        'player2Id': uid,
+        'player2Name': displayName,
+        'status': 'playing',
+      });
+
+      final updatedDoc = await roomRef.get();
+      return updatedDoc.data()..addAll({'roomId': updatedDoc.id});
+    } catch (e) {
+      print('Error joining private room: $e');
+      return {'error': 'Odaya katılırken bir hata oluştu'};
+    }
+  }
+
+  Stream<DocumentSnapshot> listenToRoom(String roomId) {
+    return _db.collection('duel_rooms').doc(roomId).snapshots();
+  }
+
+  Future<void> updateRoomScore({
+    required String roomId,
+    required String playerKey,
+    required int score,
+    required int correct,
+  }) async {
+    try {
+      await _db.collection('duel_rooms').doc(roomId).update({
+        '${playerKey}Score': score,
+        '${playerKey}Correct': correct,
+      });
+    } catch (e) {
+      print('Error updating room score: $e');
+    }
+  }
+
+  Future<void> deleteRoom(String roomId) async {
+    try {
+      await _db.collection('duel_rooms').doc(roomId).delete();
+    } catch (e) {
+      print('Error deleting room: $e');
+    }
+  }
+
+  // ==================== DUEL INVITES ====================
+
+  Future<String?> sendDuelInvite({
+    required String fromUid,
+    required String fromName,
+    required String toUid,
+    required String roomCode,
+  }) async {
+    try {
+      // Spam protection: check if there is an existing pending invite from this user to this user in the last 2 minutes
+      final now = DateTime.now();
+      final twoMinsAgo = now.subtract(const Duration(minutes: 2));
+
+      final existingQuery = await _db
+          .collection('duel_invites')
+          .where('fromUid', isEqualTo: fromUid)
+          .where('toUid', isEqualTo: toUid)
+          .where('status', isEqualTo: 'pending')
+          .get();
+
+      if (existingQuery.docs.isNotEmpty) {
+        for (var doc in existingQuery.docs) {
+          final timestamp = doc.data()['createdAt'] as Timestamp?;
+          if (timestamp != null && timestamp.toDate().isAfter(twoMinsAgo)) {
+            return 'Lütfen tekrar istek atmak için biraz bekleyin.';
+          }
+        }
+      }
+
+      await _db.collection('duel_invites').add({
+        'fromUid': fromUid,
+        'fromName': fromName,
+        'toUid': toUid,
+        'roomCode': roomCode,
+        'status': 'pending', // pending, accepted, rejected
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      return null; // Success
+    } catch (e) {
+      print('Error sending duel invite: $e');
+      return 'İstek gönderilemedi.';
+    }
+  }
+
+  Stream<QuerySnapshot> listenToIncomingInvites(String myUid) {
+    return _db
+        .collection('duel_invites')
+        .where('toUid', isEqualTo: myUid)
+        .where('status', isEqualTo: 'pending')
+        .snapshots();
+  }
+
+  Future<void> updateInviteStatus(String inviteId, String status) async {
+    try {
+      await _db.collection('duel_invites').doc(inviteId).update({
+        'status': status,
+      });
+    } catch (e) {
+      print('Error updating invite status: $e');
+    }
+  }
 }

@@ -3,6 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import '../models/user_profile.dart';
 import '../services/firestore_service.dart';
 import '../services/auth_service.dart';
+import 'dart:math';
+import 'package:provider/provider.dart';
+import '../providers/quiz_provider.dart';
+import '../services/quiz_service.dart';
+import 'duel_screen.dart';
 
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
@@ -304,7 +309,29 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
             Text(user.totalNet.toStringAsFixed(2),
                 style: GoogleFonts.poppins(
                     fontSize: 18, fontWeight: FontWeight.bold, color: const Color(0xFFFF6B6B))),
-            Text('Puan', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38)),
+            if (!isMe)
+              GestureDetector(
+                onTap: () => _sendChallenge(user.uid, user.displayName),
+                child: Container(
+                  margin: const EdgeInsets.top(4),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF4757).withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFFFF4757).withOpacity(0.5)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('⚔️', style: TextStyle(fontSize: 12)),
+                      const SizedBox(width: 4),
+                      Text('Meydan Oku', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+              )
+            else
+              Text('Puan', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38)),
           ],
         ),
       ),
@@ -419,7 +446,29 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
                 Text('$duelPoints',
                     style: GoogleFonts.poppins(
                         fontSize: 22, fontWeight: FontWeight.bold, color: const Color(0xFFFF4757))),
-                Text('Puan', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38)),
+                if (!isMe)
+                  GestureDetector(
+                    onTap: () => _sendChallenge(user['uid'], user['displayName'] ?? 'Oyuncu'),
+                    child: Container(
+                      margin: const EdgeInsets.top(4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFF4757).withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: const Color(0xFFFF4757).withOpacity(0.5)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text('⚔️', style: TextStyle(fontSize: 12)),
+                          const SizedBox(width: 4),
+                          Text('Meydan Oku', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  )
+                else
+                  Text('Puan', style: GoogleFonts.poppins(fontSize: 10, color: Colors.white38)),
               ],
             ),
           ],
@@ -617,5 +666,73 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
     if (index == 1) return Colors.blueGrey[300]!;
     if (index == 2) return Colors.brown[400]!;
     return const Color(0xFF3D5AF1);
+  }
+
+  Future<void> _sendChallenge(String targetUid, String targetName) async {
+    final myUser = AuthService().currentUser;
+    if (myUser == null) return;
+    
+    // Show loading
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator(color: Color(0xFFFF4757))),
+    );
+
+    final quiz = context.read<QuizProvider>();
+    final myProfile = await _firestoreService.getUserProfile(myUser.uid);
+    final myName = myProfile?.displayName ?? 'Oyuncu';
+
+    final random = Random();
+    final code = (100000 + random.nextInt(900000)).toString();
+
+    final localQuestions = QuizService.getQuestions(
+      examType: quiz.examType,
+      subject: 'Karışık',
+      count: 10,
+    );
+    final questionMaps = localQuestions.map((q) => q.toMap()).toList();
+
+    // Create room
+    final roomData = await _firestoreService.createPrivateRoom(
+      uid: myUser.uid,
+      displayName: myName,
+      examType: quiz.examType,
+      roomCode: code,
+      questions: questionMaps,
+    );
+
+    if (roomData == null) {
+      if (mounted) Navigator.pop(context); // close loading
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Oda oluşturulamadı.')));
+      return;
+    }
+
+    // Send invite
+    final error = await _firestoreService.sendDuelInvite(
+      fromUid: myUser.uid,
+      fromName: myName,
+      toUid: targetUid,
+      roomCode: code,
+    );
+
+    if (mounted) Navigator.pop(context); // close loading
+
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error), backgroundColor: Colors.orange));
+      // Cleanup room if failed to send invite
+      await _firestoreService.deleteRoom(roomData['roomId']);
+      return;
+    }
+
+    // Go to DuelScreen waiting
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => DuelScreen(initialRoomCode: code),
+        ),
+      );
+    }
   }
 }

@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import '../providers/quiz_provider.dart';
 import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
+import '../services/firestore_service.dart';
 import '../services/notification_service.dart';
+import 'dart:async';
 import 'quiz_screen.dart';
 import 'duel_screen.dart';
 import 'leaderboard_screen.dart';
@@ -20,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool _isRetryAdLoading = false;
+  StreamSubscription? _inviteSubscription;
+  final Set<String> _handledInvites = {};
 
   @override
   void initState() {
@@ -28,6 +32,68 @@ class _HomeScreenState extends State<HomeScreen> {
     NotificationService().requestPermissions();
     // Ödül reklamını önceden yükle
     AdManager.loadRewardedAd();
+    _listenForInvites();
+  }
+
+  void _listenForInvites() {
+    final uid = AuthService().currentUser?.uid;
+    if (uid == null) return;
+    
+    _inviteSubscription = FirestoreService().listenToIncomingInvites(uid).listen((snapshot) {
+      if (!mounted) return;
+      for (var change in snapshot.docChanges) {
+        if (change.type == DocumentChangeType.added) {
+          final doc = change.doc;
+          final data = doc.data() as Map<String, dynamic>;
+          final inviteId = doc.id;
+          
+          if (!_handledInvites.contains(inviteId) && data['status'] == 'pending') {
+             _handledInvites.add(inviteId);
+             _showInviteDialog(inviteId, data['fromName'], data['roomCode']);
+          }
+        }
+      }
+    });
+  }
+
+  void _showInviteDialog(String inviteId, String fromName, String roomCode) {
+    showDialog(
+       context: context,
+       barrierDismissible: false,
+       builder: (ctx) => AlertDialog(
+          backgroundColor: const Color(0xFF1E1E3F),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text('⚔️ Düello İsteği!', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
+          content: Text('$fromName sana meydan okuyor!\nKabul ediyor musun?', style: GoogleFonts.poppins(color: Colors.white70)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                 FirestoreService().updateInviteStatus(inviteId, 'rejected');
+                 Navigator.pop(ctx);
+              },
+              child: Text('Reddet', style: GoogleFonts.poppins(color: Colors.white54)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                 FirestoreService().updateInviteStatus(inviteId, 'accepted');
+                 Navigator.pop(ctx);
+                 Navigator.push(context, MaterialPageRoute(builder: (_) => DuelScreen(initialJoinCode: roomCode)));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFF4757),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: Text('Kabul Et', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
+            ),
+          ]
+       )
+    );
+  }
+
+  @override
+  void dispose() {
+    _inviteSubscription?.cancel();
+    super.dispose();
   }
 
   @override
