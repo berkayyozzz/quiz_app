@@ -72,9 +72,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   bool _waitingForOpponent = false;
 
   // Emojis
-  String? _showOpponentEmoji;
+  final List<Map<String, dynamic>> _activeEmojiReactions = [];
   Timer? _emojiTimer;
   String? _lastOpponentEmojiRaw;
+  bool _emojiCooldown = false;
+  int _emojiReactionKey = 0;
 
   // Animation
   late AnimationController _pulseController;
@@ -284,9 +286,22 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
     _roomSubscription = FirestoreService().listenToRoom(_roomId!).listen((snapshot) {
       if (!mounted) return;
-      if (!snapshot.exists) return;
+      if (!snapshot.exists) {
+        // Room was deleted – opponent left
+        _handleOpponentLeft();
+        return;
+      }
 
       final data = snapshot.data() as Map<String, dynamic>;
+
+      // Detect opponent leaving (their ID was cleared or room marked abandoned)
+      if (_isOnline && !_isSearching && !_duelFinished) {
+        final oppId = data['${_opponentPlayerKey}Id'];
+        if (data['status'] == 'abandoned' || (oppId == null && !_isSearching)) {
+          _handleOpponentLeft();
+          return;
+        }
+      }
 
       // Check if someone joined while we were searching
       if (_isSearching && data['status'] == 'playing' && data['player2Id'] != null) {
@@ -319,7 +334,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
           if (oppEmojiRaw != null && oppEmojiRaw != _lastOpponentEmojiRaw) {
              _lastOpponentEmojiRaw = oppEmojiRaw;
              final emoji = oppEmojiRaw.split('_')[0];
-             _showEmojiAnimation(emoji);
+             _showEmojiAnimation(emoji, isFromMe: false);
           }
         });
       }
@@ -335,21 +350,65 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     _roomId = null;
   }
 
-  void _showEmojiAnimation(String emoji) {
-    setState(() {
-      _showOpponentEmoji = emoji;
+  bool _opponentLeftHandled = false;
+
+  void _handleOpponentLeft() {
+    if (_opponentLeftHandled || _duelFinished) return;
+    _opponentLeftHandled = true;
+    _questionTimer?.cancel();
+    _roomSubscription?.cancel();
+    
+    if (!mounted) return;
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Rakip oyundan ayrıldı! Kalan sorular rakibe yanlış sayılacak.', style: GoogleFonts.poppins(color: Colors.white)),
+        backgroundColor: Colors.orangeAccent,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+
+    // Treat all remaining questions as opponent wrong, finish the duel
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) _finishDuel();
     });
-    _emojiTimer?.cancel();
-    _emojiTimer = Timer(const Duration(seconds: 3), () {
+  }
+
+  void _showEmojiAnimation(String emoji, {bool isFromMe = false}) {
+    final reaction = {
+      'emoji': emoji,
+      'isFromMe': isFromMe,
+      'key': _emojiReactionKey++,
+      'timestamp': DateTime.now(),
+    };
+    setState(() {
+      _activeEmojiReactions.add(reaction);
+    });
+    // Remove after animation completes
+    Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        setState(() => _showOpponentEmoji = null);
+        setState(() {
+          _activeEmojiReactions.removeWhere((r) => r['key'] == reaction['key']);
+        });
       }
     });
   }
 
   void _sendEmoji(String e) {
-     if (!_isOnline || _roomId == null) return;
-     FirestoreService().updateRoomEmoji(_roomId!, _myPlayerKey, '${e}_${DateTime.now().millisecondsSinceEpoch}');
+     if (_emojiCooldown) return;
+     
+     if (_isOnline && _roomId != null) {
+       FirestoreService().updateRoomEmoji(_roomId!, _myPlayerKey, '${e}_${DateTime.now().millisecondsSinceEpoch}');
+     }
+     // Show the emoji locally with sender info
+     _showEmojiAnimation(e, isFromMe: true);
+     HapticHelper.mediumImpact();
+     
+     // Cooldown to prevent spam
+     setState(() => _emojiCooldown = true);
+     Future.delayed(const Duration(seconds: 2), () {
+       if (mounted) setState(() => _emojiCooldown = false);
+     });
   }
 
   Future<void> _createPrivateRoom() async {
@@ -549,14 +608,39 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
            if (mounted) _moveToNext();
          });
       } else {
-         setState(() {
-           _waitingForOpponent = true;
-         });
-         _checkBothAnswered();
+         // Online mode: if opponent also hasn't answered, treat as both wrong and move on
+         if (!_opponentAnswered) {
+           setState(() {
+             _opponentAnswered = true;
+             _opponentAnswerIndex = -1; // opponent didn't answer
+             _waitingForOpponent = false;
+           });
+           Future.delayed(const Duration(milliseconds: 2500), () {
+             if (mounted) _moveToNext();
+           });
+         } else {
+           // Opponent already answered, just move on
+           setState(() {
+             _waitingForOpponent = false;
+           });
+           Future.delayed(const Duration(milliseconds: 2500), () {
+             if (mounted) _moveToNext();
+           });
+         }
       }
     } else if (_isBot && !_botAnswered) {
       _botAnswered = true;
       _simulateBotAnswer();
+      Future.delayed(const Duration(milliseconds: 2500), () {
+        if (mounted) _moveToNext();
+      });
+    } else if (!_isBot && _waitingForOpponent && !_opponentAnswered) {
+      // Online mode: player already answered, timer ran out, opponent still hasn't responded
+      setState(() {
+        _opponentAnswered = true;
+        _opponentAnswerIndex = -1; // opponent didn't answer (or left)
+        _waitingForOpponent = false;
+      });
       Future.delayed(const Duration(milliseconds: 2500), () {
         if (mounted) _moveToNext();
       });
@@ -1381,44 +1465,198 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
               ),
             ),
           ),
-          if (_showOpponentEmoji != null)
-            Positioned(
-              top: 80,
-              right: 20,
-              child: Text(
-                _showOpponentEmoji!,
-                style: const TextStyle(fontSize: 60),
-              ).animate().slideY(begin: 0.5, end: -0.5).fadeIn().fadeOut(delay: 2000.ms),
-            ),
+          // Emoji reaction overlays
+          ..._activeEmojiReactions.map((reaction) {
+            final isFromMe = reaction['isFromMe'] as bool;
+            final emoji = reaction['emoji'] as String;
+            final key = reaction['key'] as int;
+            final emojiInfo = _getEmojiInfo(emoji);
+            return _buildEmojiOverlay(emoji, emojiInfo, isFromMe, key);
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildEmojiBar() {
-    if (!_isOnline) return const SizedBox.shrink();
-    final emojis = ['👍', '😢', '🤯', '🔥'];
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: emojis.map((e) {
-          return GestureDetector(
-            onTap: () {
-               _sendEmoji(e);
-               HapticHelper.lightImpact();
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                shape: BoxShape.circle,
-              ),
-              child: Text(e, style: const TextStyle(fontSize: 28)),
+  Map<String, dynamic> _getEmojiInfo(String emoji) {
+    switch (emoji) {
+      case '👍': return {'label': 'Aferin!', 'color': const Color(0xFF4CAF50), 'bgGlow': const Color(0xFF4CAF50)};
+      case '😢': return {'label': 'Üzgünüm...', 'color': const Color(0xFF42A5F5), 'bgGlow': const Color(0xFF1E88E5)};
+      case '🤯': return {'label': 'İnanılmaz!', 'color': const Color(0xFFFF9800), 'bgGlow': const Color(0xFFFF6F00)};
+      case '🔥': return {'label': 'Yanıyorsun!', 'color': const Color(0xFFFF5722), 'bgGlow': const Color(0xFFD84315)};
+      case '😎': return {'label': 'Çok Kolay!', 'color': const Color(0xFF9C27B0), 'bgGlow': const Color(0xFF7B1FA2)};
+      case '💀': return {'label': 'Bitti Senin İçin', 'color': const Color(0xFF607D8B), 'bgGlow': const Color(0xFF455A64)};
+      default: return {'label': '', 'color': Colors.white, 'bgGlow': Colors.white24};
+    }
+  }
+
+  Widget _buildEmojiOverlay(String emoji, Map<String, dynamic> info, bool isFromMe, int key) {
+    final senderName = isFromMe ? 'Sen' : _opponentName;
+    final Color glowColor = info['bgGlow'] as Color;
+    final Color labelColor = info['color'] as Color;
+    final String label = info['label'] as String;
+
+    return Positioned.fill(
+      key: ValueKey('emoji_overlay_$key'),
+      child: IgnorePointer(
+        child: Stack(
+          children: [
+            // Background glow pulse
+            Positioned.fill(
+              child: Container(
+                color: glowColor.withOpacity(0.08),
+              ).animate()
+                .fadeIn(duration: 200.ms)
+                .fadeOut(delay: 2000.ms, duration: 800.ms),
             ),
-          );
-        }).toList(),
+            // Main emoji + label in center
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Sender badge
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: (isFromMe ? const Color(0xFF6C63FF) : const Color(0xFFFF4757)).withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      senderName,
+                      style: GoogleFonts.poppins(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ).animate()
+                    .fadeIn(duration: 200.ms)
+                    .slideY(begin: 0.3)
+                    .fadeOut(delay: 2200.ms, duration: 500.ms),
+                  const SizedBox(height: 8),
+                  // Big emoji
+                  Text(
+                    emoji,
+                    style: const TextStyle(fontSize: 80),
+                  ).animate()
+                    .scale(begin: const Offset(0.2, 0.2), end: const Offset(1.0, 1.0), duration: 400.ms, curve: Curves.elasticOut)
+                    .fadeOut(delay: 2000.ms, duration: 800.ms),
+                  const SizedBox(height: 4),
+                  // Label text
+                  Text(
+                    label,
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: labelColor,
+                      shadows: [
+                        Shadow(color: labelColor.withOpacity(0.5), blurRadius: 12),
+                      ],
+                    ),
+                  ).animate()
+                    .fadeIn(delay: 200.ms, duration: 300.ms)
+                    .slideY(begin: 0.3)
+                    .fadeOut(delay: 2000.ms, duration: 500.ms),
+                ],
+              ),
+            ),
+            // Floating mini emojis (particles)
+            ...List.generate(6, (i) {
+              final random = Random();
+              final startX = 40.0 + random.nextDouble() * (MediaQuery.of(context).size.width - 80);
+              final startY = MediaQuery.of(context).size.height * 0.3 + random.nextDouble() * MediaQuery.of(context).size.height * 0.4;
+              return Positioned(
+                left: startX,
+                top: startY,
+                child: Text(
+                  emoji,
+                  style: TextStyle(fontSize: 20 + random.nextDouble() * 16),
+                ).animate(delay: (i * 150).ms)
+                  .fadeIn(duration: 300.ms)
+                  .slideY(begin: 0, end: -2.0 - random.nextDouble() * 2, duration: (1500 + random.nextInt(1000)).ms, curve: Curves.easeOut)
+                  .fadeOut(delay: (1200 + random.nextInt(600)).ms, duration: 500.ms)
+                  .rotate(begin: -0.1 + random.nextDouble() * 0.2, end: -0.3 + random.nextDouble() * 0.6),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmojiBar() {
+    final emojiData = [
+      {'emoji': '👍', 'label': 'Aferin'},
+      {'emoji': '😢', 'label': 'Üzgünüm'},
+      {'emoji': '🤯', 'label': 'Vay!'},
+      {'emoji': '🔥', 'label': 'Ateş'},
+      {'emoji': '😎', 'label': 'Kolay'},
+      {'emoji': '💀', 'label': 'GG'},
+    ];
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.03),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white.withOpacity(0.06)),
+      ),
+      child: Column(
+        children: [
+          Text(
+            'Tepki Gönder',
+            style: GoogleFonts.poppins(
+              fontSize: 11,
+              color: _emojiCooldown ? Colors.white24 : Colors.white38,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: emojiData.map((data) {
+              final emoji = data['emoji'] as String;
+              final label = data['label'] as String;
+              final info = _getEmojiInfo(emoji);
+              final Color color = info['color'] as Color;
+              return Expanded(
+                child: GestureDetector(
+                  onTap: _emojiCooldown ? null : () => _sendEmoji(emoji),
+                  child: AnimatedOpacity(
+                    opacity: _emojiCooldown ? 0.3 : 1.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: color.withOpacity(0.1),
+                            border: Border.all(color: color.withOpacity(0.25)),
+                          ),
+                          child: Center(
+                            child: Text(emoji, style: const TextStyle(fontSize: 24)),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          label,
+                          style: GoogleFonts.poppins(
+                            fontSize: 9,
+                            color: Colors.white38,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }

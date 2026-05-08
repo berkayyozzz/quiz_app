@@ -233,19 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
             ),
-            IconButton(
-              icon: Icon(
-                HapticHelper.isEnabled ? Icons.vibration : Icons.phone_android,
-                color: HapticHelper.isEnabled ? Colors.greenAccent : Colors.white30,
-                size: 24,
-              ),
-              tooltip: 'Titreşim',
-              onPressed: () async {
-                await HapticHelper.setEnabled(!HapticHelper.isEnabled);
-                if (HapticHelper.isEnabled) HapticHelper.mediumImpact();
-                setState(() {});
-              },
-            ),
+
             IconButton(
               icon: const Icon(Icons.logout, color: Colors.white54),
               onPressed: () async {
