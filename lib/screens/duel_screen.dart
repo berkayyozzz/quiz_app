@@ -12,6 +12,7 @@ import '../services/ad_manager.dart';
 import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../services/haptic_helper.dart';
+import '../services/premium_service.dart';
 import '../services/quiz_service.dart';
 import 'duel_result_screen.dart';
 
@@ -117,7 +118,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     final user = authService.currentUser;
     
     if (user != null) {
-      final hasTicket = await FirestoreService().consumeDuelTicket(user.uid);
+      // Premium kullanıcılar sınırsız düello hakkına sahip
+      final isPremium = PremiumService().isPremium;
+      final hasTicket = isPremium ? true : await FirestoreService().consumeDuelTicket(user.uid);
       if (mounted) {
         setState(() {
           _isCheckingTickets = false;

@@ -12,6 +12,7 @@ import 'screens/login_screen.dart';
 import 'services/ad_manager.dart';
 import 'services/notification_service.dart';
 import 'services/analytics_service.dart';
+import 'services/premium_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -35,6 +36,13 @@ void main() async {
   
   // Initialize FCM
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  
+  // Initialize Premium Service (In-App Purchase)
+  try {
+    await PremiumService().initialize();
+  } catch (e) {
+    debugPrint('Premium service init error: $e');
+  }
   
   runApp(
     ChangeNotifierProvider(

@@ -9,10 +9,12 @@ import '../services/auth_service.dart';
 import '../services/firestore_service.dart';
 import '../services/haptic_helper.dart';
 import '../services/notification_service.dart';
+import '../services/premium_service.dart';
 import 'dart:async';
 import 'quiz_screen.dart';
 import 'duel_screen.dart';
 import 'leaderboard_screen.dart';
+import 'premium_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -184,6 +186,53 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Premium butonu
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PremiumScreen()),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  gradient: PremiumService().isPremium
+                      ? const LinearGradient(
+                          colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                        )
+                      : null,
+                  color: PremiumService().isPremium
+                      ? null
+                      : const Color(0xFFFFD700).withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: const Color(0xFFFFD700).withOpacity(0.5),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      PremiumService().isPremium ? '👑' : '💎',
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    if (!PremiumService().isPremium) ...[
+                      const SizedBox(width: 4),
+                      Text(
+                        'PRO',
+                        style: GoogleFonts.poppins(
+                          color: const Color(0xFFFFD700),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ).animate().fadeIn(),
             StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('users')
@@ -703,7 +752,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '$wrongCount yanlış soru • Reklam izle ve çöz',
+                        '$wrongCount yanlış soru${PremiumService().isPremium ? '' : ' • Reklam izle ve çöz'}',
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.white54,
@@ -721,7 +770,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: const Color(0xFFFF6B35).withOpacity(0.5),
                     ),
                   ),
-                  child: Row(
+                  child: PremiumService().isPremium
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text('✨', style: TextStyle(fontSize: 14)),
+                            const SizedBox(width: 4),
+                            Text(
+                              'Çöz',
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFFFFD700),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text('🎬', style: TextStyle(fontSize: 14)),
@@ -746,6 +811,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _handleRetryWrongQuestions(BuildContext context, QuizProvider quiz) {
+    // Premium kullanıcılar direkt çözer
+    if (PremiumService().isPremium) {
+      quiz.startRetryWrongQuestions();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const QuizScreen()),
+      );
+      return;
+    }
+
     setState(() {
       _isRetryAdLoading = true;
     });

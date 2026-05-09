@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'premium_service.dart';
 
 class AdManager {
   static InterstitialAd? _interstitialAd;
@@ -73,6 +74,12 @@ class AdManager {
 
   /// Quizi bitirirken reklamı gösterip, callback üzerinden ResultScreen gibi diğer ekranlara geçisi sağla
   static void showInterstitialAd({required VoidCallback onAdDismissed}) {
+    // Premium kullanıcılar reklam görmez
+    if (PremiumService().isPremium) {
+      onAdDismissed();
+      return;
+    }
+
     // Sadece bir kere push edilmesini garantiye almak için _isPushed bayrağı
     _isPushed = false;
 
@@ -165,6 +172,12 @@ class AdManager {
     required VoidCallback onRewarded,
     VoidCallback? onAdFailed,
   }) {
+    // Premium kullanıcılar direkt ödül alır
+    if (PremiumService().isPremium) {
+      onRewarded();
+      return;
+    }
+
     if (_isRewardedAdLoaded && _rewardedAd != null) {
       _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (ad) {

@@ -1,7 +1,7 @@
 name: yks_akademi
 description: YKS Akademi - Deneme Çöz
 publish_to: 'none'
-version: 1.2.49+49
+version: 1.2.50+50
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -26,6 +26,7 @@ dependencies:
   firebase_messaging: ^15.2.10
   firebase_analytics: ^11.4.1
   timezone: ^0.11.0
+  in_app_purchase: ^3.2.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
