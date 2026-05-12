@@ -404,6 +404,58 @@ class FirestoreService {
     return null;
   }
 
+  // Check if user has Duel Tickets without consuming
+  Future<bool> hasDuelTickets(String uid) async {
+    try {
+      final userRef = _db.collection('users').doc(uid);
+      
+      return await _db.runTransaction((transaction) async {
+        final userSnapshot = await transaction.get(userRef);
+        
+        if (!userSnapshot.exists) return false;
+
+        final data = userSnapshot.data()!;
+        int tickets = data['duelTickets'] ?? 3;
+        Timestamp? lastResetTimestamp = data['lastDuelTicketResetDate'] as Timestamp?;
+        
+        DateTime now = DateTime.now();
+        DateTime today = DateTime(now.year, now.month, now.day);
+        
+        bool needReset = false;
+
+        if (lastResetTimestamp != null) {
+          DateTime lastResetDate = lastResetTimestamp.toDate();
+          DateTime lastResetDay = DateTime(lastResetDate.year, lastResetDate.month, lastResetDate.day);
+          
+          if (today.isAfter(lastResetDay)) {
+            tickets = 3; // Reset tickets daily
+            needReset = true;
+          }
+        } else {
+            // first time playing duel
+            tickets = 3;
+            needReset = true;
+        }
+
+        if (needReset) {
+            transaction.update(userRef, {
+              'duelTickets': tickets,
+              'lastDuelTicketResetDate': FieldValue.serverTimestamp(),
+            });
+        }
+
+        if (tickets <= 0) {
+          return false; // No tickets left
+        }
+
+        return true;
+      });
+    } catch (e) {
+      print('Error checking duel tickets: $e');
+      return false;
+    }
+  }
+
   // Consume 1 Duel Ticket
   Future<bool> consumeDuelTicket(String uid) async {
     try {
@@ -421,27 +473,35 @@ class FirestoreService {
         DateTime now = DateTime.now();
         DateTime today = DateTime(now.year, now.month, now.day);
         
+        bool needReset = false;
         if (lastResetTimestamp != null) {
           DateTime lastResetDate = lastResetTimestamp.toDate();
           DateTime lastResetDay = DateTime(lastResetDate.year, lastResetDate.month, lastResetDate.day);
           
           if (today.isAfter(lastResetDay)) {
             tickets = 3; // Reset tickets daily
+            needReset = true;
           }
         } else {
             // first time playing duel
             tickets = 3;
+            needReset = true;
         }
 
         if (tickets <= 0) {
           return false; // No tickets left
         }
 
-        transaction.update(userRef, {
+        final updateData = <String, dynamic>{
           'duelTickets': tickets - 1,
-          'lastDuelTicketResetDate': FieldValue.serverTimestamp(),
           'lastUpdated': FieldValue.serverTimestamp(),
-        });
+        };
+
+        if (needReset) {
+          updateData['lastDuelTicketResetDate'] = FieldValue.serverTimestamp();
+        }
+
+        transaction.update(userRef, updateData);
 
         return true;
       });

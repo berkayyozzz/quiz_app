@@ -6,14 +6,10 @@ import 'tyt_new_questions_4.dart';
 import 'tyt_new_questions_5.dart';
 import 'tyt_new_questions_6.dart';
 import 'tyt_new_questions_7.dart';
-import 'tyt_new_questions_7.dart';
-import 'tyt_new_questions_7.dart';
 
 final List<Question> tytQuestions = [
   ...tytNewQuestions5,
   ...tytNewQuestions6,
-  ...tytNewQuestions7,
-  ...tytNewQuestions7,
   ...tytNewQuestions7,
   // ─────────────── TÜRKÇE (ÖSYM TARZI / YENİ NESİL) ───────────────
   Question(

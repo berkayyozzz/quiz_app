@@ -120,7 +120,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     if (user != null) {
       // Premium kullanıcılar sınırsız düello hakkına sahip
       final isPremium = PremiumService().isPremium;
-      final hasTicket = isPremium ? true : await FirestoreService().consumeDuelTicket(user.uid);
+      final hasTicket = isPremium ? true : await FirestoreService().hasDuelTickets(user.uid);
       if (mounted) {
         setState(() {
           _isCheckingTickets = false;
@@ -754,6 +754,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     setState(() {
       _duelFinished = true;
     });
+
+    final user = AuthService().currentUser;
+    if (user != null && !PremiumService().isPremium) {
+       FirestoreService().consumeDuelTicket(user.uid);
+    }
 
     AdManager.showInterstitialAd(
       onAdDismissed: () {

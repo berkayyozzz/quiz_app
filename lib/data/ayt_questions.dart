@@ -6,14 +6,10 @@ import 'ayt_new_questions_4.dart';
 import 'ayt_new_questions_5.dart';
 import 'ayt_new_questions_6.dart';
 import 'ayt_new_questions_7.dart';
-import 'ayt_new_questions_7.dart';
-import 'ayt_new_questions_7.dart';
 
 final List<Question> aytQuestions = [
   ...aytNewQuestions5,
   ...aytNewQuestions6,
-  ...aytNewQuestions7,
-  ...aytNewQuestions7,
   ...aytNewQuestions7,
   // ─────────────── AYT MATEMATİK ───────────────
   Question(
