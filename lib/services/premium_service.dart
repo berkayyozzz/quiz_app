@@ -133,30 +133,45 @@ class PremiumService extends ChangeNotifier {
     _isPremium = value;
     notifyListeners();
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('is_premium', value);
+    final uid = AuthService().currentUser?.uid;
+    if (uid != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('is_premium_$uid', value);
+    }
+  }
+
+  /// Çıkış yapıldığında veya hesap değiştiğinde durumu temizle
+  Future<void> clearPremiumStatus() async {
+    _isPremium = false;
+    notifyListeners();
   }
 
   /// Önceki durumu yükle
   Future<void> _loadCachedPremiumStatus() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      _isPremium = prefs.getBool('is_premium') ?? false;
+      final uid = AuthService().currentUser?.uid;
+      
+      if (uid == null) {
+        _isPremium = false;
+        notifyListeners();
+        return;
+      }
+
+      _isPremium = prefs.getBool('is_premium_$uid') ?? false;
 
       // Firestore'dan da kontrol et
-      final uid = AuthService().currentUser?.uid;
-      if (uid != null) {
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .get();
-        if (doc.exists) {
-          final data = doc.data();
-          if (data != null && data['isPremium'] == true) {
-            _isPremium = true;
-            await prefs.setBool('is_premium', true);
-          }
-        }
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+          
+      if (doc.exists) {
+        final data = doc.data();
+        final bool isFirestorePremium = data != null && data['isPremium'] == true;
+        
+        _isPremium = isFirestorePremium;
+        await prefs.setBool('is_premium_$uid', isFirestorePremium);
       }
     } catch (e) {
       debugPrint('Error loading premium status: $e');

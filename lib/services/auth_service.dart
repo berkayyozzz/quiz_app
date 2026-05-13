@@ -6,6 +6,7 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'premium_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -98,6 +99,7 @@ class AuthService {
     try {
       await _googleSignIn.signOut();
       await _auth.signOut();
+      await PremiumService().clearPremiumStatus();
     } catch (e) {
       print('Sign out error: $e');
     }
