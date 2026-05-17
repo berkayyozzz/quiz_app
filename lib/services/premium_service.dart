@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,12 @@ class PremiumService extends ChangeNotifier {
 
   /// Uygulama açıldığında çağrılır
   Future<void> initialize() async {
+    if (Platform.isIOS) {
+      _isLoading = false;
+      notifyListeners();
+      return;
+    }
+
     // Önce local cache kontrol et
     await _loadCachedPremiumStatus();
 

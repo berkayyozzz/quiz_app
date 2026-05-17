@@ -11,6 +11,7 @@ import '../services/haptic_helper.dart';
 import '../services/notification_service.dart';
 import '../services/premium_service.dart';
 import 'dart:async';
+import 'dart:io';
 import 'quiz_screen.dart';
 import 'duel_screen.dart';
 import 'leaderboard_screen.dart';
@@ -187,52 +188,53 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Premium butonu
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const PremiumScreen()),
-                );
-              },
-              child: Container(
-                margin: const EdgeInsets.only(right: 4),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  gradient: PremiumService().isPremium
-                      ? const LinearGradient(
-                          colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
-                        )
-                      : null,
-                  color: PremiumService().isPremium
-                      ? null
-                      : const Color(0xFFFFD700).withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xFFFFD700).withOpacity(0.5),
+            if (!Platform.isIOS)
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PremiumScreen()),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    gradient: PremiumService().isPremium
+                        ? const LinearGradient(
+                            colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                          )
+                        : null,
+                    color: PremiumService().isPremium
+                        ? null
+                        : const Color(0xFFFFD700).withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: const Color(0xFFFFD700).withOpacity(0.5),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        PremiumService().isPremium ? '👑' : '💎',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      if (!PremiumService().isPremium) ...[
+                        const SizedBox(width: 4),
+                        Text(
+                          'PRO',
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFFFFD700),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      PremiumService().isPremium ? '👑' : '💎',
-                      style: const TextStyle(fontSize: 14),
-                    ),
-                    if (!PremiumService().isPremium) ...[
-                      const SizedBox(width: 4),
-                      Text(
-                        'PRO',
-                        style: GoogleFonts.poppins(
-                          color: const Color(0xFFFFD700),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ).animate().fadeIn(),
+              ).animate().fadeIn(),
             StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('users')
