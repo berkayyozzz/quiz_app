@@ -103,5 +103,21 @@ class AuthService {
     } catch (e) {
       print('Sign out error: $e');
     }
+  // Delete account
+  Future<void> deleteAccount() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        await user.delete();
+        await PremiumService().clearPremiumStatus();
+        await signOut();
+      }
+    } on FirebaseAuthException catch (e) {
+      print('Delete account auth error: ${e.message}');
+      rethrow;
+    } catch (e) {
+      print('Delete account error: $e');
+      rethrow;
+    }
   }
 }

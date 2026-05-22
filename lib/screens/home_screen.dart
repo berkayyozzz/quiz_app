@@ -285,11 +285,38 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
 
-            IconButton(
-              icon: const Icon(Icons.logout, color: Colors.white54),
-              onPressed: () async {
-                await AuthService().signOut();
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.settings, color: Colors.white54),
+              color: const Color(0xFF1E1E3F),
+              onSelected: (value) async {
+                if (value == 'logout') {
+                  await AuthService().signOut();
+                } else if (value == 'delete') {
+                  _showDeleteAccountDialog(context);
+                }
               },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.logout, color: Colors.white),
+                      const SizedBox(width: 8),
+                      Text('Çıkış Yap', style: GoogleFonts.poppins(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      const Icon(Icons.delete_forever, color: Colors.redAccent),
+                      const SizedBox(width: 8),
+                      Text('Hesabı Sil', style: GoogleFonts.poppins(color: Colors.redAccent)),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -863,5 +890,92 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     showAd();
+  }
+
+  void _showDeleteAccountDialog(BuildContext context) {
+    final TextEditingController confirmController = TextEditingController();
+    bool isLoading = false;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            backgroundColor: const Color(0xFF1E1E3F),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text('Hesabı Sil', style: GoogleFonts.poppins(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hesabınızı silmek istediğinize emin misiniz? Bu işlem geri alınamaz ve tüm verileriniz (skorlar, düello geçmişi, abonelik) kalıcı olarak silinir.',
+                  style: GoogleFonts.poppins(color: Colors.white70),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Onaylamak için "SİL" yazın:',
+                  style: GoogleFonts.poppins(color: Colors.white54, fontSize: 12),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: confirmController,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.black26,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: isLoading ? null : () => Navigator.pop(ctx),
+                child: Text('İptal', style: GoogleFonts.poppins(color: Colors.white54)),
+              ),
+              ElevatedButton(
+                onPressed: (confirmController.text.trim().toUpperCase() != 'SİL' || isLoading)
+                    ? null
+                    : () async {
+                        setState(() => isLoading = true);
+                        try {
+                          await AuthService().deleteAccount();
+                          if (ctx.mounted) {
+                            Navigator.pop(ctx);
+                          }
+                        } catch (e) {
+                          setState(() => isLoading = false);
+                          if (ctx.mounted) {
+                            ScaffoldMessenger.of(ctx).showSnackBar(
+                              SnackBar(
+                                content: Text('Hesap silinemedi. Lütfen çıkış yapıp tekrar giriş yaptıktan sonra deneyin.'),
+                                backgroundColor: Colors.redAccent,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  disabledBackgroundColor: Colors.redAccent.withOpacity(0.3),
+                ),
+                child: isLoading
+                    ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                    : Text('Kalıcı Olarak Sil', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+            ],
+          );
+        }
+      ),
+    );
   }
 }
