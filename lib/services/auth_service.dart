@@ -103,6 +103,8 @@ class AuthService {
     } catch (e) {
       print('Sign out error: $e');
     }
+  }
+
   // Delete account
   Future<void> deleteAccount() async {
     try {
