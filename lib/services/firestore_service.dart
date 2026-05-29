@@ -412,7 +412,22 @@ class FirestoreService {
       return await _db.runTransaction((transaction) async {
         final userSnapshot = await transaction.get(userRef);
         
-        if (!userSnapshot.exists) return false;
+        if (!userSnapshot.exists) {
+          // Yeni kullanıcı - doküman henüz oluşturulmamış, 3 hak ile oluştur
+          final user = FirebaseAuth.instance.currentUser;
+          final displayName = user?.displayName ?? 'Misafir-${(uid.length >= 5) ? uid.substring(0, 5) : uid}';
+          transaction.set(userRef, {
+            'displayName': displayName,
+            'highScore': 0,
+            'totalNet': 0,
+            'totalGamesPlayed': 0,
+            'currentStreak': 0,
+            'duelTickets': 3,
+            'lastDuelTicketResetDate': FieldValue.serverTimestamp(),
+            'lastUpdated': FieldValue.serverTimestamp(),
+          });
+          return true; // Yeni kullanıcıya 3 hak verildi
+        }
 
         final data = userSnapshot.data()!;
         int tickets = data['duelTickets'] ?? 3;
@@ -464,7 +479,22 @@ class FirestoreService {
       return await _db.runTransaction((transaction) async {
         final userSnapshot = await transaction.get(userRef);
         
-        if (!userSnapshot.exists) return false;
+        if (!userSnapshot.exists) {
+          // Doküman yoksa bilet düşüremeyiz, ama 3 hak ile oluşturup 1 düşelim
+          final user = FirebaseAuth.instance.currentUser;
+          final displayName = user?.displayName ?? 'Misafir-${(uid.length >= 5) ? uid.substring(0, 5) : uid}';
+          transaction.set(userRef, {
+            'displayName': displayName,
+            'highScore': 0,
+            'totalNet': 0,
+            'totalGamesPlayed': 0,
+            'currentStreak': 0,
+            'duelTickets': 2, // 3 - 1
+            'lastDuelTicketResetDate': FieldValue.serverTimestamp(),
+            'lastUpdated': FieldValue.serverTimestamp(),
+          });
+          return true;
+        }
 
         final data = userSnapshot.data()!;
         int tickets = data['duelTickets'] ?? 3;
@@ -519,10 +549,25 @@ class FirestoreService {
       return await _db.runTransaction((transaction) async {
         final userSnapshot = await transaction.get(userRef);
         
-        if (!userSnapshot.exists) return false;
+        if (!userSnapshot.exists) {
+          // Doküman yoksa 3 hak ile oluştur
+          final user = FirebaseAuth.instance.currentUser;
+          final displayName = user?.displayName ?? 'Misafir-${(uid.length >= 5) ? uid.substring(0, 5) : uid}';
+          transaction.set(userRef, {
+            'displayName': displayName,
+            'highScore': 0,
+            'totalNet': 0,
+            'totalGamesPlayed': 0,
+            'currentStreak': 0,
+            'duelTickets': 3,
+            'lastDuelTicketResetDate': FieldValue.serverTimestamp(),
+            'lastUpdated': FieldValue.serverTimestamp(),
+          });
+          return true;
+        }
 
         final data = userSnapshot.data()!;
-        int tickets = data['duelTickets'] ?? 3;
+        int tickets = data['duelTickets'] ?? 0;
         
         transaction.update(userRef, {
           'duelTickets': tickets + 3,
