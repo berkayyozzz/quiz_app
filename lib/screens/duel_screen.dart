@@ -984,6 +984,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             ],
           ),
         ),
+        ),
       ),
     );
   }
