@@ -15,6 +15,7 @@ import '../providers/quiz_provider.dart';
 import 'duel_screen.dart';
 import 'home_screen.dart';
 import 'leaderboard_screen.dart';
+import '../widgets/banner_ad_widget.dart';
 
 class DuelResultScreen extends StatefulWidget {
   final int playerScore;
@@ -721,6 +722,8 @@ class _DuelResultScreenState extends State<DuelResultScreen> {
                   ),
                 ).animate().fadeIn(delay: 900.ms),
 
+                const SizedBox(height: 24),
+                const BannerAdWidget(),
                 const SizedBox(height: 24),
               ],
             ),

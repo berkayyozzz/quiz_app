@@ -14,6 +14,7 @@ import '../services/firestore_service.dart';
 import '../services/haptic_helper.dart';
 import '../services/premium_service.dart';
 import '../services/quiz_service.dart';
+import '../widgets/native_ad_widget.dart';
 import 'duel_result_screen.dart';
 
 class DuelScreen extends StatefulWidget {
@@ -840,16 +841,17 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D1A),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white54),
                 onPressed: () => Navigator.pop(context),
               ),
-              const Spacer(),
+              const SizedBox(height: 24),
               Center(
                 child: Container(
                   width: 100,
@@ -976,7 +978,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   ],
                 ),
               ],
-              const Spacer(),
+              const SizedBox(height: 32),
+              const NativeAdWidget(height: 280),
+              const SizedBox(height: 16),
             ],
           ),
         ),

@@ -22,6 +22,48 @@ class AdManager {
   static const String _iosRewardedAdUnitId = 'ca-app-pub-6164147837428706/3965074048';
   static const String _androidRewardedAdUnitId = 'ca-app-pub-6164147837428706/7824428003';
 
+  /// Native Reklam ID'leri
+  static const String _iosNativeAdUnitId = 'ca-app-pub-6164147837428706/8310087089';
+  static const String _androidNativeAdUnitId = 'ca-app-pub-6164147837428706/4750646251';
+
+  /// Banner Reklam ID'leri
+  static const String _iosBannerAdUnitId = 'ca-app-pub-6164147837428706/8417898294';
+  static const String _androidBannerAdUnitId = 'ca-app-pub-6164147837428706/2562936387';
+
+  /// Google Mobile Ads Test Banner ID'leri
+  static String get bannerAdUnitId {
+    if (kReleaseMode) {
+      if (Platform.isIOS) {
+        return _iosBannerAdUnitId;
+      } else if (Platform.isAndroid) {
+        return _androidBannerAdUnitId;
+      }
+    }
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/6300978111'; // Android Test Banner
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-3940256099942544/2934735716'; // iOS Test Banner
+    }
+    throw UnsupportedError('Desteklenmeyen platform');
+  }
+
+  /// Google Mobile Ads Test Native ID'leri
+  static String get nativeAdUnitId {
+    if (kReleaseMode) {
+      if (Platform.isIOS) {
+        return _iosNativeAdUnitId;
+      } else if (Platform.isAndroid) {
+        return _androidNativeAdUnitId;
+      }
+    }
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/2247696110'; // Android Test Native
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-3940256099942544/3986624511'; // iOS Test Native
+    }
+    throw UnsupportedError('Desteklenmeyen platform');
+  }
+
   /// Google Mobile Ads Test Interstitial ID'leri
   static String get interstitialAdUnitId {
     if (kReleaseMode) {

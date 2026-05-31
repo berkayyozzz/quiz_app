@@ -16,6 +16,7 @@ import 'quiz_screen.dart';
 import 'duel_screen.dart';
 import 'leaderboard_screen.dart';
 import 'premium_screen.dart';
+import '../widgets/native_ad_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -138,13 +139,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 12),
                     _buildSubjectChips(quiz),
                     const SizedBox(height: 32),
+                    _buildStartButton(context, quiz),
+                    const SizedBox(height: 32),
                     _buildDenemeSection(context, quiz),
                     if (quiz.hasWrongQuestions) ...[
                       const SizedBox(height: 32),
                       _buildRetryWrongCard(context, quiz),
                     ],
                     const SizedBox(height: 32),
-                    _buildStartButton(context, quiz),
+                    const NativeAdWidget(height: 300),
                     const SizedBox(height: 32),
                   ],
                 ),

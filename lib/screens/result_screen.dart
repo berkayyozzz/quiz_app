@@ -11,6 +11,7 @@ import 'home_screen.dart';
 import 'leaderboard_screen.dart';
 import 'quiz_screen.dart';
 import '../services/analytics_service.dart';
+import '../widgets/banner_ad_widget.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -744,6 +745,8 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                     ).animate().fadeIn(delay: 900.ms),
 
+                    const SizedBox(height: 24),
+                    const BannerAdWidget(),
                     const SizedBox(height: 24),
                   ],
                 ),
